@@ -1,9 +1,6 @@
 #pragma once
-#include "Resources.h"
-#include "Btn.h";
+#include "Btn.h"
 #include "Menu.h"
-static const sf::Vector2u winSize = sf::Vector2u(560, 560);
-
 
 class Controller {
 public:
@@ -21,6 +18,7 @@ private:
 	{
 		Game,
 	};
+
 	Menu m_menu;
 	Screen screen = Screen::Game;
 };
