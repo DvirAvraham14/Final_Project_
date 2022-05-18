@@ -1,6 +1,7 @@
 #include "Menu.h"
 
-Menu::Menu() {
+Menu::Menu(std::shared_ptr<Screen> ptr)
+{
 	//bg
 	m_bg.setTexture(Resources::instance().getSprite(Resources::TEXTURE::BG));
 	m_bg.setTextureRect(sf::IntRect(0, 0, WIDTH_WINDOW, HEIGHT_WINDOW));
@@ -13,6 +14,7 @@ Menu::Menu() {
 	m_logo.setOrigin(m_logo.getGlobalBounds().width / 2, m_logo.getGlobalBounds().height / 2);
 	m_logo.setPosition(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.5f);
 	createBottons();
+	m_screen = ptr;
 }
 
 void Menu::createBottons() {
@@ -25,9 +27,10 @@ void Menu::createBottons() {
 		return currentStart;
 	};
 
-	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.f + HEIGHT_WINDOW / 7.f, Resources::TEXTURE::PLAY, []() {std::cout << "22"; }));
+	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.f + HEIGHT_WINDOW / 7.f, Resources::TEXTURE::PLAY,
+		[&]() {m_screen->setScreen(T_Screen::Game); }));
 
-	m_buttons.push_back(Btn(currentStart, Resources::TEXTURE::HELP, []() {std::cout << "33"; }));
+	m_buttons.push_back(Btn(currentStart, Resources::TEXTURE::HELP, []() {}));
 	m_buttons.push_back(Btn(nextStart(), Resources::TEXTURE::SOUND, [&]()
 		{ this->mute(m_buttons.capacity()-1); }));
 }
