@@ -22,6 +22,7 @@ private:
 	//};
 
 	Menu m_menu;
+	Map m_map;
 	//Screen m_screen = Screen::Menu;
 };
 

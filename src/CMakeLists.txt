@@ -6,4 +6,5 @@
                                               "AnimationData.cpp"
                                               "Direction.cpp"
                                               "Menu.cpp"
+                                              "Map.cpp"
                                               )

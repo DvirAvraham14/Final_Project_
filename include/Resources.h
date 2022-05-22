@@ -3,7 +3,8 @@
 #include <SFML\Audio.hpp>
 #include "AnimationData.h"
 
-const int NUM_OF_TEXTURE = 6;
+const int NUM_OF_TEXTURE = 7;
+const int NUM_OF_MAPS = 1;
 
 
 class Resources {
@@ -16,8 +17,8 @@ private:
 						"mute.png",
 						"sound.png",
 						"logo.png",
+						"map1.jpg",
 	};
-
 	std::vector<sf::Texture>	m_textures;
 	sf::SoundBuffer					m_sound;
 
@@ -40,9 +41,8 @@ public:
 		MUTE,
 		SOUND,
 		LOGO,
-		EXIT,
+		MAP1,
 	};
-
 	const sf::Font& getFont();
 	const sf::SoundBuffer& getSound();
 	const sf::Texture& getSprite(Resources::TEXTURE);
