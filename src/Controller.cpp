@@ -13,8 +13,10 @@ Controller::Controller()
 //__________________________________
 void Controller::run() {
 	sf::Vector2f cursorPosF;
+	sf::View   View(m_window.getDefaultView());
 	while (m_window.isOpen()) {
 		m_window.clear(sf::Color::White);
+		m_window.setView(View);
 		sf::Event event;
 		cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 		while (m_window.pollEvent(event)) {
@@ -33,6 +35,10 @@ void Controller::run() {
 	
 		if (m_screen->getScreen() == T_Screen::Menu) {
 			m_menu.Draw(m_window);
+		}
+		if (m_screen->getScreen() == T_Screen::Game) {
+			View.move(0.f, -1.f); // negative y to move 'up' along sprite height
+			m_map.draw(m_window);
 		}
 		m_window.display();
 	}

@@ -29,13 +29,12 @@ const sf::SoundBuffer& Resources::getSound() {
 	return m_sound;
 }
 
-//__________________________________
+
 const sf::Texture& Resources::getSprite(Resources::TEXTURE sprite) {
 	auto index = static_cast<size_t>(sprite);
 	return m_textures[index];
 }
-
-
+//__________________________________
 
 void Resources::loadTextur() {
 	for (auto i = 0; i < NUM_OF_TEXTURE;i++) {

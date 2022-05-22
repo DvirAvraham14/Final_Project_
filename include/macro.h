@@ -1,7 +1,11 @@
 #pragma once
 #include "Resources.h"
+#include <regex> 
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <math.h>
 const int WIDTH_WINDOW = 1024;
 const int HEIGHT_WINDOW = 768;
 
