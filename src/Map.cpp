@@ -1,6 +1,5 @@
 #include "Map.h"
 
-
 Map::Map() {
 	addMaps();
 }
@@ -11,7 +10,8 @@ void Map::addMaps() {
 		openAndInsertData(map);
 	}
 	sf::Sprite bg;
-	bg.setTexture(Resources::instance().getSprite(Resources::TEXTURE::MAP1));
+	bg.setTexture(Resources::instance().getSprite(Resources::TEXTURE::MAP1, true));
+	bg.setTextureRect({0,0,10000, HEIGHT_WINDOW});
 	m_mapSprite.push_back(bg);
 }
 
@@ -21,6 +21,7 @@ vector<sf::Vector2f> Map::readCord(std::string map) {
 	std::string line;
 	std::vector<sf::Vector2f> points;
 	file.open(map);
+	
 	while (std::getline(file, line)) {
 
 		std::istringstream iss(line);
@@ -54,9 +55,9 @@ float Map::calculateRectSize(int x1, int y1, int x2, int y2) {
 
 
 void Map::setView(sf::View &view) {
-	sf::FloatRect  fBounds(0.f, 0.f, 1000.f, 1000.f);
-	sf::IntRect    iBounds(fBounds);
-	sf::Sprite                      Sprite(Resources::instance().getSprite(Resources::TEXTURE::MAP1), iBounds);
+	sf::FloatRect fBounds(0.f, 0.f, 1000.f, 1000.f);
+	sf::IntRect   iBounds(fBounds);
+	sf::Sprite    Sprite(Resources::instance().getSprite(Resources::TEXTURE::MAP1, true), iBounds);
 	Sprite.setPosition(fBounds.left, fBounds.top - 1000.f + view.getSize().y);
 
 	m_mapSprite[0] = Sprite;

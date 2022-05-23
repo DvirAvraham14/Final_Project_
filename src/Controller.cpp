@@ -31,7 +31,7 @@ void Controller::run() {
 			if (event.type == sf::Event::Closed)
 				m_window.close();
 			if (event.type == sf::Event::KeyPressed && m_screen->getScreen()==T_Screen::Game)
-				View.move(3.f, 0.f); 
+				View.move(10.f, 0.f); 
 		}
 		auto delta = m_gameClock.restart();
 	

@@ -43,9 +43,10 @@ public:
 		LOGO,
 		MAP1,
 	};
+
 	const sf::Font& getFont();
 	const sf::SoundBuffer& getSound();
-	const sf::Texture& getSprite(Resources::TEXTURE);
+	const sf::Texture& getSprite(Resources::TEXTURE, bool repated = false);
 	const AnimationData& animationData( ) { return m_data; }
 
 

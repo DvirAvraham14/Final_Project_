@@ -32,17 +32,18 @@ const sf::SoundBuffer& Resources::getSound() {
 }
 
 
-const sf::Texture& Resources::getSprite(Resources::TEXTURE sprite) {
+const sf::Texture& Resources::getSprite(Resources::TEXTURE sprite, bool repated) {
 	auto index = static_cast<size_t>(sprite);
+	m_textures[index].setRepeated(repated);
 	return m_textures[index];
 }
+
 //__________________________________
 
 void Resources::loadTextur() {
 	for (auto i = 0; i < NUM_OF_TEXTURE; i++) {
 		sf::Texture temp;
 		temp.loadFromFile(m_textPath[i]);
-		temp.setRepeated(true); // not here not every textute repeated
 		m_textures.push_back(temp);
 	}
 }
