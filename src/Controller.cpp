@@ -2,12 +2,13 @@
 #include "Resources.h"
 
 Controller::Controller()
-	:m_screen(std::make_shared<Screen>()), m_menu(m_screen)
+	:m_screen(std::make_shared<Screen>()), m_menu(m_screen),m_map(m_world)
 {
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel) ,
 		"Death Race",
 		sf::Style::Titlebar | sf::Style::Close);
+	m_window.setFramerateLimit(60);
 	createVehicels();
 }
 
@@ -41,8 +42,9 @@ void Controller::run() {
 			m_menu.Draw(m_window);
 		}
 		if (m_screen->getScreen() == T_Screen::Game) {
+			m_world->Step(timeStep, velocityIterations, positionIterations);
 			m_map.draw(m_window);
-			//m_vehicels[0]->draw(m_window);
+			m_vehicels[0]->draw(m_window);
 		}
 		m_window.display();
 	}
@@ -51,7 +53,7 @@ void Controller::run() {
 
 
 void Controller::createVehicels() {
-	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE)));
+	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE), m_world));
 }
 
 

@@ -6,7 +6,7 @@ Menu::Menu(std::shared_ptr<Screen> ptr)
 	m_bg.setTexture(Resources::instance().getTexture(Resources::TEXTURE::BG));
 	m_bg.setTextureRect(sf::IntRect(0, 0, WIDTH_WINDOW, HEIGHT_WINDOW));
 	//left menu reac background
-	m_menuBack = sf::RectangleShape({80,168});
+	m_menuBack = sf::RectangleShape({ 80,168 });
 	m_menuBack.setPosition(30, 30);
 	m_menuBack.setFillColor(sf::Color(0xe2bb23a0));
 	//logo
@@ -32,7 +32,7 @@ void Menu::createBottons() {
 
 	m_buttons.push_back(Btn(currentStart, Resources::TEXTURE::HELP, []() {}));
 	m_buttons.push_back(Btn(nextStart(), Resources::TEXTURE::SOUND, [&]()
-		{ this->mute(m_buttons.capacity()-1); }));
+		{ this->mute(m_buttons.capacity() - 1); }));
 }
 
 
