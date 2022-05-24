@@ -1,5 +1,6 @@
 #pragma once
 #include "Resources.h"
+#include <SFML\Audio.hpp>
 #include <regex> 
 #include <vector>
 #include <iostream>

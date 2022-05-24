@@ -32,7 +32,7 @@ const sf::SoundBuffer& Resources::getSound() {
 }
 
 
-const sf::Texture& Resources::getSprite(Resources::TEXTURE sprite, bool repated) {
+const sf::Texture& Resources::getTexture(Resources::TEXTURE sprite, bool repated) {
 	auto index = static_cast<size_t>(sprite);
 	m_textures[index].setRepeated(repated);
 	return m_textures[index];

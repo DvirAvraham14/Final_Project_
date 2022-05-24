@@ -1,6 +1,8 @@
 #pragma once
 #include "Menu.h"
-
+#include"GameObject.h"
+#include"MovingObject.h"
+#include "Scate.h"
 
 class Controller {
 public:
@@ -14,15 +16,12 @@ private:
 	std::shared_ptr<Screen>		m_screen;
 
 	void whilePlaying(sf::Event, sf::Vector2f );
+	void createVehicels();
 
-	//enum class Screen
-	//{
-	//	Menu,
-	//	Game,
-	//};
 
 	Menu m_menu;
 	Map m_map;
+	std::vector<std::shared_ptr<MovingObject>> m_vehicels;
 	//Screen m_screen = Screen::Menu;
 };
 

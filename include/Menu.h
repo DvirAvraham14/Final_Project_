@@ -3,7 +3,6 @@
 #include "Btn.h"
 #include "Screen.h"
 #include "Map.h"
-#include <SFML\Audio.hpp>
 
 
 class Menu

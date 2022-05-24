@@ -3,14 +3,14 @@
 Menu::Menu(std::shared_ptr<Screen> ptr)
 {
 	//bg
-	m_bg.setTexture(Resources::instance().getSprite(Resources::TEXTURE::BG));
+	m_bg.setTexture(Resources::instance().getTexture(Resources::TEXTURE::BG));
 	m_bg.setTextureRect(sf::IntRect(0, 0, WIDTH_WINDOW, HEIGHT_WINDOW));
 	//left menu reac background
 	m_menuBack = sf::RectangleShape({80,168});
 	m_menuBack.setPosition(30, 30);
 	m_menuBack.setFillColor(sf::Color(0xe2bb23a0));
 	//logo
-	m_logo.setTexture(Resources::instance().getSprite(Resources::TEXTURE::LOGO));
+	m_logo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::LOGO));
 	m_logo.setOrigin(m_logo.getGlobalBounds().width / 2, m_logo.getGlobalBounds().height / 2);
 	m_logo.setPosition(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.5f);
 	createBottons();

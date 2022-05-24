@@ -8,6 +8,7 @@ Controller::Controller()
 	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel) ,
 		"Death Race",
 		sf::Style::Titlebar | sf::Style::Close);
+	createVehicels();
 }
 
 //__________________________________
@@ -20,6 +21,7 @@ void Controller::run() {
 		sf::Event event;
 		cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 		while (m_window.pollEvent(event)) {
+
 			switch (m_screen->getScreen())
 			{
 			default:
@@ -31,7 +33,7 @@ void Controller::run() {
 			if (event.type == sf::Event::Closed)
 				m_window.close();
 			if (event.type == sf::Event::KeyPressed && m_screen->getScreen()==T_Screen::Game)
-				View.move(10.f, 0.f); 
+				View.move(3.f, 0.f); 
 		}
 		auto delta = m_gameClock.restart();
 	
@@ -40,10 +42,18 @@ void Controller::run() {
 		}
 		if (m_screen->getScreen() == T_Screen::Game) {
 			m_map.draw(m_window);
+			//m_vehicels[0]->draw(m_window);
 		}
 		m_window.display();
 	}
 }
+
+
+
+void Controller::createVehicels() {
+	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE)));
+}
+
 
 
 void Controller::whilePlaying(sf::Event event, sf::Vector2f cursorPosF) {

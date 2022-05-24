@@ -3,7 +3,7 @@
 #include <SFML\Audio.hpp>
 #include "AnimationData.h"
 
-const int NUM_OF_TEXTURE = 7;
+const int NUM_OF_TEXTURE = 8;
 const int NUM_OF_MAPS = 1;
 
 
@@ -18,6 +18,7 @@ private:
 						"sound.png",
 						"logo.png",
 						"map1.jpg",
+						"tempScateSprite.png",
 	};
 	std::vector<sf::Texture>	m_textures;
 	sf::SoundBuffer					m_sound;
@@ -42,11 +43,12 @@ public:
 		SOUND,
 		LOGO,
 		MAP1,
+		SCATE,
 	};
 
 	const sf::Font& getFont();
 	const sf::SoundBuffer& getSound();
-	const sf::Texture& getSprite(Resources::TEXTURE, bool repated = false);
+	const sf::Texture& getTexture(Resources::TEXTURE, bool repated = false);
 	const AnimationData& animationData( ) { return m_data; }
 
 

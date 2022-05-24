@@ -7,4 +7,8 @@
                                               "Direction.cpp"
                                               "Menu.cpp"
                                               "Map.cpp"
+                                              "GameObject.cpp"
+                                              "MovingObject.cpp"
+                                              "PlayerVehicles.cpp"
+                                              "Scate.cpp"
                                               )

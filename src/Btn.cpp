@@ -6,7 +6,7 @@
 Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<void(void)> func) 
 	:m_position({ x, y }), m_func(func)
 {
-	m_sprite.setTexture(Resources::instance().getSprite(sprite));
+	m_sprite.setTexture(Resources::instance().getTexture(sprite));
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
 	m_sprite.setPosition(m_position);
 	m_sound.setBuffer(Resources::instance().getSound());
@@ -40,7 +40,7 @@ void Btn::Press(const sf::Vector2f cursur) {
 
 //__________________________________
 void Btn::updateSprite(Resources::TEXTURE sprite) {
-	m_sprite.setTexture(Resources::instance().getSprite(sprite));
+	m_sprite.setTexture(Resources::instance().getTexture(sprite));
 }
 
 
