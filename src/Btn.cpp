@@ -3,7 +3,7 @@
 
 //that class will show button or title on the board
 
-Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<void(void)> func) 
+Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<void(void)> func)
 	:m_position({ x, y }), m_func(func)
 {
 	m_sprite.setTexture(Resources::instance().getTexture(sprite));
@@ -20,11 +20,11 @@ Btn::Btn(sf::Vector2f pos, Resources::TEXTURE sprite, std::function<void(void)> 
 //__________________________________
 void Btn::hover(const sf::Vector2f cursur) {
 	if (m_func) {
-		
-		if (this->m_sprite.getGlobalBounds().contains(cursur)) 
+
+		if (this->m_sprite.getGlobalBounds().contains(cursur))
 			m_sprite.setColor(sf::Color(0xfafafacc));
-		
-		else 
+
+		else
 			m_sprite.setColor(sf::Color(0xfafafaff));
 	}
 }

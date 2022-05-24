@@ -11,4 +11,5 @@
                                               "MovingObject.cpp"
                                               "PlayerVehicles.cpp"
                                               "Scate.cpp"
+                                              "ManageLevel.cpp"
                                               )

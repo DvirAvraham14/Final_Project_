@@ -17,8 +17,9 @@ private:
 						"mute.png",
 						"sound.png",
 						"logo.png",
-						"map1.jpg",
 						"tempScateSprite.png",
+						"map1.jpg",
+						
 	};
 	std::vector<sf::Texture>	m_textures;
 	sf::SoundBuffer					m_sound;
@@ -42,8 +43,9 @@ public:
 		MUTE,
 		SOUND,
 		LOGO,
-		MAP1,
 		SCATE,
+		MAP1,
+		
 	};
 
 	const sf::Font& getFont();

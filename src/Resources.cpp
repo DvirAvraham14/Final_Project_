@@ -6,10 +6,10 @@ Resources::Resources()
 {
 	if (!m_font.loadFromFile("gameFont.otf"))
 		std::cerr << "Font error\n";
-		//std::exception();
+	//std::exception();
 	if (!m_sound.loadFromFile("coll.wav"))
 		std::cerr << "sound loading failed\n";
-		//std::exception();
+	//std::exception();
 
 	loadTextur();
 }
