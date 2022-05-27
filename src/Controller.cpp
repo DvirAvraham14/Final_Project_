@@ -1,16 +1,15 @@
 #include "Controller.h"
-
+#include "DebugDraw.h"
 
 Controller::Controller()
-	:m_screen(std::make_shared<Screen>()), m_menu(m_screen),m_map(m_world)
+	:m_screen(std::make_shared<Screen>()), m_menu(m_screen), m_map(m_world)
 {
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel) ,
+	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel),
 		"Death Race",
 		sf::Style::Titlebar | sf::Style::Close);
 	m_window.setFramerateLimit(60);
-	//MyContactListener myContactListenerInstance;
-	//m_world->SetContactListener(&myContactListenerInstance);
+	m_world->SetContactListener(&myContact);
 	createVehicels();
 }
 
@@ -20,6 +19,9 @@ void Controller::run() {
 	sf::View   View(m_window.getDefaultView());
 	auto delta = m_gameClock.restart();
 
+	DebugDraw d(m_window);
+	uint32 flags = b2Draw::e_shapeBit;
+	d.SetFlags(flags);
 	while (m_window.isOpen()) {
 		m_window.clear(sf::Color::White);
 		m_window.setView(View);
@@ -41,7 +43,7 @@ void Controller::run() {
 				m_manageLevel.manageAction(m_vehicels, m_gameClock);
 			}
 		}
-	
+
 		if (m_screen->getScreen() == T_Screen::Menu) {
 			m_menu.Draw(m_window);
 		}
@@ -54,6 +56,7 @@ void Controller::run() {
 		if (m_nextLevel)
 			updateLevel();
 
+			m_world->SetDebugDraw(&d);
 		m_window.display();
 	}
 }
@@ -75,9 +78,9 @@ void Controller::createVehicels() {
 
 void Controller::whilePlaying(sf::Event event, sf::Vector2f cursorPosF) {
 
-		try {
-			m_menu.handleMouse(event, cursorPosF);
-		}
-		catch (std::exception& ) {}
+	try {
+		m_menu.handleMouse(event, cursorPosF);
+	}
+	catch (std::exception&) {}
 }
 

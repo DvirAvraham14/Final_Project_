@@ -1,8 +1,9 @@
 #include "Map.h"
 
-Map::Map(std::shared_ptr<b2World> world)
-	:m_world(world) 
-{}
+//Map::Map(std::shared_ptr<b2World> world)
+//{
+//	m_world = world;
+//}
 
 
 void Map::addMaps(int index) {
@@ -62,9 +63,10 @@ void Map::CreateGround() {
 	b2ChainShape chain;
 	chain.CreateLoop(vs, size);
 	m_body->CreateFixture(&chain, 1.0f);
+	m_body->SetUserData(this);
 }
 
-void Map::draw(sf::RenderWindow& target) const {
+void Map::draw(sf::RenderWindow& target)  {
 	target.draw(m_mapSprite[0]);
 	target.draw(m_road);
 }

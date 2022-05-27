@@ -21,7 +21,7 @@ private:
 						"map1.jpg",
 						
 	};
-	std::vector<sf::Texture>	m_textures;
+	std::vector<sf::Texture>		m_textures;
 	sf::SoundBuffer					m_sound;
 
 	sf::Font						m_font;

@@ -6,9 +6,9 @@ public:
 	using PlayerVehicles::PlayerVehicles;
 	//Scate() = default;
 	
-	virtual void draw(sf::RenderWindow& target) override;
-	virtual void jump()override;
-	virtual void drive()override;
+	virtual void draw(sf::RenderWindow& target) ;
+	virtual void jump();
+	virtual void drive();
 
 private:
 };

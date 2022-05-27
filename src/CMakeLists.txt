@@ -12,4 +12,6 @@
                                               "PlayerVehicles.cpp"
                                               "Scate.cpp"
                                               "ManageLevel.cpp"
+                                              "MyContactListener.cpp"
+                                              "CollisionHandler.cpp"
                                               )
