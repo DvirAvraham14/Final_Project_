@@ -27,3 +27,4 @@ public:
 
 	void groundOnJump(GameObject& Ground, GameObject& scate);
 	void groundOnJumpOP(GameObject& scate, GameObject& ground);
+

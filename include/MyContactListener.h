@@ -10,3 +10,5 @@ public:
 	~MyContactListener() {};
 	void BeginContact(b2Contact* contact);
 };
+
+

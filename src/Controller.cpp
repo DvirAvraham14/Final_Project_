@@ -18,13 +18,13 @@ void Controller::run() {
 	sf::Vector2f cursorPosF;
 	sf::View   View(m_window.getDefaultView());
 	auto delta = m_gameClock.restart();
-
 	DebugDraw d(m_window);
 	uint32 flags = b2Draw::e_shapeBit;
 	d.SetFlags(flags);
 	while (m_window.isOpen()) {
 		m_window.clear(sf::Color::White);
 		m_window.setView(View);
+		m_world->SetDebugDraw(&d);
 		sf::Event event;
 		cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 		while (m_window.pollEvent(event)) {
@@ -48,7 +48,7 @@ void Controller::run() {
 			m_menu.Draw(m_window);
 		}
 		if (m_screen->getScreen() == T_Screen::Game) {
-			View.setCenter(sf::Vector2f(m_vehicels[0]->getPos().x + 450.0f, m_vehicels[0]->getPos().y));
+			View.setCenter(sf::Vector2f(m_vehicels[0]->getPos().x + 450.0f, HEIGHT_WINDOW/2));
 			m_world->Step(timeStep, velocityIterations, positionIterations);
 			m_map.draw(m_window);
 			m_vehicels[0]->draw(m_window);
@@ -56,7 +56,7 @@ void Controller::run() {
 		if (m_nextLevel)
 			updateLevel();
 
-			m_world->SetDebugDraw(&d);
+		
 		m_window.display();
 	}
 }

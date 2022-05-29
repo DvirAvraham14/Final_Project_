@@ -17,6 +17,8 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground)
 	groundOnJump(ground, scate);
 }
 
+
+
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;

@@ -11,7 +11,7 @@ public:
 	sf::Vector2f getPos() { return m_sprite.getPosition(); }
 	void startContact() { m_contacting = true; }
 	void endContact() { m_contacting = false; }
-	
+
 protected:
 	std::shared_ptr<b2World> m_world;
 

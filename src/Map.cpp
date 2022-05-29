@@ -1,10 +1,5 @@
 #include "Map.h"
 
-//Map::Map(std::shared_ptr<b2World> world)
-//{
-//	m_world = world;
-//}
-
 
 void Map::addMaps(int index) {
 	openAndInsertData(m_textMapsPath[index-1]);
@@ -23,8 +18,8 @@ void Map::openAndInsertData(std::string map) {
 	m_road.setPointCount(points.size() + 2);
 	for (auto i = 0; i < points.size(); i++)
 		m_road.setPoint(i, sf::Vector2f(points[i].x, points[i].y));
-	m_road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, WIDTH_WINDOW));
-	m_road.setPoint(points.size() + 1, sf::Vector2f(points.begin()->x, WIDTH_WINDOW));
+	m_road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, INT32_MAX));
+	m_road.setPoint(points.size() + 1, sf::Vector2f(0	, INT32_MAX));
 	m_road.setFillColor(sf::Color::Black);
 
 	CreateGround();
@@ -56,7 +51,7 @@ void Map::CreateGround() {
 
 	// Define the ground box shape
 	//b2ChainShape groundBox;
-	auto size = m_road.getPointCount() - 2;
+	auto size = m_road.getPointCount();
 	b2Vec2* vs = new b2Vec2[size];
 	for (auto i = 0; i < size; i++)
 		vs[i].Set(m_road.getPoint(i).x / SCALAR, m_road.getPoint(i).y / SCALAR);

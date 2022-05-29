@@ -20,7 +20,7 @@ private:
 	};
 
 	std::vector<sf::Sprite> m_mapSprite;
-	sf::ConvexShape m_road;
+	sf::ConvexShape			m_road;
 	//std::shared_ptr<b2World> m_world;
 	//b2Body* m_body;
 };
