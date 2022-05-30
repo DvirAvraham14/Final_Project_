@@ -1,18 +1,19 @@
 #include "CollisionHandler.h"
 #include "Scate.h"
-#include "Map.h"
+#include "Ground.h"
 
 
 // primary collision-processing functions
-void groundOnJump(GameObject& Ground, GameObject& scate)
+void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch)
 {
-	scate.startContact();
+	if (feetToch)
+		scate.startContact();
 }
 
 // secondary collision-processing functions that just
 // implement symmetry: swap the parameters and call a
 // primary function
-void groundOnJumpOP(GameObject& scate, GameObject& ground)
+void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch)
 {
 	groundOnJump(ground, scate);
 }
@@ -22,8 +23,8 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground)
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;
-	phm[Key(typeid(Map  ), typeid(Scate))] = &groundOnJump;
-	phm[Key(typeid(Scate), typeid(Map  ))] = &groundOnJumpOP;
+	phm[Key(typeid(Ground), typeid(Scate))] = &groundOnJump;
+	phm[Key(typeid(Scate), typeid(Ground))] = &groundOnJumpOP;
 
 	return phm;
 }
@@ -45,12 +46,12 @@ CollisionHandler& CollisionHandler::instance()
 	return instance;
 }
 
-void CollisionHandler::processCollision(GameObject& object1, GameObject& object2)
+void CollisionHandler::processCollision(GameObject& object1, GameObject& object2, bool feetTouch)
 {
 	auto phf = lookup(typeid(object1), typeid(object2));
 	if (!phf)
 		throw "Unknown type";
-	phf(object1, object2);
+	phf(object1, object2, feetTouch);
 }
 
 

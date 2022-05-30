@@ -4,6 +4,8 @@ GameObject::GameObject(const sf::Texture &texture, std::shared_ptr<b2World> worl
 	:m_world(world) 
 {
 	m_sprite.setTexture(texture);
+	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2,
+					   m_sprite.getGlobalBounds().height / 2);
 	m_contacting = false;
 	CreateBody(pos);
 }
@@ -13,24 +15,41 @@ GameObject::GameObject(std::shared_ptr<b2World> world)
 {
 	m_contacting = false;
 }
-
+	
 void GameObject::CreateBody(sf::Vector2f pos) {
-	//b2BodyDef bodyDef;
+	b2BodyDef m_bodyDef;
 	m_bodyDef.type = b2_dynamicBody;
-	m_bodyDef.position.Set(pos.x / SCALAR, pos.y / SCALAR);
+	m_bodyDef.position.Set(pos.x , pos.y );
 	m_body = m_world->CreateBody(&m_bodyDef);
+	
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
+	dynamicBox.SetAsBox(m_sprite.getTexture()->getSize().x/2, 
+		m_sprite.getTexture()->getSize().y / 2);
 	b2FixtureDef fixtureDef;
+
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.01f;
-	fixtureDef.restitution = 0.05f;
-	b2MassData massa;
-	massa.mass = 10;
-	massa.center = m_body->GetLocalCenter();
-	m_body->SetMassData(&massa);
-	// Add the shape to the body
+	fixtureDef.density		=	 0.5f;
+	fixtureDef.friction		=	 0.1f;
+
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
+
+	setSensor(0, dynamicBox, fixtureDef,  1);
+	setMassa(5.0f);
 }
+
+void GameObject::setSensor(float posX, b2PolygonShape &poly, b2FixtureDef & fixtureDef, int id) {
+	poly.SetAsBox(5, 5, b2Vec2(posX, m_sprite.getOrigin().y), 0);
+	b2Fixture* m_footSensorFixture;
+	fixtureDef.isSensor = true;
+	m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
+	m_footSensorFixture->SetUserData((void*)id);
+}
+void GameObject::setMassa(float weight) {
+	b2MassData massa;
+	massa.mass		= weight;
+	massa.center	= b2Vec2(m_body->GetLocalCenter().x, m_body->GetLocalCenter().y);
+	massa.I			= m_sprite.getOrigin().y;
+	m_body->SetMassData(&massa);
+}
+

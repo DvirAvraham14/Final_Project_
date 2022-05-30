@@ -4,7 +4,7 @@ class ManageLevel
 {
 public:
 	ManageLevel()=default;
-	void manageAction(std::vector<std::shared_ptr<MovingObject>> vehicles,sf::Clock &clock);
+	void manageAction(std::vector<std::shared_ptr<MovingObject>> vehicles, sf::Event event);
 private:
 
 };

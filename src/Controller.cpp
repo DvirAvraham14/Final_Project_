@@ -2,29 +2,29 @@
 #include "DebugDraw.h"
 
 Controller::Controller()
-	:m_screen(std::make_shared<Screen>()), m_menu(m_screen), m_map(m_world)
+	:m_screen(std::make_shared<Screen>()), m_menu(m_screen)
 {
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel),
 		"Death Race",
 		sf::Style::Titlebar | sf::Style::Close);
-	m_window.setFramerateLimit(60);
+
 	m_world->SetContactListener(&myContact);
-	createVehicels();
+	updateLevel();
+	createObj();
 }
 
 //__________________________________
 void Controller::run() {
 	sf::Vector2f cursorPosF;
 	sf::View   View(m_window.getDefaultView());
-	auto delta = m_gameClock.restart();
+	//auto delta = m_gameClock.restart();
 	DebugDraw d(m_window);
-	uint32 flags = b2Draw::e_shapeBit;
-	d.SetFlags(flags);
+	d.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
+	m_world->SetDebugDraw(&d);
 	while (m_window.isOpen()) {
 		m_window.clear(sf::Color::White);
 		m_window.setView(View);
-		m_world->SetDebugDraw(&d);
 		sf::Event event;
 		cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 		while (m_window.pollEvent(event)) {
@@ -34,13 +34,13 @@ void Controller::run() {
 			default:
 				throw std::invalid_argument("Unknown enum entery used!");
 				break;
-			case T_Screen::Menu:			whilePlaying(event, cursorPosF);	break;
-			case T_Screen::Game:			whilePlaying(event, cursorPosF);	break;
+			case T_Screen::Menu:			whilePlaying(event, cursorPosF);		break;
+			case T_Screen::Game:			/*whilePlaying(event, cursorPosF);*/	break;
 			}
 			if (event.type == sf::Event::Closed)
 				m_window.close();
 			if (event.type == sf::Event::KeyPressed && m_screen->getScreen() == T_Screen::Game) {
-				m_manageLevel.manageAction(m_vehicels, m_gameClock);
+				m_manageLevel.manageAction(m_vehicels, event);
 			}
 		}
 
@@ -48,14 +48,16 @@ void Controller::run() {
 			m_menu.Draw(m_window);
 		}
 		if (m_screen->getScreen() == T_Screen::Game) {
-			View.setCenter(sf::Vector2f(m_vehicels[0]->getPos().x + 450.0f, HEIGHT_WINDOW/2));
+			if(static_cast<Ground*>( m_objects[0].get() )->getEndPoint() - m_vehicels[0]->getPos().x > WIDTH_WINDOW )
+				View.setCenter(sf::Vector2f(m_vehicels[0]->getPos().x + 350.0f, HEIGHT_WINDOW/2));
 			m_world->Step(timeStep, velocityIterations, positionIterations);
-			m_map.draw(m_window);
+			m_objects[0]->draw(m_window);
+			m_vehicels[0]->update();
 			m_vehicels[0]->draw(m_window);
+			m_world->DebugDraw();
 		}
-		if (m_nextLevel)
-			updateLevel();
-
+		/*if (m_nextLevel)
+			updateLevel();*/
 		
 		m_window.display();
 	}
@@ -64,14 +66,17 @@ void Controller::run() {
 
 void Controller::updateLevel() {
 
-	m_map.addMaps(m_level);
-	m_nextLevel = false;
-	m_level++;
+	m_map.createMap(m_level);
+	//m_nextLevel = false;
+	//m_level++;
 }
 
 
-void Controller::createVehicels() {
-	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE), m_world, sf::Vector2f(100, 630)));
+void Controller::createObj() {
+
+	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(),m_world));
+
+	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE), m_world, sf::Vector2f(200, 450)));
 }
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Menu.h"
 #include "Scate.h"
+#include "Ground.h"
 #include "Map.h"
 #include "MangeLevel.h"
 #include "MyContactListener.h"
@@ -21,11 +22,12 @@ private:
 	MyContactListener myContact;
 	void updateLevel();
 	void whilePlaying(sf::Event, sf::Vector2f );
-	void createVehicels();
+	void createObj();
 	bool m_nextLevel = true;
 	Menu m_menu;
 	Map m_map;
 	std::vector<std::shared_ptr<MovingObject>> m_vehicels;
+	std::vector<std::shared_ptr<GameObject>> m_objects;
 	ManageLevel m_manageLevel;
 
 

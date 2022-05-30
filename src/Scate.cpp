@@ -1,28 +1,31 @@
 #include"Scate.h"
 
 
+float Scate::physicalMove(float vel, float desiredVel) {
+	float velChange = desiredVel - vel;
+	return m_body->GetMass() * velChange; //disregard time factor
+}
+
 void Scate::drive() {
-	b2Vec2 vel = m_body->GetLinearVelocity();
-	float desiredVel = 5;
-	float velChange = desiredVel - vel.x;
-	float force = m_body->GetMass() * velChange / (1 / 60.0); //disregard time factor
-	m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
+
+	if (m_contacting) {
+		float impulse = physicalMove(m_body->GetLinearVelocity().x, 40);
+		m_body->ApplyLinearImpulse(b2Vec2(impulse, 0), m_body->GetWorldCenter(), true);
+	}
 }
 
 void Scate::jump() {
+
 	if (m_contacting) {
-		m_body->ApplyLinearImpulse(b2Vec2(0, -15), m_body->GetWorldCenter(), true);
+		b2Vec2 vel = m_body->GetLinearVelocity();
+		float impulse = physicalMove(vel.y, 50);
+		m_body->ApplyLinearImpulse(b2Vec2(vel.x, -impulse), m_body->GetWorldCenter(), true);
 		m_contacting = false;
 	}
 }
 
 
-void Scate::draw(sf::RenderWindow& target)  {
-	b2Vec2 position = m_body->GetPosition();
-	position *= SCALAR;
-	float angle = 180 / b2_pi * m_body->GetAngle();
-	m_sprite.setPosition(position.x, position.y);
-	m_sprite.setRotation(angle);
+void Scate::draw(sf::RenderWindow& target) const {
 	target.draw(m_sprite);
 }
 

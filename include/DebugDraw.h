@@ -4,7 +4,7 @@
 
 
 // 1 meter (box2d) is more or less 64 pixels (sfml)
-#define RATIO 30.0f
+#define RATIO 100.F
 #define PIXELS_PER_METER RATIO
 
 // 64 pixels (sfml) are more or less 1 meter (box2d)
@@ -54,7 +54,7 @@ public:
 			//polygon.AddPoint(vertex.x * RATIO, vertex.y * RATIO, this->B2SFColor(color, 50), this->B2SFColor(color));
 		}
 		polygon.setFillColor(sf::Color{ 111,12,184, 127 });
-		polygon.setOutlineThickness(0.5f);
+		polygon.setOutlineThickness(1.f);
 		//polygon.setOutlineColor(sf::Color{ 111, 12, 184 });
 		this->window->draw(polygon);
 	};

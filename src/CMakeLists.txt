@@ -14,4 +14,5 @@
                                               "ManageLevel.cpp"
                                               "MyContactListener.cpp"
                                               "CollisionHandler.cpp"
+                                              "Ground.cpp"
                                               )
