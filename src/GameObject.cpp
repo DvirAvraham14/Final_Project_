@@ -29,13 +29,13 @@ void GameObject::CreateBody(sf::Vector2f pos) {
 
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density		=	 0.5f;
-	fixtureDef.friction		=	 0.1f;
+	fixtureDef.friction		=	 0.01f;
 
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
 
 	setSensor(0, dynamicBox, fixtureDef,  1);
-	setMassa(5.0f);
+	setMassa(10.0f);
 }
 
 void GameObject::setSensor(float posX, b2PolygonShape &poly, b2FixtureDef & fixtureDef, int id) {

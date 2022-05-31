@@ -1,11 +1,11 @@
 #pragma once
-#include "Resources.h"
 #include <SFML\Audio.hpp>
+#include "box2d/box2d.h"
+#include "Resources.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "box2d/box2d.h"
 
 const int WIDTH_WINDOW = 1024;
 const int HEIGHT_WINDOW = 768;
