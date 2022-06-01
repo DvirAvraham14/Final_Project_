@@ -15,4 +15,6 @@
                                               "MyContactListener.cpp"
                                               "CollisionHandler.cpp"
                                               "Ground.cpp"
+                                              "Obstacles.cpp"
+                                              "StaticObject.cpp"
                                               )

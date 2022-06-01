@@ -9,7 +9,7 @@ Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<void(void)> 
 	m_sprite.setTexture(Resources::instance().getTexture(sprite));
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
 	m_sprite.setPosition(m_position);
-	m_sound.setBuffer(Resources::instance().getSound());
+	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUND::CLICK));
 }
 
 Btn::Btn(sf::Vector2f pos, Resources::TEXTURE sprite, std::function<void(void)> func)
@@ -32,7 +32,6 @@ void Btn::hover(const sf::Vector2f cursur) {
 //__________________________________
 void Btn::Press(const sf::Vector2f cursur) {
 	if (m_func && this->m_sprite.getGlobalBounds().contains(cursur)) {
-		//
 		m_sound.play();
 		m_func();
 	}
