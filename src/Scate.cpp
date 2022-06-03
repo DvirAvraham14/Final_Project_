@@ -14,17 +14,13 @@ void Scate::drive(int speed) {
 	}
 }
 
-void Scate::jump() {
+void Scate::jump(int height) {
 
 	if (m_contacting) {
+		m_animation.direction((m_dir = Direction::Filp));
 		b2Vec2 vel = m_body->GetLinearVelocity();
-		float force = physicalMove(vel.y, 40);
-		m_body->ApplyForce(b2Vec2(vel.x, -force), m_body->GetWorldCenter(), true);
+		float force = physicalMove(vel.y, height);
+		m_body->ApplyForce(b2Vec2(0, -force), m_body->GetWorldCenter(), true);
 		endContact();
 	}
 }
-
-//
-//void Scate::draw(sf::RenderWindow& target) const {
-//	target.draw(m_sprite);
-//}

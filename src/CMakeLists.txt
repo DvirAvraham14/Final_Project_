@@ -17,4 +17,7 @@
                                               "Ground.cpp"
                                               "Obstacles.cpp"
                                               "StaticObject.cpp"
+                                              "EndFlag.cpp"
+                                              "Enemy.cpp"
+                                              "Monster.cpp"
                                               )

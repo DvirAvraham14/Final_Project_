@@ -2,6 +2,8 @@
 #include "Scate.h"
 #include "Ground.h"
 #include "Railing.h"
+#include "Spikes.h"
+#include "EndFlag.h"
 
 
 // primary collision-processing functions
@@ -44,16 +46,44 @@ void oppsiteRailing(GameObject& railing, GameObject& scate, bool feetToch, bool 
 	scateRailing(railing, scate, feetToch, endTouch);
 }
 
+void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endTouch)
+{
+	auto obj = static_cast<Scate*>(&scate);
+	obj->startContact();
+	spikes.play();
+	obj->jump(20);
+}
+
+
+void oppsiteSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bool endTouch)
+{
+	scateSpikes(spikes, scate, feetToch, endTouch);
+}
+
+
+void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
+{
+	endFlag.play();
+}
+
+
+void oppsiteEndFlag(GameObject& endFlag, GameObject& scate, bool feetToch, bool endTouch)
+{
+	scateEndFlag(endFlag, scate, feetToch, endTouch);
+}
+
 
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;
 	phm[Key(typeid(Ground), typeid(Scate))] = &groundOnJump;
 	phm[Key(typeid(Scate), typeid(Ground))] = &groundOnJumpOP;
-
 	phm[Key(typeid(Scate), typeid(Railing))] = &scateRailing;
 	phm[Key(typeid(Railing), typeid(Scate))] = &oppsiteRailing;
-
+	phm[Key(typeid(Scate), typeid(Spikes))] = &scateSpikes;
+	phm[Key(typeid(Spikes), typeid(Scate))] = &oppsiteSpikes;
+	phm[Key(typeid(Scate), typeid(EndFlag))] = &scateEndFlag;
+	phm[Key(typeid(EndFlag), typeid(Scate))] = &oppsiteEndFlag;
 	return phm;
 }
 

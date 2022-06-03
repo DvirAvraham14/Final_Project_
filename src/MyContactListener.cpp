@@ -15,6 +15,7 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 	CollisionHandler::instance().processCollision(*objA, *objB,
 		((int)bodtTagA == 1 || (int)bodtTagB == 1) ? true : false);
 }
+
 void MyContactListener::EndContact(b2Contact* contact) {
 
 	void* bodyUserDataA = contact->GetFixtureA()->GetBody()->GetUserData();

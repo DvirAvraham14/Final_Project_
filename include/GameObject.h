@@ -6,15 +6,20 @@ class GameObject
 public:
 	GameObject() =default;
 	GameObject(std::shared_ptr<b2World> world);
-	GameObject(const sf::Texture &texture, std::shared_ptr<b2World>,sf::Vector2f pos);
+	/*GameObject(const sf::Texture &texture, std::shared_ptr<b2World>,sf::Vector2f pos);*/
+	GameObject(Resources::TEXTURE, std::shared_ptr<b2World>,sf::Vector2f pos);
 	virtual ~GameObject() = default;
 	virtual void draw(sf::RenderWindow& target) const;
-	sf::Vector2f getPos() const{ return m_sprite.getPosition(); }
+
 	void startContact() { m_contacting = true; }
 	void endContact() { m_contacting = false; }
+
+	sf::Vector2f getPos() const{ return m_sprite.getPosition(); }
+	bool getContacting()const { return m_contacting; }
+
 	void play() {if(m_sound.getStatus()!=sf::Sound::Playing) m_sound.play(); }
 	void stopPlay() {m_sound.stop(); }
-	bool getContacting()const { return m_contacting; }
+
 protected:
 	std::shared_ptr<b2World> m_world;
 	sf::Sprite				 m_sprite;

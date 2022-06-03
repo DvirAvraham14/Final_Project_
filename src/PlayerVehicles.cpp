@@ -1,10 +1,13 @@
 #include"PlayerVehicles.h"
 
-PlayerVehicles::PlayerVehicles(const sf::Texture& texture, std::shared_ptr<b2World> world, sf::Vector2f pos)
-	:MovingObject(texture,world, pos)
+PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
+	std::shared_ptr<b2World> world,
+	sf::Vector2f pos,
+	Resources::Players aniData)
+	:MovingObject(texture,world, pos,aniData)
 {
 	CreateBody(pos);
-	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUND::LANDING));
+	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::LANDING));
 }
 
 void PlayerVehicles::CreateBody(sf::Vector2f pos) {
@@ -15,12 +18,11 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(m_sprite.getTexture()->getSize().x / 2,
-		m_sprite.getTexture()->getSize().y / 2);
+	dynamicBox.SetAsBox(40, 40);
 	b2FixtureDef fixtureDef;
 
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 0.5f;
+	fixtureDef.shape	= &dynamicBox;
+	fixtureDef.density	= 0.5f;
 	fixtureDef.friction = 0.01f;
 
 	m_body->CreateFixture(&fixtureDef);
@@ -31,12 +33,13 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 }
 
 void PlayerVehicles::setSensor(float posX, b2PolygonShape& poly, b2FixtureDef& fixtureDef, int id) {
-	poly.SetAsBox(5, 5, b2Vec2(posX, m_sprite.getOrigin().y), 0);
+	poly.SetAsBox(5, 5, b2Vec2(posX, 40), 0);
 	b2Fixture* m_footSensorFixture;
 	fixtureDef.isSensor = true;
 	m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
 	m_footSensorFixture->SetUserData((void*)id);
 }
+
 void PlayerVehicles::setMassa(float weight) {
 	b2MassData massa;
 	massa.mass = weight;

@@ -4,7 +4,7 @@ class StaticObject :public GameObject
 {
 public:
 	using GameObject::GameObject;
-	StaticObject(const sf::Texture& texture, std::shared_ptr<b2World> world, sf::Vector2f pos);
+	StaticObject(Resources::TEXTURE, std::shared_ptr<b2World> world, sf::Vector2f pos);
 	//	StaticObject()=default;
 	//virtual void draw(sf::RenderWindow& target) const ;
 

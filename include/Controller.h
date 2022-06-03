@@ -3,7 +3,9 @@
 #include "Scate.h"
 #include "Railing.h"
 #include "Spikes.h"
+#include "Monster.h"
 #include "Ground.h"
+#include "EndFlag.h"
 #include "Map.h"
 #include "MangeLevel.h"
 #include "MyContactListener.h"
@@ -12,6 +14,7 @@
 
 class Controller {
 public:
+	using res = Resources;
 	Controller();
 	void run();
 
@@ -22,7 +25,7 @@ private:
 	int							m_level = 1;
 	std::shared_ptr<Screen>		m_screen;
 	sf::View m_view;
-	std::shared_ptr<b2World>	m_world = std::make_unique<b2World>(b2Vec2(0.0f, 9.8f));
+	std::shared_ptr<b2World> m_world = std::make_unique<b2World>(b2Vec2(0.0f, 9.8f));
 	MyContactListener myContact;
 	void updateLevel();
 	void updateGameMoves();
@@ -32,8 +35,9 @@ private:
 	bool m_nextLevel = true;
 	Menu m_menu;
 	Map m_map;
-	std::vector<std::shared_ptr<MovingObject>> m_vehicels;
-	std::vector<std::shared_ptr<GameObject>> m_objects;
+	std::vector<std::shared_ptr<MovingObject>>	m_vehicels;
+	std::vector<std::shared_ptr<MovingObject>>	m_enemies;
+	std::vector<std::shared_ptr<GameObject>>	m_objects;
 	ManageLevel m_manageLevel;
 
 

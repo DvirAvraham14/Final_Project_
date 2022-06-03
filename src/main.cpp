@@ -1,15 +1,13 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <SFML\Graphics.hpp>
 #include "Controller.h"
 
-int main()
+int main() try
 {
 	Controller game;
 	game.run();
 
 	return EXIT_SUCCESS;
 }
-
+catch (std::exception& e) {
+	std::cout << e.what();
+}

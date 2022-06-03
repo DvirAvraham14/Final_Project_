@@ -3,13 +3,47 @@
 #include <SFML\Audio.hpp>
 #include "AnimationData.h"
 
-const int NUM_OF_TEXTURE = 10;
-const int NUM_OF_SOUND = 3;
-
-
 class Resources {
+public:
+	static Resources& instance();
+
+	enum Players {
+		Spike,
+		Enemy,
+		MaxPlayer,
+	};
+
+	enum TEXTURE {
+		BG = 0,
+		PLAY,
+		HELP,
+		MUTE,
+		SOUND,
+		LOGO,
+		SCATE,
+		RAILING,
+		SPIKES,
+		SpikeTexture,
+		Monster,
+		Flag,
+		MAP1,
+		MaxTexture,
+	};
+
+	enum  SOUNDS {
+		CLICK,
+		SLIDE,
+		LANDING,
+		Winning,
+		MaxSounds,
+	};
+
+	const sf::Font& getFont();
+	const sf::SoundBuffer& getSound(SOUNDS );
+	const sf::Texture& getTexture(TEXTURE, bool = false);
+	const AnimationData& getData(Players);
 private:
-	std::string				m_textPath[NUM_OF_TEXTURE] = {
+	std::string				m_textPath[MaxTexture] = {
 						"GameBackround.png",
 						"play.png",
 						"help.png",
@@ -19,20 +53,25 @@ private:
 						"tempScateSprite.png",
 						"railing.png",
 						"spikes.png",
-						"map1.jpg",
-						
+						"Charchater1.png",
+						"tempMonster.png",
+						"Flag.png",
+						"map1.jpg",				
 	};	
-	std::string				m_soundsPath[NUM_OF_SOUND] = {
+
+	std::string				m_soundsPath[MaxSounds] = {
 							"coll.wav",
 							"slide.wav",
 							"landing.wav",
+							"winning.wav",
 						
 	};
+
 	std::vector<sf::Texture>		m_textures;
 	std::vector<sf::SoundBuffer>	m_sounds;
-
+	std::vector<AnimationData>		m_animaData;
 	sf::Font						m_font;
-	AnimationData					m_data;
+
 
 	Resources();
 	Resources(const Resources&) = delete;
@@ -40,34 +79,6 @@ private:
 
 	void loadTextur();
 	void loadSounds();
-
-public:
-	static Resources& instance();
-
-	enum class TEXTURE {
-		BG  = 0,
-		PLAY ,
-		HELP ,
-		MUTE,
-		SOUND,
-		LOGO,
-		SCATE,
-		RAILING,
-		SPIKES,
-		MAP1,
-	};
-
-	enum class SOUND {
-		CLICK,
-		SLIDE,
-		LANDING,
-	};
-
-	const sf::Font& getFont();
-	const sf::SoundBuffer& getSound(Resources::SOUND sound);
-	const sf::Texture& getTexture(Resources::TEXTURE, bool repated = false);
-	const AnimationData& animationData( ) { return m_data; }
-
-
+	void loadAnimaData();
 
 };

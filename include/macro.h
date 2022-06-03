@@ -16,10 +16,10 @@ enum class T_Screen
 	Game,
 };
 
-//const float SCALAR = 100;
 const float timeStep = 1.0f / 60.0f;
 const int32 velocityIterations = 8;
 const int32 positionIterations = 3;
+
 namespace map { 
 				const char DOT = 'd';
 				const char OBSTACLE = 'o';

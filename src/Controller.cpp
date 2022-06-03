@@ -17,10 +17,12 @@ Controller::Controller()
 void Controller::run() {
 	sf::Vector2f cursorPosF;
 	
-	//auto delta = m_gameClock.restart();
+	// debug draw
 	DebugDraw d(m_window);
 	d.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 	m_world->SetDebugDraw(&d);
+	//end de
+
 	while (m_window.isOpen()) {
 		m_window.clear(sf::Color::White);
 		m_window.setView(m_view);
@@ -30,11 +32,16 @@ void Controller::run() {
 
 			switch (m_screen->getScreen())
 			{
-			//default:
-			//	throw std::invalid_argument("Unknown enum entery used!");
-			//	break;
+			default:
+				//throw std::invalid_argument("Unknown enum entery used!");
+				break;
 			case T_Screen::Menu:			m_menu.handleMouse(event, cursorPosF);		break;
-		//	case T_Screen::Game:			whilePlaying(event);						break;
+			case T_Screen::Game:
+			{
+				if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
+					static_cast<MovingObject*>(m_vehicels[0].get())->changeAni();
+				break;
+			}
 			}
 			if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				m_window.close();
@@ -45,11 +52,6 @@ void Controller::run() {
 		draw();
 		m_window.display();
 
-		//if (m_screen->getScreen() == T_Screen::Menu) {
-		//	m_menu.Draw(m_window);
-		//}
-		/*if (m_nextLevel)
-			updateLevel();*/
 	}
 }
 
@@ -57,40 +59,38 @@ void Controller::run() {
 void Controller::updateLevel() {
 
 	m_map.createMap(m_level);
-	//m_nextLevel = false;
-	//m_level++;
 }
+
 
 
 void Controller::createObj() {
 
-	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(),m_world));
-	m_vehicels.push_back(std::make_shared<Scate>(Resources::instance().getTexture(Resources::TEXTURE::SCATE), m_world, sf::Vector2f(200, 500)));
+	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(), m_world));
+	m_vehicels.push_back(std::make_shared<Scate>(res::TEXTURE::SpikeTexture, m_world, sf::Vector2f(200, 500), res::Players::Spike));
 
 	std::vector<sf::Vector3f> obstacles = m_map.getObstacels();
 	for (auto& obstacle : obstacles) {
-		switch (int(obstacle.x)){
-			case 1:
-				m_objects.push_back(std::make_shared<Railing>(Resources::instance().getTexture(Resources::TEXTURE::RAILING), 
-					m_world, sf::Vector2f(obstacle.y, obstacle.z)));
+		switch (int(obstacle.x)) {
+		case 1:
+			m_objects.push_back(std::make_shared<Railing>(res::TEXTURE::RAILING, m_world, sf::Vector2f(obstacle.y, obstacle.z)));
 			break;
-			case 2:
-				m_objects.push_back(std::make_shared<Spikes>(Resources::instance().getTexture(Resources::TEXTURE::SPIKES),
-					m_world, sf::Vector2f(obstacle.y, obstacle.z)));
-				std::cout << obstacle.y << obstacle.z;
+		case 2:
+			m_objects.push_back(std::make_shared<Spikes>(res::TEXTURE::SPIKES,
+				m_world, sf::Vector2f(obstacle.y, obstacle.z)));
 			break;
+		case 3:
+			m_objects.push_back(std::make_shared<EndFlag>(res::TEXTURE::Flag,
+				m_world, sf::Vector2f(obstacle.y, obstacle.z)));
+			break;
+		case 4:
+			m_enemies.push_back(std::make_shared<Monster>(Resources::TEXTURE::Monster,
+				m_world, sf::Vector2f(obstacle.y, obstacle.z),
+				Resources::Players::Enemy));
+			break;
+
 		}
 	}
 }
-
-
-
-//void Controller::whilePlaying(sf::Event event) {
-//	if (event.type == sf::Event::KeyPressed && m_screen->getScreen() == T_Screen::Game) {
-//		m_manageLevel.manageAction(m_vehicels, event);
-//	}
-//}
-
 
 void Controller::draw() {
 	if(m_screen->getScreen() == T_Screen::Menu)
@@ -100,6 +100,7 @@ void Controller::draw() {
 		for (auto& obj : m_objects)
 			obj->draw(m_window);
 		m_vehicels[0]->draw(m_window);
+		m_enemies[0]->draw(m_window);
 		m_world->DebugDraw();
 	}
 }
@@ -110,6 +111,8 @@ void Controller::updateGameMoves() {
 		m_view.setCenter(sf::Vector2f(m_vehicels[0]->getPos().x + 350.0f, HEIGHT_WINDOW / 2));
 
 	m_world->Step(timeStep, velocityIterations, positionIterations);
-	m_vehicels[0]->update();
+	const auto delta = m_gameClock.restart();
+	m_vehicels[0]->update(delta);
+	m_enemies[0]->drive(7);
 }
 
