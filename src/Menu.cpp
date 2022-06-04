@@ -1,49 +1,24 @@
 #include "Menu.h"
 
-Menu::Menu(std::shared_ptr<Screen> ptr)
+Menu::Menu()
+	:Screen(Resources::TEXTURE::BG, T_Screen::MENU)
 {
-	//bg
-	m_bg.setTexture(Resources::instance().getTexture(Resources::TEXTURE::BG));
-	m_bg.setTextureRect(sf::IntRect(0, 0, WIDTH_WINDOW, HEIGHT_WINDOW));
-	//left menu reac background
-	m_menuBack = sf::RectangleShape({ 80,168 });
-	m_menuBack.setPosition(30, 30);
-	m_menuBack.setFillColor(sf::Color(0xe2bb23a0));
+	createButtons();
 	//logo
 	m_logo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::LOGO));
 	m_logo.setOrigin(m_logo.getGlobalBounds().width / 2, m_logo.getGlobalBounds().height / 2);
-	m_logo.setPosition(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.5f);
-	createBottons();
-	m_screen = ptr;
+	m_logo.setPosition(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.17f);
+	
 }
 
-void Menu::createBottons() {
-	auto currentStart = sf::Vector2f(m_menuBack.getGlobalBounds().left + 40, m_menuBack.getGlobalBounds().top + 45);
-	const auto middleSpace = sf::Vector2f(0, 84);
+void Menu::createButtons() {
 
-	auto nextStart = [&]()
-	{
-		currentStart += middleSpace;
-		return currentStart;
-	};
+	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.4f, Resources::TEXTURE::PLAY,
+		[&]()->T_Screen{return SELECT_LEVEL; }));
 
-	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 2.f + HEIGHT_WINDOW / 7.f, Resources::TEXTURE::PLAY,
-		[&]() {m_screen->setScreen(T_Screen::Game); }));
-
-	m_buttons.push_back(Btn(currentStart, Resources::TEXTURE::HELP, []() {}));
-	m_buttons.push_back(Btn(nextStart(), Resources::TEXTURE::SOUND, [&]()
-		{ this->mute(m_buttons.capacity() - 1); }));
-}
-
-
-void Menu::handleMouse(sf::Event event, const sf::Vector2f cursorPos)
-{
-	for (auto& btn : m_buttons) {
-		if (event.type == sf::Event::MouseMoved)
-			btn.hover(cursorPos);
-		else if (event.type == sf::Event::MouseButtonReleased)
-			btn.Press(cursorPos);
-	}
+	m_buttons.push_back(Btn(WIDTH_WINDOW / 17, HEIGHT_WINDOW / 10, Resources::TEXTURE::HELP,[]()->T_Screen {return MENU; }));
+	m_buttons.push_back(Btn(WIDTH_WINDOW / 17, HEIGHT_WINDOW / 4, Resources::TEXTURE::SOUND, [&]()->T_Screen
+		{ this->mute(m_buttons.capacity() - 1); return MENU; }));
 }
 
 void Menu::mute(int index) {
@@ -59,11 +34,7 @@ void Menu::mute(int index) {
 	}
 }
 
-
-void Menu::Draw(sf::RenderWindow& target) const {
-	target.draw(m_bg);
-	target.draw(m_menuBack);
+void Menu::draw(sf::RenderWindow& target) const {
+	Draw(target);
 	target.draw(m_logo);
-	for (auto& btn : m_buttons)
-		btn.draw(target);
 }

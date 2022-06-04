@@ -6,7 +6,7 @@
 class Resources {
 public:
 	static Resources& instance();
-
+	
 	enum Players {
 		Spike,
 		Enemy,
@@ -20,13 +20,26 @@ public:
 		MUTE,
 		SOUND,
 		LOGO,
-		SCATE,
+		ROAD,
+		MAP_ROAD,
+		LOCK,
+		SELECTION,
+		ARROW,
+		SELECT,
+		NAMES,
+		BACK,
+		CITY_NIGHT,
+		SNOWY_CITY,
+		CITY,
+		BEACH,
+		AREAS,
+		SELECT_A,
 		RAILING,
 		SPIKES,
 		SpikeTexture,
 		Monster,
 		Flag,
-		MAP1,
+		Truck,
 		MaxTexture,
 	};
 
@@ -35,6 +48,8 @@ public:
 		SLIDE,
 		LANDING,
 		Winning,
+		KnifeStab,
+		Crash,
 		MaxSounds,
 	};
 
@@ -44,19 +59,33 @@ public:
 	const AnimationData& getData(Players);
 private:
 	std::string				m_textPath[MaxTexture] = {
-						"GameBackround.png",
+						"background.png",
 						"play.png",
 						"help.png",
 						"mute.png",
 						"sound.png",
 						"logo.png",
-						"tempScateSprite.png",
+						"road.png",
+						"roadMap.png",
+						"lock.png",
+						"selectionV.png",
+						"arrow-left.png",
+						"selectB.png",
+						"players.png",
+						"back.png",
+						"CityNight.png",
+						"SnowyCity.png",
+						"City.png",
+						"Beach.png",
+						"areas.png",
+						"selectArea.png",
 						"railing.png",
 						"spikes.png",
 						"Charchater1.png",
 						"tempMonster.png",
 						"Flag.png",
-						"map1.jpg",				
+						"truck.png",
+										
 	};	
 
 	std::string				m_soundsPath[MaxSounds] = {
@@ -64,6 +93,8 @@ private:
 							"slide.wav",
 							"landing.wav",
 							"winning.wav",
+							"KnifeStab.wav",
+							"crash.wav",
 						
 	};
 

@@ -3,7 +3,6 @@
 
 void Map::createMap(int index) {
 	m_obstacles.clear();
-	//m_road.
 	std::string path = "map" + std::to_string(index) + ".txt";
 	vector<sf::Vector2f> points;
 	points = readCord(path);

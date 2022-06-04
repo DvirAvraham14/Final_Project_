@@ -2,11 +2,14 @@
 
 GameObject::GameObject(Resources::TEXTURE textue,
 					   std::shared_ptr<b2World> world,
-					   sf::Vector2f pos)
+					   sf::Vector2f pos,
+					   Resources::SOUNDS sound)
 	:m_world(world),
 	m_sprite(Resources::instance().getTexture(textue)),
 	m_contacting(false)
-{}
+{
+	m_sound.setBuffer(Resources::instance().getSound(sound));
+}
 
 GameObject::GameObject(std::shared_ptr<b2World> world)
 	:m_world(world),

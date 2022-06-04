@@ -3,7 +3,9 @@
 #include "Ground.h"
 #include "Railing.h"
 #include "Spikes.h"
+#include"Truck.h"
 #include "EndFlag.h"
+#include "Monster.h"
 
 
 // primary collision-processing functions
@@ -28,12 +30,12 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch, bool e
 
 void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool endTouch)
 {
-	auto s = static_cast<Scate*>(&scate);
+	auto scateTouchRailing = static_cast<Scate*>(&scate);
 	if (feetToch)
 		railing.play();
-	else
-		s->drive(-20);
-
+	else 
+		scateTouchRailing->drive(-20);
+	
 	if (endTouch) 
 		railing.stopPlay();
 }
@@ -41,7 +43,7 @@ void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool en
 // secondary collision-processing functions that just
 // implement symmetry: swap the parameters and call a
 // primary function
-void oppsiteRailing(GameObject& railing, GameObject& scate, bool feetToch, bool endTouch)
+void oppsiteScateRailing(GameObject& railing, GameObject& scate, bool feetToch, bool endTouch)
 {
 	scateRailing(railing, scate, feetToch, endTouch);
 }
@@ -55,7 +57,7 @@ void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endT
 }
 
 
-void oppsiteSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bool endTouch)
+void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bool endTouch)
 {
 	scateSpikes(spikes, scate, feetToch, endTouch);
 }
@@ -64,6 +66,7 @@ void oppsiteSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bool en
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
 	endFlag.play();
+	endFlag.stopBody();
 }
 
 
@@ -73,17 +76,72 @@ void oppsiteEndFlag(GameObject& endFlag, GameObject& scate, bool feetToch, bool 
 }
 
 
+void scateMonster(GameObject& scate, GameObject& monster, bool feetToch, bool endTouch)
+{
+	monster.play();
+}
+
+
+void oppsiteScateMonster(GameObject& monster, GameObject& scate, bool feetToch, bool endTouch)
+{
+	scateMonster(monster, scate, feetToch, endTouch);
+}
+
+void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTouch)
+{
+	truck.play();
+	std::cout << "LOST";
+}
+
+
+void oppsiteScateTruck(GameObject& monster, GameObject& truck, bool feetToch, bool endTouch)
+{
+	scateTruck(monster, truck, feetToch, endTouch);
+}
+
+
+
+
+void truckRailing(GameObject& truck, GameObject& railing, bool feetToch, bool endTouch) {
+	railing.undoCollision();
+}
+void oppsiteTruckRailing(GameObject& railing, GameObject& truck, bool feetToch, bool endTouch)
+{
+	truckRailing(railing, truck, feetToch, endTouch);
+}
+
+void truckMonster(GameObject& truck, GameObject& monster, bool feetToch, bool endTouch)
+{
+	monster.undoCollision();
+}
+
+void oppsiteTruckMonster(GameObject& monster, GameObject& truck, bool feetToch, bool endTouch)
+{
+	truckMonster(monster, truck, feetToch, endTouch);
+}
+
+
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;
 	phm[Key(typeid(Ground), typeid(Scate))] = &groundOnJump;
 	phm[Key(typeid(Scate), typeid(Ground))] = &groundOnJumpOP;
 	phm[Key(typeid(Scate), typeid(Railing))] = &scateRailing;
-	phm[Key(typeid(Railing), typeid(Scate))] = &oppsiteRailing;
+	phm[Key(typeid(Railing), typeid(Scate))] = &oppsiteScateRailing;
 	phm[Key(typeid(Scate), typeid(Spikes))] = &scateSpikes;
-	phm[Key(typeid(Spikes), typeid(Scate))] = &oppsiteSpikes;
+	phm[Key(typeid(Spikes), typeid(Scate))] = &oppsiteScateSpikes;
+	phm[Key(typeid(Scate), typeid(Monster))] = &scateMonster;
+	phm[Key(typeid(Monster), typeid(Scate))] = &oppsiteScateMonster;
 	phm[Key(typeid(Scate), typeid(EndFlag))] = &scateEndFlag;
 	phm[Key(typeid(EndFlag), typeid(Scate))] = &oppsiteEndFlag;
+
+	phm[Key(typeid(Scate), typeid(Truck))] = &scateTruck;
+	phm[Key(typeid(Truck), typeid(Scate))] = &oppsiteScateTruck;
+
+	phm[Key(typeid(Truck), typeid(Railing))] = &truckRailing;
+	phm[Key(typeid(Railing), typeid(Truck))] = &oppsiteTruckRailing;
+	phm[Key(typeid(Truck), typeid(Monster))] = &truckMonster;
+	phm[Key(typeid(Monster), typeid(Truck))] = &oppsiteTruckMonster;
 	return phm;
 }
 

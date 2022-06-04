@@ -28,5 +28,13 @@ public:
 	void groundOnJump(GameObject& Ground, GameObject& scate, bool = false, bool = false);
 	void groundOnJumpOP(GameObject& scate, GameObject& ground, bool = false, bool = false);
 	void scateRailing(GameObject& scate, GameObject& ground, bool = false,bool = false);
-	void oppsiteRailing(GameObject& scate, GameObject& ground, bool = false, bool = false);
+	void oppsiteScateRailing(GameObject& scate, GameObject& ground, bool = false, bool = false);
+	void scateSpikes(GameObject& scate, GameObject& spikes, bool = false, bool = false);
+	void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool = false, bool = false);
+	void scateMonster(GameObject& scate, GameObject& monster, bool = false, bool = false);
+	void oppsiteScateMonster(GameObject& monster, GameObject& scate, bool = false, bool = false);
 
+	void truckRailing(GameObject& truck, GameObject& railing, bool = false, bool = false);
+	void oppsiteTruckRailing(GameObject& railing, GameObject& truck, bool = false, bool = false);
+	void truckMonster(GameObject& truck, GameObject& monster, bool = false, bool = false);
+	void oppsiteTruckMonster(GameObject& monster, GameObject& truck, bool = false, bool = false);

@@ -7,7 +7,7 @@ public:
 	GameObject() =default;
 	GameObject(std::shared_ptr<b2World> world);
 	/*GameObject(const sf::Texture &texture, std::shared_ptr<b2World>,sf::Vector2f pos);*/
-	GameObject(Resources::TEXTURE, std::shared_ptr<b2World>,sf::Vector2f pos);
+	GameObject(Resources::TEXTURE, std::shared_ptr<b2World>,sf::Vector2f pos, Resources::SOUNDS sound);
 	virtual ~GameObject() = default;
 	virtual void draw(sf::RenderWindow& target) const;
 
@@ -19,7 +19,8 @@ public:
 
 	void play() {if(m_sound.getStatus()!=sf::Sound::Playing) m_sound.play(); }
 	void stopPlay() {m_sound.stop(); }
-
+	void undoCollision() { m_body->GetFixtureList()->SetSensor(true); }
+	void stopBody() { m_body->SetAwake(false); }
 protected:
 	std::shared_ptr<b2World> m_world;
 	sf::Sprite				 m_sprite;

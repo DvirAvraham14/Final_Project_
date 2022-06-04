@@ -3,10 +3,11 @@ Ground::Ground(const int level,sf::ConvexShape road,std::shared_ptr<b2World> wor
 	:m_road(std::move(road))
 {
 	m_world=world;
-	auto mapIndex =  Resources::TEXTURE::MAP1;
+	auto mapIndex =  Resources::TEXTURE::CITY_NIGHT;
 	m_sprite.setTexture(Resources::instance().getTexture(mapIndex, true));
 	auto s = static_cast<int>(m_road.getPoint(m_road.getPointCount() - 2).x);
-	m_sprite.setTextureRect({ 0, 0 , s, HEIGHT_WINDOW });
+	m_sprite.setTextureRect({ 0, 0 , s, (int)m_sprite.getGlobalBounds().height });
+	//m_sprite.setScale(0.5, 0.9);
 	CreateGround();
 }
 int Ground::getEndPoint() const {

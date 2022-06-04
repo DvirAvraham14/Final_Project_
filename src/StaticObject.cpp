@@ -1,13 +1,12 @@
 #include"StaticObject.h"
 
-StaticObject::StaticObject(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos)
-	:GameObject(texture, world, pos)
+StaticObject::StaticObject(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::SOUNDS sound)
+	:GameObject(texture, world, pos,sound)
 {
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2,
 					   m_sprite.getGlobalBounds().height / 2);
 	m_sprite.setPosition(sf::Vector2f(pos.x,pos.y-m_sprite.getOrigin().y));
 	CreateBody(pos);
-	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::SLIDE));
 }
 
 void StaticObject::CreateBody(sf::Vector2f pos) {

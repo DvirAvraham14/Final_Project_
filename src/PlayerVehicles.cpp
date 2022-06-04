@@ -3,11 +3,11 @@
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	sf::Vector2f pos,
-	Resources::Players aniData)
-	:MovingObject(texture,world, pos,aniData)
+	Resources::Players aniData
+	,Resources::SOUNDS sound)
+	:MovingObject(texture,world, pos,aniData,sound)
 {
 	CreateBody(pos);
-	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::LANDING));
 }
 
 void PlayerVehicles::CreateBody(sf::Vector2f pos) {
@@ -18,7 +18,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(40, 40);
+	dynamicBox.SetAsBox(45, 45);
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape	= &dynamicBox;
@@ -46,4 +46,17 @@ void PlayerVehicles::setMassa(float weight) {
 	massa.center = b2Vec2(m_body->GetLocalCenter().x, m_body->GetLocalCenter().y);
 	massa.I = m_sprite.getOrigin().y;
 	m_body->SetMassData(&massa);
+}
+
+void PlayerVehicles::update(sf::Time delta) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		jump();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		drive(40);
+
+	b2Vec2  position = m_body->GetPosition();
+	float	angle = 180 / b2_pi * m_body->GetAngle();
+	m_sprite.setPosition(position.x, position.y);
+	m_sprite.setRotation(angle);
+	m_animation.update(delta);
 }

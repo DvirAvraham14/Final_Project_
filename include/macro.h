@@ -8,14 +8,23 @@
 #include <sstream>
 
 const int WIDTH_WINDOW = 1024;
-const int HEIGHT_WINDOW = 768;
+const int HEIGHT_WINDOW = WIDTH_WINDOW/1.6;
 
-enum class T_Screen
+enum T_Screen
 {
-	Menu,
-	Game,
+	MENU = 0,
+	SELECT_LEVEL,
+	SELECT_VEHICLE,
+	SELECT_AREA,
+	GAME,
 };
 
+enum Players
+{
+	TRICKY = 0,
+	SPIKE,
+	JAKE,
+};
 const float timeStep = 1.0f / 60.0f;
 const int32 velocityIterations = 8;
 const int32 positionIterations = 3;

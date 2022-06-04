@@ -7,9 +7,10 @@ const auto AnimationTime = sf::seconds(0.1f);
 Animation::Animation(const AnimationData& data, Direction dir, sf::Sprite& sprite)
     : m_data(data), m_dir(dir), m_sprite(sprite)
 {
-    auto size = m_data.m_data.find(m_dir)->second[m_index];
-    m_sprite.setOrigin(size.width/2, size.height / 2 + 30 );
-    update();
+      auto size = m_data.m_data.find(m_dir)->second[m_index];
+      m_sprite.setOrigin(size.width / 2, size.height / 2 + 30);
+   if(sprite.getLocalBounds().height<100)
+      update();
 }
 
 void Animation::direction(Direction dir)

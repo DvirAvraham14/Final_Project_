@@ -1,11 +1,6 @@
 #include"Scate.h"
 
 
-float Scate::physicalMove(float vel, float desiredVel) {
-	float velChange = desiredVel - vel;
-	return m_body->GetMass() * ((velChange > desiredVel)?  desiredVel : velChange) / (1 / 60.0); //disregard time factor
-}
-
 void Scate::drive(int speed) {
 
 	if (m_contacting) {

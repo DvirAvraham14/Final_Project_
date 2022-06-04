@@ -7,8 +7,8 @@ public:
 	//Scate() = default;
 	
 	//virtual void draw(sf::RenderWindow& target) const;
-	virtual void jump(int);
-	virtual void drive(int);
-	float physicalMove(float , float );
+	virtual void drive(int=40);
+	virtual void jump(int=40);
+	//float physicalMove(float , float );
 private:
 };

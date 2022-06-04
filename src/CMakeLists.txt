@@ -20,4 +20,10 @@
                                               "EndFlag.cpp"
                                               "Enemy.cpp"
                                               "Monster.cpp"
+                                              "Truck.cpp"
+                                              "Screen.cpp"
+                                              "SelectArea.cpp"
+                                              "SelectVehicle.cpp"
+                                              "RoadMap.cpp"
+                                              "GameScreen.cpp"
                                               )

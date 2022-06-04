@@ -1,6 +1,6 @@
 #include"Enemy.h"
-Enemy::Enemy(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::Players aniData)
-	:MovingObject(texture, world, pos, aniData)
+Enemy::Enemy(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::Players aniData, Resources::SOUNDS sound)
+	:MovingObject(texture, world, pos, aniData,sound)
 {
 	CreateBody(pos);
 }
@@ -20,11 +20,7 @@ void Enemy::CreateBody(sf::Vector2f pos) {
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 1.f;
-
+	//m_body->SetGravityScale(0.1);
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
-}
-void Enemy::checkAndGo(sf::Time time) {
-	//if(fmod(time.asSeconds(),5)<=4 )
-		drive(7);
 }

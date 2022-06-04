@@ -4,10 +4,10 @@ class Enemy : public MovingObject
 {
 public:
 	using::MovingObject::MovingObject;
-	Enemy(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f, Resources::Players aniData);
-	virtual void drive(int speed = 20) = 0;
-	void jump(int jump = 50) {}
-	void checkAndGo(sf::Time time);
+	Enemy(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f, Resources::Players aniData, Resources::SOUNDS sound);
+	virtual void drive(int)       =0;
+	virtual void jump(int ) {}
+	virtual void update(sf::Time) = 0;
 	virtual void CreateBody(sf::Vector2f pos);
 
 protected:

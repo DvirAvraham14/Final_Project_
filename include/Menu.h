@@ -1,25 +1,14 @@
 #pragma once
-#include "macro.h"
-#include "Btn.h"
 #include "Screen.h"
-#include "Map.h"
 
-
-class Menu
+class Menu:public Screen
 {
 public:
-	Menu() = default;
-	Menu(std::shared_ptr<Screen>);
-	void Draw(sf::RenderWindow& target) const;
-	void handleMouse(sf::Event, const sf::Vector2f);
+	Menu();
+	virtual void draw(sf::RenderWindow& target) const;
 private:
-	void createBottons();
 	void mute(int index);
-
-	sf::Sprite					m_bg;
-	sf::RectangleShape			m_menuBack;
+	void createButtons();
 	sf::Sprite					m_logo;
-	std::vector<Btn>			m_buttons;
 	sf::Listener				m_lis;
-	std::shared_ptr<Screen>		m_screen;
 };
