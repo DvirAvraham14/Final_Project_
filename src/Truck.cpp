@@ -5,6 +5,7 @@ Truck::Truck(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vec
 {
 	auto size = m_sprite.getGlobalBounds();
 	m_sprite.setOrigin(size.width/2, size.height/2);
+	
 }
 
 void Truck::update(sf::Time time) {

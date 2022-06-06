@@ -8,7 +8,9 @@ MovingObject::MovingObject(Resources::TEXTURE texture,
 	:GameObject(texture, world, pos, sound),
 	m_dir(Direction::Win),
 	m_animation(Resources::instance().getData(aniData), Direction::Win, m_sprite)
-{}
+{
+	m_sprite.setScale(WIDTH_WINDOW / 1137.f, WIDTH_WINDOW / 1137.f);
+}
 
 void MovingObject::changeAni() {
 	m_dir = static_cast<Direction>((m_dir + 1) % Direction::MaxDir);
