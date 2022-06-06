@@ -18,7 +18,6 @@ private:
 	sf::RenderWindow			             m_window;
 	std::vector<std::shared_ptr<Screen>>     m_screen;
 	int                                      m_currScreen = 0;
-	//sf::View                                 m_view;
 	std::shared_ptr<sf::View>                m_view = std::make_shared<sf::View>();
 	std::shared_ptr<b2World>                 m_world = std::make_shared<b2World>(b2Vec2(0.0f, 9.8f));
 	MyContactListener                        myContact;

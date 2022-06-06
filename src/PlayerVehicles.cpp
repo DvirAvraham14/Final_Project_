@@ -18,7 +18,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(45, 45);
+	dynamicBox.SetAsBox(WIDTH_WINDOW / 33.3f, WIDTH_WINDOW / 23.5f);
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape	= &dynamicBox;
@@ -33,7 +33,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 }
 
 void PlayerVehicles::setSensor(float posX, b2PolygonShape& poly, b2FixtureDef& fixtureDef, int id) {
-	poly.SetAsBox(5, 5, b2Vec2(posX, 40), 0);
+	poly.SetAsBox(5, 5, b2Vec2(posX, WIDTH_WINDOW / 23.5f), 0);
 	b2Fixture* m_footSensorFixture;
 	fixtureDef.isSensor = true;
 	m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
