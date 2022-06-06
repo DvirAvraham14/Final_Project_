@@ -1,4 +1,6 @@
 #include"SelectArea.h"
+
+//______________________________________________________
 SelectArea::SelectArea()
 	:Screen(Resources::TEXTURE::CITY_NIGHT, T_Screen::SELECT_VEHICLE)
 {
@@ -10,6 +12,8 @@ SelectArea::SelectArea()
 	m_names.setOrigin(m_names.getGlobalBounds().width / 2, m_names.getGlobalBounds().height / 2);
 	m_names.setPosition(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 4.0f);
 }
+
+//______________________________________________________
 void SelectArea::createButtons() {
 
 	sf::Sprite arrow;
@@ -25,6 +29,8 @@ void SelectArea::createButtons() {
 	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 1.1f, Resources::TEXTURE::SELECT_A,
 		[]() ->T_Screen {return GAME; }));
 }
+
+//______________________________________________________
 void SelectArea::creatBgs() {
 
 	m_BgName.push_back(sf::IntRect(0, 0, 2500 / 4, 122));
@@ -32,6 +38,8 @@ void SelectArea::creatBgs() {
 	m_BgName.push_back(sf::IntRect((2500 / 4) * 2, 0, 2500 / 4, 122));
 	m_BgName.push_back(sf::IntRect((2500 / 4) * 3, 0, 2500 / 4, 122));
 }
+
+//______________________________________________________
 void SelectArea::updateRect() {
 	sf::RectangleShape rect;
 	rect.setSize({ WIDTH_WINDOW, HEIGHT_WINDOW });
@@ -39,6 +47,8 @@ void SelectArea::updateRect() {
 	m_background = rect;
 	m_names.setTextureRect(m_BgName[m_currBg]);
 }
+
+//______________________________________________________
 void SelectArea::draw(sf::RenderWindow& target) const {
 	Draw(target);
 	target.draw(m_names);

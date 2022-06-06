@@ -9,6 +9,8 @@ public:
 	
 	enum Players {
 		Spike,
+		Jake,
+		Tricky,
 		Enemy,
 		MaxPlayer,
 	};

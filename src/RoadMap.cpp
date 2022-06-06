@@ -1,4 +1,5 @@
 #include"RoadMap.h"
+
 RoadMap::RoadMap() 
 	:Screen(Resources::TEXTURE::MAP_ROAD, T_Screen::MENU)
 {
@@ -24,7 +25,6 @@ void RoadMap::lockLevels() {
 }
 
 void RoadMap::setLock(std::vector<sf::Vector2f> position) {
-
 	sf::Sprite lock;
 	auto currScreen = SELECT_LEVEL;
 	lock.setTexture(Resources::instance().getTexture(Resources::TEXTURE::LOCK));
@@ -34,17 +34,18 @@ void RoadMap::setLock(std::vector<sf::Vector2f> position) {
 	}
 	Unlock(1);
 }
+
 void RoadMap::Unlock(int index) {
 	m_buttons[index].unlock([&]() ->T_Screen {return SELECT_VEHICLE; });
 }
-void RoadMap::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
 
+void RoadMap::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
 	for (auto& btn : m_buttons)
 		if (event.type == sf::Event::MouseButtonReleased)
 			btn.Press(cursorPos);
 }
-void RoadMap::draw(sf::RenderWindow& target) const {
 
+void RoadMap::draw(sf::RenderWindow& target) const {
 	Draw(target);
 	for (auto& i : m_locks)
 		i.draw(target);
