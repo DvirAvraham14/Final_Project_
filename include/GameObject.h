@@ -26,6 +26,7 @@ public:
 	void removeObj() {
 		toDelete = true;
 	}
+
 	bool getDeleteStatus() { return toDelete; }
 protected:
 	std::shared_ptr<b2World> m_world;

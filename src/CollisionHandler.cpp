@@ -74,9 +74,8 @@ void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bo
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
 	auto scateTouchflag = static_cast<Scate*>(&scate);
-	//scateTouchflag->drive();
 	scateTouchflag->setSpeet(-10);
-	//scateTouchflag->setEnableMove(false);
+	scateTouchflag->setAni(Direction::Win);
 	endFlag.play();
 	endFlag.stopBody();
 }
@@ -108,7 +107,6 @@ void oppsiteScateCoin(GameObject& coin, GameObject& scate, bool feetToch, bool e
 void scateCoin(GameObject& scate, GameObject& coin, bool feetToch, bool endTouch)
 {
 	coin.removeObj();
-	//coin.undoCollision();
 }
 
 

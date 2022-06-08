@@ -19,6 +19,7 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 void GameScreen::createObj() {
 
 	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(), m_world));
+
 	m_vehicels.push_back(std::make_shared<Scate>(res::TEXTURE::SpikeTexture, m_world, sf::Vector2f(300, 500),
 		res::Players::Spike, res::SOUNDS::Coins));
 
@@ -58,18 +59,20 @@ void GameScreen::createObstacles() {
 
 void GameScreen::createCoins() {
 	std::vector<CoinData> coins = m_map.getCoins();
+	
 	for (auto& coin : coins) {
 		if(coin.m_isLine)
-			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS)
+			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS) {
 				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
-					m_world, sf::Vector2f(coin.m_pos.y + j, coin.m_pos.z), res::SOUNDS::Coins,false));
+					m_world, sf::Vector2f(coin.m_pos.y + j, coin.m_pos.z - 20), res::SOUNDS::Coins, false));
+			}
 		else
 		
 			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS) {
 				if (i > coin.m_pos.x / 2)
 					j-=2* map::COINS_DIS;
 				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
-					m_world, sf::Vector2f(coin.m_pos.y + i* map::COINS_DIS, coin.m_pos.z-j), res::SOUNDS::Coins,false));
+					m_world, sf::Vector2f(coin.m_pos.y + i* map::COINS_DIS, coin.m_pos.z-j - 20), res::SOUNDS::Coins,false));
 			}
 	}
 }
