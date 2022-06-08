@@ -6,11 +6,16 @@
 #include "RoadMap.h"
 #include "SelectArea.h"
 #include "GameScreen.h"
+#include <memory>
 
 
 class Controller {
 public:
 	Controller();
+	~Controller() {
+		for (auto& screen : m_screen)
+			screen.reset();
+	}
 	void run();
 
 private:

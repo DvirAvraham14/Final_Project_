@@ -6,17 +6,15 @@
 #include"Truck.h"
 #include "EndFlag.h"
 #include "Monster.h"
+#include "Coin.h"
+
 
 
 // primary collision-processing functions
 void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch, bool endTouch)
 {
-	if (feetToch) {
-		if (!scate.getContacting()) {
-			scate.play();
-		}
+	if (feetToch) 
 		scate.startContact();
-	}
 }
 
 // secondary collision-processing functions that just
@@ -31,13 +29,20 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch, bool e
 void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool endTouch)
 {
 	auto scateTouchRailing = static_cast<Scate*>(&scate);
-	if (feetToch)
+
+	if (feetToch) {
 		railing.play();
-	else 
-		scateTouchRailing->drive(-20);
-	
-	if (endTouch) 
+	}
+	else if(!endTouch && !feetToch){
+		scateTouchRailing->setEnableMove(false);
+		scateTouchRailing->setSpeet(-15);
+
+	}
+	if (endTouch) {
 		railing.stopPlay();
+		scateTouchRailing->setEnableMove(true);
+		scateTouchRailing->setRotate(true);
+	}
 }
 
 // secondary collision-processing functions that just
@@ -50,10 +55,13 @@ void oppsiteScateRailing(GameObject& railing, GameObject& scate, bool feetToch, 
 
 void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endTouch)
 {
-	auto obj = static_cast<Scate*>(&scate);
-	obj->startContact();
-	spikes.play();
-	obj->jump(20);
+	if (scate.getSprite().getGlobalBounds().intersects(spikes.getSprite().getGlobalBounds())) {
+		std::cout << "not touching the ground\n";
+		auto obj = static_cast<Scate*>(&scate);
+		obj->startContact();
+		spikes.play();
+		obj->jump(20);
+	}
 }
 
 
@@ -65,6 +73,10 @@ void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bo
 
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
+	auto scateTouchflag = static_cast<Scate*>(&scate);
+	//scateTouchflag->drive();
+	scateTouchflag->setSpeet(-10);
+	//scateTouchflag->setEnableMove(false);
 	endFlag.play();
 	endFlag.stopBody();
 }
@@ -87,9 +99,28 @@ void oppsiteScateMonster(GameObject& monster, GameObject& scate, bool feetToch, 
 	scateMonster(monster, scate, feetToch, endTouch);
 }
 
+void oppsiteScateCoin(GameObject& coin, GameObject& scate, bool feetToch, bool endTouch)
+{
+	scateCoin(scate, coin, feetToch, endTouch);
+}
+
+
+void scateCoin(GameObject& scate, GameObject& coin, bool feetToch, bool endTouch)
+{
+	coin.removeObj();
+	//coin.undoCollision();
+}
+
+
+
 void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTouch)
 {
 	truck.play();
+	auto truckTouchscate = static_cast<Truck*>(&truck);
+	auto scateTouchTruck = static_cast<Scate*>(&scate);
+	truckTouchscate->setEnableMove(false);
+	scateTouchTruck->setEnableMove(false);
+	scateTouchTruck->setAni(Direction::FrontFall);
 	std::cout << "LOST";
 }
 
@@ -120,6 +151,27 @@ void oppsiteTruckMonster(GameObject& monster, GameObject& truck, bool feetToch, 
 	truckMonster(monster, truck, feetToch, endTouch);
 }
 
+void truckCoin(GameObject& truck, GameObject& coin, bool feetToch, bool endTouch) {
+	coin.undoCollision();
+}
+
+void oppsiteTruckCoin(GameObject& coin, GameObject& truck, bool feetToch, bool endTouch)
+{
+	truckRailing(coin, truck, feetToch, endTouch);
+}
+
+void SpikesTruck(GameObject& spikes, GameObject& truck, bool feetToch, bool endTouch)
+{
+	if (feetToch)
+		truck.setGravity(0);
+	else
+		truck.setGravity(1);
+}
+
+void SpikesTruckOP(GameObject& truck, GameObject& spikes, bool feetToch, bool endTouch)
+{
+	SpikesTruck(spikes, truck, feetToch, endTouch);
+}
 
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
@@ -138,10 +190,18 @@ CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 	phm[Key(typeid(Scate), typeid(Truck))] = &scateTruck;
 	phm[Key(typeid(Truck), typeid(Scate))] = &oppsiteScateTruck;
 
+	phm[Key(typeid(Scate), typeid(Coin))] = &scateCoin;
+	phm[Key(typeid(Coin), typeid(Scate))] = &oppsiteScateCoin;
+
 	phm[Key(typeid(Truck), typeid(Railing))] = &truckRailing;
 	phm[Key(typeid(Railing), typeid(Truck))] = &oppsiteTruckRailing;
 	phm[Key(typeid(Truck), typeid(Monster))] = &truckMonster;
 	phm[Key(typeid(Monster), typeid(Truck))] = &oppsiteTruckMonster;
+	phm[Key(typeid(Truck), typeid(Coin))] = &truckCoin;
+	phm[Key(typeid(Coin), typeid(Truck))] = &oppsiteTruckCoin;
+
+	phm[Key(typeid(Spikes), typeid(Truck))] = &SpikesTruck;
+	phm[Key(typeid(Truck), typeid(Spikes))] = &SpikesTruckOP;
 	return phm;
 }
 
@@ -162,7 +222,7 @@ CollisionHandler& CollisionHandler::instance()
 	return instance;
 }
 
-void CollisionHandler::processCollision(GameObject& object1, GameObject& object2, bool feetTouch,bool endTouch)
+void CollisionHandler::processCollision(GameObject& object1, GameObject& object2, bool feetTouch, bool endTouch)
 {
 	auto phf = lookup(typeid(object1), typeid(object2));
 	if (!phf)

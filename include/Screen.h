@@ -4,6 +4,7 @@
 class Screen {
 public:
 	Screen() = default;
+	virtual ~Screen() = default;
 	Screen(Resources::TEXTURE, T_Screen curr = MENU);
 	virtual void draw(sf::RenderWindow& target) const = 0;
 	virtual void handleScreen(sf::Event event, const sf::Vector2f cursorPos);

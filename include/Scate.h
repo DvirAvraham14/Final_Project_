@@ -7,8 +7,9 @@ public:
 	//Scate() = default;
 	
 	//virtual void draw(sf::RenderWindow& target) const;
-	virtual void drive(int=40);
-	virtual void jump(int=40);
+	virtual void drive();
+	virtual void jump(float = JUMP_HEIGHT);
+	void setAni(Direction dir) { m_animation.direction(dir); }
 	//float physicalMove(float , float );
 private:
 };

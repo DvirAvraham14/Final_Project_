@@ -1,15 +1,16 @@
 #include"Scate.h"
 
 
-void Scate::drive(int speed) {
+void Scate::drive() {
 
 	if (m_contacting) {
-		float force = physicalMove(m_body->GetLinearVelocity().x, speed);
+		m_speed += (m_speed < MAX_SPEED_SKATE) ? 5 : 0;
+		float force = physicalMove(m_body->GetLinearVelocity().x, m_speed);
 		m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
 	}
 }
 
-void Scate::jump(int height) {
+void Scate::jump(float height) {
 
 	if (m_contacting) {
 		m_animation.direction((m_dir = Direction::Filp));

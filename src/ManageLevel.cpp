@@ -8,7 +8,7 @@ void ManageLevel::manageAction(std::vector<std::shared_ptr<MovingObject>> vehicl
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			vehicle->jump();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			vehicle->drive(40);
+			vehicle->drive();
 	}
 }
 

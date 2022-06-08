@@ -27,6 +27,8 @@ void Animation::update(sf::Time delta)
     m_elapsed += delta;
     if (m_elapsed >= AnimationTime)
     {
+        if ((m_dir == Direction::FallBack || m_dir == Direction::FrontFall) && m_index == m_data.m_data.find(m_dir)->second.size() - 1)
+            return;
         m_elapsed -= AnimationTime;
         ++m_index;
         m_index %= m_data.m_data.find(m_dir)->second.size();

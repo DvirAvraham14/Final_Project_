@@ -13,14 +13,15 @@ void Enemy::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(m_sprite.getTexture()->getSize().x / 2,
-		m_sprite.getTexture()->getSize().y / 2);
+	dynamicBox.SetAsBox(m_sprite.getTextureRect().width / 2,
+		m_sprite.getTextureRect().height / 2);
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 1.f;
-	//m_body->SetGravityScale(0.1);
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
+	//setSensor(0, dynamicBox, fixtureDef, 1);
+
 }

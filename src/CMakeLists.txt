@@ -26,4 +26,5 @@
                                               "SelectVehicle.cpp"
                                               "RoadMap.cpp"
                                               "GameScreen.cpp"
+                                              "Spikes.cpp"
                                               )

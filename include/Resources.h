@@ -42,16 +42,17 @@ public:
 		Monster,
 		Flag,
 		Truck,
+		Coin,
 		MaxTexture,
 	};
 
 	enum  SOUNDS {
 		CLICK,
 		SLIDE,
-		LANDING,
 		Winning,
 		KnifeStab,
 		Crash,
+		Coins,
 		MaxSounds,
 	};
 
@@ -84,19 +85,20 @@ private:
 						"railing.png",
 						"spikes.png",
 						"Charchater1.png",
-						"tempMonster.png",
+						"Monster.png",
 						"Flag.png",
 						"truck.png",
+						"coin.png",
 										
 	};	
 
 	std::string				m_soundsPath[MaxSounds] = {
 							"coll.wav",
 							"slide.wav",
-							"landing.wav",
 							"winning.wav",
 							"KnifeStab.wav",
 							"crash.wav",
+							"coin.wav",
 						
 	};
 

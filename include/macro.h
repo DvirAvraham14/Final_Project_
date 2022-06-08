@@ -30,6 +30,19 @@ const int32 velocityIterations = 8;
 const int32 positionIterations = 3;
 
 namespace map { 
-				const char DOT = 'd';
-				const char OBSTACLE = 'o';
+				const char DOT		 = 'd';
+				const char OBSTACLE  = 'o';
+				const char COINS	 = 'c';
+				const int  COINS_DIS =  70;
 }
+
+struct CoinData
+{
+	sf::Vector3f m_pos;
+	bool m_isLine;
+};
+
+const float JUMP_HEIGHT			= 40;
+const float MAX_SPEED_SKATE		= 40;
+const float MAX_SPEED_MONSTER	= 10;
+const float MAX_SPEED_TRUCK		= 10;

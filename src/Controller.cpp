@@ -14,7 +14,6 @@ Controller::Controller()
 	
 	createScreens();
 }
-
 //__________________________________
 void Controller::run() {
 	sf::Vector2f cursorPosF;
@@ -42,15 +41,14 @@ void Controller::run() {
 
 		m_screen[m_currScreen]->update();	
 		m_screen[m_currScreen]->draw(m_window);
-		m_world->DebugDraw();
 		m_window.display();
 	}
 }
 
 void Controller::createScreens() {
-	m_screen.push_back(std::make_shared<Menu>());
-	m_screen.push_back(std::make_shared<RoadMap>());
-	m_screen.push_back(std::make_shared<SelectVehicle>());
-	m_screen.push_back(std::make_shared<SelectArea>());
-	m_screen.push_back(std::make_shared<GameScreen>(m_world, m_view));
+	m_screen.push_back(std::make_unique<Menu>());
+	m_screen.push_back(std::make_unique<RoadMap>());
+	m_screen.push_back(std::make_unique<SelectVehicle>());
+	m_screen.push_back(std::make_unique<SelectArea>());
+	m_screen.push_back(std::make_unique<GameScreen>(m_world, m_view));
 }

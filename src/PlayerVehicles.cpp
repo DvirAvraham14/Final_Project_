@@ -23,7 +23,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 
 	fixtureDef.shape	= &dynamicBox;
 	fixtureDef.density	= 0.5f;
-	fixtureDef.friction = 0.01f;
+	fixtureDef.friction = 0.1f;
 
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
@@ -49,14 +49,29 @@ void PlayerVehicles::setMassa(float weight) {
 }
 
 void PlayerVehicles::update(sf::Time delta) {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_enableMove)
 		jump();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		drive(40);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_enableMove)
+		drive();
+	if (!m_enableMove)
+		stop();
 
+	updatePosition();
+	m_animation.update(delta);
+}
+
+void PlayerVehicles::updatePosition() {
 	b2Vec2  position = m_body->GetPosition();
 	float	angle = 180 / b2_pi * m_body->GetAngle();
-	m_sprite.setPosition(position.x, position.y);
+	auto temp = std::fmod(angle, 360);
+	if (temp > 45) {
+		m_animation.direction(Direction::FrontFall);
+		angle = 0;
+	}
+	else if (temp < -45) {
+		m_animation.direction(Direction::FallBack);
+		angle = 0;
+	}
 	m_sprite.setRotation(angle);
-	m_animation.update(delta);
+	m_sprite.setPosition(position.x, position.y);
 }

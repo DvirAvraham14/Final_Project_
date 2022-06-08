@@ -4,63 +4,41 @@
 
 namespace
 {
-    AnimationData SpikeData()
-    {
-        const auto size = sf::Vector2i(250, 196);
-        const auto middleSpace = sf::Vector2i(55, 142);
+	AnimationData SpikeData()
+	{
+		const auto size = sf::Vector2i(250, 196);
+		const auto middleSpace = sf::Vector2i(55, 142);
 
-        auto Spike = AnimationData{};
-        auto currentStart = sf::Vector2i(0, 0);
-        auto nextStart = [&]()
-        {
+		auto Spike = AnimationData{};
+		auto currentStart = sf::Vector2i(0, 0);
+		auto nextStart = [&]()
+		{
 			currentStart.x += (250);
-			if (currentStart.x == 250 * 11) {
-			
+			if (currentStart.x > 250 * 11) {
+
 				currentStart.x = 0;
 				currentStart.y += 196;
 			}
-				
-            return currentStart;
-        };
+
+			return currentStart;
+		};
 
 		Spike.m_data[Direction::Win].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++) 
+		for (auto i = 1; i <= 11; i++)
 			Spike.m_data[Direction::Win].emplace_back(nextStart(), size);
 
-		Spike.m_data[Direction::Drive].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::Drive].emplace_back(nextStart(), size);
+		for (auto i = 1; i < Direction::MaxDir; i++)
+			for (auto j = 0; j < 12; j++)
+				Spike.m_data[static_cast<Direction>(i)].emplace_back(nextStart(), size);
 
-		Spike.m_data[Direction::Filp].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::Filp].emplace_back(nextStart(), size);
-
-		Spike.m_data[Direction::Push].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::Push].emplace_back(nextStart(), size);
-
-		Spike.m_data[Direction::FrontFall].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::FrontFall].emplace_back(nextStart(), size);
-
-		Spike.m_data[Direction::Start].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::Start].emplace_back(nextStart(), size);
-
-		Spike.m_data[Direction::Stand].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::Stand].emplace_back(nextStart(), size);
-
-		Spike.m_data[Direction::FallBack].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
-			Spike.m_data[Direction::FallBack].emplace_back(nextStart(), size);
-		
-        return Spike;
-    }
+		return Spike;
+	}
 
 	AnimationData EnemyData() {
 		auto enemy = AnimationData{};
-		enemy.m_data[Direction::Win].emplace_back(0,0, 70,50);
+		for (auto i = 0; i < Direction::MaxDir; i++)
+			for (auto rect = 0; rect < 3; rect++)
+				enemy.m_data[static_cast<Direction>(i)].emplace_back(70 * rect, 0, 70, 48);
 		return enemy;
 	}
 }

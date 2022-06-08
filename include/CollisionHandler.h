@@ -38,3 +38,6 @@ public:
 	void oppsiteTruckRailing(GameObject& railing, GameObject& truck, bool = false, bool = false);
 	void truckMonster(GameObject& truck, GameObject& monster, bool = false, bool = false);
 	void oppsiteTruckMonster(GameObject& monster, GameObject& truck, bool = false, bool = false);
+
+	void oppsiteScateCoin(GameObject& coin, GameObject& scate, bool = false, bool = false);
+	void scateCoin(GameObject& scate, GameObject& coin, bool = false, bool = false);
