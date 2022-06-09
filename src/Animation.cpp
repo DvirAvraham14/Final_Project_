@@ -27,7 +27,7 @@ void Animation::update(sf::Time delta)
     m_elapsed += delta;
     if (m_elapsed >= AnimationTime)
     {
-        if ((m_dir == Direction::FallBack || m_dir == Direction::FrontFall) && m_index == m_data.m_data.find(m_dir)->second.size() - 1)
+        if ((m_dir == Direction::FrontFall) && m_index == m_data.m_data.find(m_dir)->second.size() - 1)
             return;
         m_elapsed -= AnimationTime;
         ++m_index;
@@ -39,6 +39,8 @@ void Animation::update(sf::Time delta)
 void Animation::update()
 {
     m_sprite.setTextureRect(m_data.m_data.find(m_dir)->second[m_index]);
+    if (Btn::getScreen() == GAME)
+        m_sprite.setScale(0.6, 0.6);
 }
 
 void Animation::AutoSwitch() {

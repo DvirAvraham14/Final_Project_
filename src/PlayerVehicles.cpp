@@ -68,10 +68,6 @@ void PlayerVehicles::updatePosition() {
 		m_animation.direction(Direction::FrontFall);
 		angle = 0;
 	}
-	else if (temp < -45) {
-		m_animation.direction(Direction::FallBack);
-		angle = 0;
-	}
 	m_sprite.setRotation(angle);
 	m_sprite.setPosition(position.x, position.y);
 }

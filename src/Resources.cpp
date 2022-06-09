@@ -6,28 +6,28 @@ namespace
 {
 	AnimationData SpikeData()
 	{
-		const auto size = sf::Vector2i(332, 263);
+		const auto size = sf::Vector2i(333, 264);
 
 		auto Spike = AnimationData{};
 		auto currentStart = sf::Vector2i(0, 0);
 		auto nextStart = [&]()
 		{
-			currentStart.x += (332);
-			if (currentStart.x > 332 * 11) {
+			currentStart.x += (333);
+			if (currentStart.x > 333 * 18) {
 
 				currentStart.x = 0;
-				currentStart.y += 263;
+				currentStart.y += 264;
 			}
 
 			return currentStart;
 		};
 
 		Spike.m_data[Direction::Win].emplace_back(currentStart, size);
-		for (auto i = 1; i <= 11; i++)
+		for (auto i = 1; i <= 18; i++)
 			Spike.m_data[Direction::Win].emplace_back(nextStart(), size);
 
 		for (auto i = 1; i < Direction::MaxDir; i++)
-			for (auto j = 0; j < 12; j++)
+			for (auto j = 0; j < 19; j++)
 				Spike.m_data[static_cast<Direction>(i)].emplace_back(nextStart(), size);
 
 		return Spike;

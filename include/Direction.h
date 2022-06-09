@@ -10,8 +10,6 @@ enum Direction
     Push,
     FrontFall,
     Start,
-    Stand,
-    FallBack,
     MaxDir,
 };
 
