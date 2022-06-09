@@ -88,7 +88,7 @@ private:
 						"spikes.png",
 						"Tricky.png",
 						"Spike.png",
-						"Jack.png",
+						"jake.png",
 						"Monster.png",
 						"Flag.png",
 						"truck.png",

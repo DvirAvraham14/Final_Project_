@@ -6,6 +6,7 @@ PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	:MovingObject(texture, world, sf::Vector2f(200, 500), Resources::Players::Tricky, sound)
 {
 	CreateBody(sf::Vector2f(200, 500));
+	setBox2dEnable(false);
 }
 
 void PlayerVehicles::CreateBody(sf::Vector2f pos) {
@@ -22,6 +23,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	fixtureDef.shape	= &dynamicBox;
 	fixtureDef.density	= 0.5f;
 	fixtureDef.friction = 0.1f;
+
 
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
@@ -73,3 +75,4 @@ void PlayerVehicles::updatePosition() {
 	m_sprite.setRotation(angle);
 	m_sprite.setPosition(position.x, position.y);
 }
+

@@ -42,7 +42,6 @@ struct CoinData
 	bool m_isLine;
 };
 
-const float JUMP_HEIGHT			= 40;
-const float MAX_SPEED_SKATE		= 40;
-const float MAX_SPEED_MONSTER	= 10;
+const float JUMP_HEIGHT[Resources::Players::MaxPlayer] = { 50,45,40,0 };
+const float MAX_SPEED[Resources::Players::MaxPlayer] = {35,40,45,10};
 const float MAX_SPEED_TRUCK		= 10;

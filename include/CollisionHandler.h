@@ -7,12 +7,6 @@
 
 
 class CollisionHandler {
-private:
-
-	CollisionHandler() = default;
-	CollisionHandler(const CollisionHandler&) = delete;
-	void operator=(const CollisionHandler&) = delete;
-    
 public:
 
 	using HitFunctionPtr = void (*)(GameObject&, GameObject&, bool, bool);
@@ -23,6 +17,13 @@ public:
 	void   processCollision(GameObject& object1, GameObject& object2, bool , bool= false);
 	HitFunctionPtr lookup(const std::type_index& class1, const std::type_index& class2);
 	HitMap initializeCollisionMap();
+private:
+	template<typename T>
+	void setCollisionPlayer(HitMap& table);
+	CollisionHandler() = default;
+	CollisionHandler(const CollisionHandler&) = delete;
+	void operator=(const CollisionHandler&) = delete;
+
 };
 
 	void groundOnJump(GameObject& Ground, GameObject& scate, bool = false, bool = false);

@@ -8,8 +8,8 @@ public:
 
 	//virtual void draw(sf::RenderWindow& target) const;
 	virtual void drive();
-	virtual void jump(float = JUMP_HEIGHT);
-	void setAni(Direction dir) { m_animation.direction(dir); }
-	//float physicalMove(float , float );
+	virtual void jump(float = 0);
+
+
 private:
 };

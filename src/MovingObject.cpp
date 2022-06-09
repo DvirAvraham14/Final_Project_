@@ -6,16 +6,12 @@ MovingObject::MovingObject(Resources::TEXTURE texture,
 	Resources::Players aniData,
 	Resources::SOUNDS sound)
 	:GameObject(texture, world, pos, sound),
-	m_dir(Direction::Win),
-	m_animation(Resources::instance().getData(aniData), Direction::Win, m_sprite)
+	m_animation(Resources::instance().getData(aniData), Direction::Start, m_sprite)
 {
 	m_sprite.setScale(WIDTH_WINDOW / 1137.f, WIDTH_WINDOW / 1137.f);
 }
 
-void MovingObject::changeAni() {
-	m_dir = static_cast<Direction>((m_dir + 1) % Direction::MaxDir);
-	m_animation.direction(m_dir);
-}
+
 float MovingObject::physicalMove(float vel, float desiredVel) {
 	float velChange = desiredVel - vel;
 	return m_body->GetMass() * ((velChange > desiredVel) ? desiredVel : velChange) / (1 / 60.0); //disregard time factor

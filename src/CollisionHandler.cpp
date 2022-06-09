@@ -52,7 +52,7 @@ void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool en
 // primary function
 void oppsiteScateRailing(GameObject& railing, GameObject& scate, bool feetToch, bool endTouch)
 {
-	scateRailing(railing, scate, feetToch, endTouch);
+	scateRailing(scate, railing, feetToch, endTouch);
 }
 
 void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endTouch)
@@ -85,19 +85,20 @@ void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool en
 
 void oppsiteEndFlag(GameObject& endFlag, GameObject& scate, bool feetToch, bool endTouch)
 {
-	scateEndFlag(endFlag, scate, feetToch, endTouch);
+	scateEndFlag(scate, endFlag, feetToch, endTouch);
 }
 
 
 void scateMonster(GameObject& scate, GameObject& monster, bool feetToch, bool endTouch)
 {
 	monster.play();
+	std::cout << typeid(monster).name();
 }
 
 
 void oppsiteScateMonster(GameObject& monster, GameObject& scate, bool feetToch, bool endTouch)
 {
-	scateMonster(monster, scate, feetToch, endTouch);
+	scateMonster(scate, monster, feetToch, endTouch);
 }
 
 void oppsiteScateCoin(GameObject& coin, GameObject& scate, bool feetToch, bool endTouch)
@@ -117,7 +118,7 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 {
 	truck.play();
 	auto truckTouchscate = static_cast<Truck*>(&truck);
-	auto scateTouchTruck = static_cast<Spike*>(&scate);
+	auto scateTouchTruck = static_cast<PlayerVehicles*>(&scate);
 	truckTouchscate->setEnableMove(false);
 	scateTouchTruck->setEnableMove(false);
 	scateTouchTruck->setAni(Direction::FrontFall);
@@ -125,9 +126,9 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 }
 
 
-void oppsiteScateTruck(GameObject& monster, GameObject& truck, bool feetToch, bool endTouch)
+void oppsiteScateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTouch)
 {
-	scateTruck(monster, truck, feetToch, endTouch);
+	scateTruck(truck, scate, feetToch, endTouch);
 }
 
 
@@ -176,26 +177,10 @@ void SpikesTruckOP(GameObject& truck, GameObject& spikes, bool feetToch, bool en
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;
-	phm[Key(typeid(Ground), typeid(Spike))] = &groundOnJump;
-	phm[Key(typeid(Spike), typeid(Ground))] = &groundOnJumpOP;
-	phm[Key(typeid(Ground), typeid(Tricky))] = &groundOnJump;
-	phm[Key(typeid(Tricky), typeid(Ground))] = &groundOnJumpOP;
-	phm[Key(typeid(Ground), typeid(Jake))] = &groundOnJump;
-	phm[Key(typeid(Jake), typeid(Ground))] = &groundOnJumpOP;
-	phm[Key(typeid(Spike), typeid(Railing))] = &scateRailing;
-	phm[Key(typeid(Railing), typeid(Spike))] = &oppsiteScateRailing;
-	phm[Key(typeid(Spike), typeid(Spikes))] = &scateSpikes;
-	phm[Key(typeid(Spikes), typeid(Spike))] = &oppsiteScateSpikes;
-	phm[Key(typeid(Spike), typeid(Monster))] = &scateMonster;
-	phm[Key(typeid(Monster), typeid(Spike))] = &oppsiteScateMonster;
-	phm[Key(typeid(Spike), typeid(EndFlag))] = &scateEndFlag;
-	phm[Key(typeid(EndFlag), typeid(Spike))] = &oppsiteEndFlag;
-
-	phm[Key(typeid(Spike), typeid(Truck))] = &scateTruck;
-	phm[Key(typeid(Truck), typeid(Spike))] = &oppsiteScateTruck;
-
-	phm[Key(typeid(Spike), typeid(Coin))] = &scateCoin;
-	phm[Key(typeid(Coin), typeid(Spike))] = &oppsiteScateCoin;
+	setCollisionPlayer<Spike>(phm);
+	setCollisionPlayer<Tricky>(phm);
+	setCollisionPlayer<Jake>(phm);
+	//spike
 
 	phm[Key(typeid(Truck), typeid(Railing))] = &truckRailing;
 	phm[Key(typeid(Railing), typeid(Truck))] = &oppsiteTruckRailing;
@@ -203,7 +188,6 @@ CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 	phm[Key(typeid(Monster), typeid(Truck))] = &oppsiteTruckMonster;
 	phm[Key(typeid(Truck), typeid(Coin))] = &truckCoin;
 	phm[Key(typeid(Coin), typeid(Truck))] = &oppsiteTruckCoin;
-
 	phm[Key(typeid(Spikes), typeid(Truck))] = &SpikesTruck;
 	phm[Key(typeid(Truck), typeid(Spikes))] = &SpikesTruckOP;
 	return phm;
@@ -234,4 +218,20 @@ void CollisionHandler::processCollision(GameObject& object1, GameObject& object2
 	phf(object1, object2, feetTouch, endTouch);
 }
 
-
+template<typename T>
+void CollisionHandler::setCollisionPlayer(HitMap &phm) {
+	phm[Key(typeid(Ground), typeid(T))] = &groundOnJump;
+	phm[Key(typeid(T), typeid(Ground))] = &groundOnJumpOP;
+	phm[Key(typeid(T), typeid(Railing))] = &scateRailing;
+	phm[Key(typeid(Railing), typeid(T))] = &oppsiteScateRailing;
+	phm[Key(typeid(T), typeid(Spikes))] = &scateSpikes;
+	phm[Key(typeid(Spikes), typeid(T))] = &oppsiteScateSpikes;
+	phm[Key(typeid(T), typeid(Monster))] = &scateMonster;
+	phm[Key(typeid(Monster), typeid(T))] = &oppsiteScateMonster;
+	phm[Key(typeid(T), typeid(Truck))]		= &scateTruck;
+	phm[Key(typeid(Truck), typeid(T))]		= &oppsiteScateTruck;
+	phm[Key(typeid(T), typeid(EndFlag))]	= &scateEndFlag;
+	phm[Key(typeid(EndFlag), typeid(T))]	= &oppsiteEndFlag;
+	phm[Key(typeid(T), typeid(Coin))]		= &scateCoin;
+	phm[Key(typeid(Coin), typeid(T))]		= &oppsiteScateCoin;
+}

@@ -5,8 +5,8 @@ class PlayerVehicles : public MovingObject
 public:
 	
 	PlayerVehicles(Resources::TEXTURE, std::shared_ptr<b2World>, Resources::SOUNDS sound);
-	virtual void drive()				        = 0;
-	virtual void jump(float = JUMP_HEIGHT)		= 0;
+	virtual void drive()				= 0;
+	virtual void jump(float = 0)		= 0;
 	virtual void update(sf::Time delta);
 	virtual void CreateBody(sf::Vector2f pos);
 
