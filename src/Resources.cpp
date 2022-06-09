@@ -6,18 +6,17 @@ namespace
 {
 	AnimationData SpikeData()
 	{
-		const auto size = sf::Vector2i(250, 196);
-		const auto middleSpace = sf::Vector2i(55, 142);
+		const auto size = sf::Vector2i(332, 263);
 
 		auto Spike = AnimationData{};
 		auto currentStart = sf::Vector2i(0, 0);
 		auto nextStart = [&]()
 		{
-			currentStart.x += (250);
-			if (currentStart.x > 250 * 11) {
+			currentStart.x += (332);
+			if (currentStart.x > 332 * 11) {
 
 				currentStart.x = 0;
-				currentStart.y += 196;
+				currentStart.y += 263;
 			}
 
 			return currentStart;
@@ -98,7 +97,7 @@ void Resources::loadSounds() {
 
 //__________________________________
 void Resources::loadAnimaData() {
-	m_animaData[Spike] = SpikeData();
+	m_animaData[Tricky] = m_animaData[Jake] = m_animaData[Spike] = SpikeData();
 	m_animaData[Enemy] = EnemyData();
 }
 

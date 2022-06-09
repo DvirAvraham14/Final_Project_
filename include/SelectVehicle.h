@@ -9,10 +9,12 @@ public:
 	SelectVehicle();
 	virtual void draw(sf::RenderWindow& target) const;
 	int static currPlayer;
-	int static getScreen() { return currPlayer; };
+	int static getPlayer() { return currPlayer; };
 private:
 	using player = Resources::Players;
 	T_Screen changePlayer(bool next);
+	void creatNameFrame();
+	void creatPlayersName();
 	void creatPlayers();
 	void createButtons();
 	void updateRect();

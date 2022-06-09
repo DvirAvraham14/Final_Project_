@@ -4,10 +4,13 @@ Menu::Menu()
 	:Screen(Resources::TEXTURE::BG, T_Screen::MENU)
 {
 	createButtons();
+
+	m_buttons.erase(m_buttons.begin());
 	//logo
 	m_logo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::LOGO));
 	m_logo.setOrigin(m_logo.getGlobalBounds().width / 2, m_logo.getGlobalBounds().height / 2);
 	m_logo.setPosition(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.17f);
+	m_logo.setScale(WIDTH_WINDOW / 2000.f, WIDTH_WINDOW / 2000.f);
 	
 }
 

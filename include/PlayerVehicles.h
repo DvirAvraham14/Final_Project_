@@ -4,7 +4,7 @@ class PlayerVehicles : public MovingObject
 {
 public:
 	
-	PlayerVehicles(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f, Resources::Players aniData, Resources::SOUNDS sound);
+	PlayerVehicles(Resources::TEXTURE, std::shared_ptr<b2World>, Resources::SOUNDS sound);
 	virtual void drive()				        = 0;
 	virtual void jump(float = JUMP_HEIGHT)		= 0;
 	virtual void update(sf::Time delta);

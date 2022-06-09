@@ -8,9 +8,9 @@ public:
 	static Resources& instance();
 	
 	enum Players {
+		Tricky,
 		Spike,
 		Jake,
-		Tricky,
 		Enemy,
 		MaxPlayer,
 	};
@@ -38,7 +38,9 @@ public:
 		SELECT_A,
 		RAILING,
 		SPIKES,
+		TrickyTexture,
 		SpikeTexture,
+		JackTexture,
 		Monster,
 		Flag,
 		Truck,
@@ -84,7 +86,9 @@ private:
 						"selectArea.png",
 						"railing.png",
 						"spikes.png",
-						"Charchater1.png",
+						"Tricky.png",
+						"Spike.png",
+						"Jack.png",
 						"Monster.png",
 						"Flag.png",
 						"truck.png",

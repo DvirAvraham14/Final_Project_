@@ -2,7 +2,10 @@
 #include "MyContactListener.h"
 #include "DebugDraw.h"
 #include "Screen.h"
-#include "Scate.h"
+#include "Spike.h"
+#include "Jake.h"
+#include "Tricky.h"
+#include "SelectVehicle.h"
 #include "Railing.h"
 #include "Spikes.h"
 #include "Monster.h"
@@ -20,13 +23,14 @@ public:
 	GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view);
 	virtual void draw(sf::RenderWindow& target) const;
 	virtual void handleScreen(sf::Event event, const sf::Vector2f cursorPos);
+	Resources::TEXTURE static                   m_choosenBg;
 private:
 	void createObj();
 	void createObstacles();
 	void createCoins();
 	void updateLevel();
 	std::shared_ptr<sf::View>					m_view;
-	//sf::View*                                   m_view;
+	sf::Sprite                                  m_gameBg;
 	sf::Clock					                m_gameClock;
 	int							                m_level		= 1;
 	int							                m_coinCount = 0;

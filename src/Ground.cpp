@@ -1,18 +1,22 @@
 #include "Ground.h"
-Ground::Ground(const int level,sf::ConvexShape road,std::shared_ptr<b2World> world)
+
+//------------------------------------------
+
+Ground::Ground(const int level, sf::ConvexShape road, std::shared_ptr<b2World> world)
 	:m_road(std::move(road))
 {
-	m_world=world;
-	auto mapIndex =  Resources::TEXTURE::CITY_NIGHT;
-	m_sprite.setTexture(Resources::instance().getTexture(mapIndex, true));
-	auto s = static_cast<int>(m_road.getPoint(m_road.getPointCount() - 2).x);
-	m_sprite.setTextureRect({ 0, 0 , s, (int)m_sprite.getGlobalBounds().height });
-	//m_sprite.setScale(0.5, 0.9);
+	m_world = world;
 	CreateGround();
 }
+
+//------------------------------------------
+
 int Ground::getEndPoint() const {
 	return static_cast<int>(m_road.getPoint(m_road.getPointCount() - 2).x);
 }
+
+//------------------------------------------
+
 void Ground::CreateGround() {
 	// The body is also added to the world
 	b2BodyDef groundBodyDef;
@@ -29,7 +33,9 @@ void Ground::CreateGround() {
 	m_body->CreateFixture(&chain, 1.0f);
 	m_body->SetUserData(this);
 }
+//------------------------------------------
+
 void Ground::draw(sf::RenderWindow& target)  const {
-	target.draw(m_sprite);
+
 	target.draw(m_road);
 }

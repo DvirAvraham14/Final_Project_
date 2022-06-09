@@ -1,16 +1,16 @@
 #include"GameScreen.h"
 GameScreen::GameScreen(std::shared_ptr<b2World> world,std::shared_ptr<sf::View> view)
-	:m_world(world), m_view(view)//,Screen(res::TEXTURE::CITY_NIGHT, GAME)
+	:m_world(world), m_view(view)
 {
 	updateLevel();
 	createObj();
 }
 void GameScreen::draw(sf::RenderWindow& target) const {
-	//target.draw(m_background);
+	target.draw(m_gameBg);
 	for (auto& obj : m_objects) 
-			obj->draw(target);
+		obj->draw(target);
 	
-	m_vehicels[0]->draw(target);
+	m_vehicels[SelectVehicle::currPlayer]->draw(target);
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
 	m_world->DebugDraw();
@@ -20,8 +20,9 @@ void GameScreen::createObj() {
 
 	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(), m_world));
 
-	m_vehicels.push_back(std::make_shared<Scate>(res::TEXTURE::SpikeTexture, m_world, sf::Vector2f(300, 500),
-		res::Players::Spike, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_shared<Tricky>(res::TEXTURE::TrickyTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_shared<Spike>(res::TEXTURE::SpikeTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture, m_world, res::SOUNDS::Coins));
 
 	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(0, 550),
 		res::Players::Enemy, res::SOUNDS::Crash));
@@ -84,23 +85,28 @@ void GameScreen::updateLevel() {
 
 
 void GameScreen::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
+
+	sf::Sprite s(Resources::instance().getTexture(m_choosenBg, true), sf::IntRect(0, 0, WIDTH_WINDOW * 100, HEIGHT_WINDOW*2));
+	m_gameBg = s;
+	m_gameBg.setScale(WIDTH_WINDOW / 2000.f, WIDTH_WINDOW / 2000.6f);
+
 	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
 		static_cast<MovingObject*>(m_vehicels[0].get())->changeAni();
 
-	if (static_cast<Ground*>(m_objects[0].get())->getEndPoint() - m_vehicels[0]->getPos().x > WIDTH_WINDOW)
-		m_view->setCenter(sf::Vector2f(m_vehicels[0]->getPos()).x + WIDTH_WINDOW/3, (HEIGHT_WINDOW / 2)+150);
+	if (static_cast<Ground*>(m_objects[0].get())->getEndPoint() - m_vehicels[SelectVehicle::currPlayer]->getPos().x > WIDTH_WINDOW)
+		m_view->setCenter(sf::Vector2f(m_vehicels[SelectVehicle::currPlayer]->getPos()).x + WIDTH_WINDOW/3, HEIGHT_WINDOW / 2.f);
 
 	m_world->Step(timeStep, velocityIterations, positionIterations);
 	const auto delta = m_gameClock.restart();
 
-	m_vehicels[0]->update(delta);
+	m_vehicels[SelectVehicle::currPlayer]->update(delta);
 	for (auto& enemy : m_enemies)
 		enemy->update(delta);
 
 	for (auto i = 0; i < m_objects.size();i++) 
 		if (m_objects[i]->getDeleteStatus()) {
 			m_objects.erase(m_objects.begin() + i);
-			m_vehicels[0]->play();
+			m_vehicels[SelectVehicle::currPlayer]->play();
 			m_coinCount++;
 		}
 }

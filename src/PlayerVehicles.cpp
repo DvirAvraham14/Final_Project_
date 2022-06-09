@@ -2,12 +2,10 @@
 
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
-	sf::Vector2f pos,
-	Resources::Players aniData
-	,Resources::SOUNDS sound)
-	:MovingObject(texture,world, pos,aniData,sound)
+	Resources::SOUNDS sound)
+	:MovingObject(texture, world, sf::Vector2f(200, 500), Resources::Players::Tricky, sound)
 {
-	CreateBody(pos);
+	CreateBody(sf::Vector2f(200, 500));
 }
 
 void PlayerVehicles::CreateBody(sf::Vector2f pos) {

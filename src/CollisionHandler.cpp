@@ -1,5 +1,7 @@
 #include "CollisionHandler.h"
-#include "Scate.h"
+#include "Spike.h"
+#include "Jake.h"
+#include "Tricky.h"
 #include "Ground.h"
 #include "Railing.h"
 #include "Spikes.h"
@@ -28,7 +30,7 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch, bool e
 
 void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool endTouch)
 {
-	auto scateTouchRailing = static_cast<Scate*>(&scate);
+	auto scateTouchRailing = static_cast<Spike*>(&scate);
 
 	if (feetToch) {
 		railing.play();
@@ -57,7 +59,7 @@ void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endT
 {
 	if (scate.getSprite().getGlobalBounds().intersects(spikes.getSprite().getGlobalBounds())) {
 		std::cout << "not touching the ground\n";
-		auto obj = static_cast<Scate*>(&scate);
+		auto obj = static_cast<Spike*>(&scate);
 		obj->startContact();
 		spikes.play();
 		obj->jump(20);
@@ -73,7 +75,7 @@ void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bo
 
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
-	auto scateTouchflag = static_cast<Scate*>(&scate);
+	auto scateTouchflag = static_cast<Spike*>(&scate);
 	scateTouchflag->setSpeet(-10);
 	scateTouchflag->setAni(Direction::Win);
 	endFlag.play();
@@ -115,7 +117,7 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 {
 	truck.play();
 	auto truckTouchscate = static_cast<Truck*>(&truck);
-	auto scateTouchTruck = static_cast<Scate*>(&scate);
+	auto scateTouchTruck = static_cast<Spike*>(&scate);
 	truckTouchscate->setEnableMove(false);
 	scateTouchTruck->setEnableMove(false);
 	scateTouchTruck->setAni(Direction::FrontFall);
@@ -174,22 +176,26 @@ void SpikesTruckOP(GameObject& truck, GameObject& spikes, bool feetToch, bool en
 CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 {
 	HitMap phm;
-	phm[Key(typeid(Ground), typeid(Scate))] = &groundOnJump;
-	phm[Key(typeid(Scate), typeid(Ground))] = &groundOnJumpOP;
-	phm[Key(typeid(Scate), typeid(Railing))] = &scateRailing;
-	phm[Key(typeid(Railing), typeid(Scate))] = &oppsiteScateRailing;
-	phm[Key(typeid(Scate), typeid(Spikes))] = &scateSpikes;
-	phm[Key(typeid(Spikes), typeid(Scate))] = &oppsiteScateSpikes;
-	phm[Key(typeid(Scate), typeid(Monster))] = &scateMonster;
-	phm[Key(typeid(Monster), typeid(Scate))] = &oppsiteScateMonster;
-	phm[Key(typeid(Scate), typeid(EndFlag))] = &scateEndFlag;
-	phm[Key(typeid(EndFlag), typeid(Scate))] = &oppsiteEndFlag;
+	phm[Key(typeid(Ground), typeid(Spike))] = &groundOnJump;
+	phm[Key(typeid(Spike), typeid(Ground))] = &groundOnJumpOP;
+	phm[Key(typeid(Ground), typeid(Tricky))] = &groundOnJump;
+	phm[Key(typeid(Tricky), typeid(Ground))] = &groundOnJumpOP;
+	phm[Key(typeid(Ground), typeid(Jake))] = &groundOnJump;
+	phm[Key(typeid(Jake), typeid(Ground))] = &groundOnJumpOP;
+	phm[Key(typeid(Spike), typeid(Railing))] = &scateRailing;
+	phm[Key(typeid(Railing), typeid(Spike))] = &oppsiteScateRailing;
+	phm[Key(typeid(Spike), typeid(Spikes))] = &scateSpikes;
+	phm[Key(typeid(Spikes), typeid(Spike))] = &oppsiteScateSpikes;
+	phm[Key(typeid(Spike), typeid(Monster))] = &scateMonster;
+	phm[Key(typeid(Monster), typeid(Spike))] = &oppsiteScateMonster;
+	phm[Key(typeid(Spike), typeid(EndFlag))] = &scateEndFlag;
+	phm[Key(typeid(EndFlag), typeid(Spike))] = &oppsiteEndFlag;
 
-	phm[Key(typeid(Scate), typeid(Truck))] = &scateTruck;
-	phm[Key(typeid(Truck), typeid(Scate))] = &oppsiteScateTruck;
+	phm[Key(typeid(Spike), typeid(Truck))] = &scateTruck;
+	phm[Key(typeid(Truck), typeid(Spike))] = &oppsiteScateTruck;
 
-	phm[Key(typeid(Scate), typeid(Coin))] = &scateCoin;
-	phm[Key(typeid(Coin), typeid(Scate))] = &oppsiteScateCoin;
+	phm[Key(typeid(Spike), typeid(Coin))] = &scateCoin;
+	phm[Key(typeid(Coin), typeid(Spike))] = &oppsiteScateCoin;
 
 	phm[Key(typeid(Truck), typeid(Railing))] = &truckRailing;
 	phm[Key(typeid(Railing), typeid(Truck))] = &oppsiteTruckRailing;

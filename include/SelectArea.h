@@ -1,5 +1,6 @@
 #pragma once
-#include"Screen.h"
+#include "Screen.h"
+#include "GameScreen.h"
 
 class SelectArea :public Screen
 {

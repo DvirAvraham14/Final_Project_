@@ -12,7 +12,9 @@ void Map::createMap(int index) {
 		m_road.setPoint(i, sf::Vector2f(points[i].x, points[i].y));
 	m_road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, INT32_MAX));
 	m_road.setPoint(points.size() + 1, sf::Vector2f(0, INT32_MAX));
-	m_road.setFillColor(sf::Color::Black);
+	m_road.setOutlineThickness(WIDTH_WINDOW/-33.3f);
+	m_road.setOutlineColor(sf::Color(0x373737FF));
+	m_road.setFillColor(sf::Color(0x555555FF));
 }
 
 

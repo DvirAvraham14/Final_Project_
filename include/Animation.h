@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Direction.h"
+#include "Resources.h"
+#include "Btn.h"
 #include "AnimationData.h"
 #include <SFML/Graphics.hpp>
 

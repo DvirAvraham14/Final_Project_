@@ -1,7 +1,8 @@
 #include "Controller.h"
 
-T_Screen Btn::m_screen			= T_Screen::MENU;
-int SelectVehicle::currPlayer	= Resources::Players::Spike;
+T_Screen Btn::m_screen = T_Screen::MENU;
+int SelectVehicle::currPlayer = Resources::Players::Spike;
+Resources::TEXTURE GameScreen::m_choosenBg = Resources::TEXTURE::CITY_NIGHT;
 
 Controller::Controller()
 {

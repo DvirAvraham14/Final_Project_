@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerVehicles.h"
-class Scate : public PlayerVehicles
+class Spike : public PlayerVehicles
 {
 public:
 	using PlayerVehicles::PlayerVehicles;
