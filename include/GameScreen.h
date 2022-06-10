@@ -36,7 +36,7 @@ private:
 	int							                m_coinCount = 0;
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
+	std::vector<std::shared_ptr<GameObject>>	m_objects;
 	std::vector<std::shared_ptr<MovingObject>>	m_vehicels;
 	std::vector<std::shared_ptr<MovingObject>>	m_enemies;
-	std::vector<std::shared_ptr<GameObject>>	m_objects;
 };

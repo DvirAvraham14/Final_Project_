@@ -8,7 +8,7 @@ MovingObject::MovingObject(Resources::TEXTURE texture,
 	:GameObject(texture, world, pos, sound),
 	m_animation(Resources::instance().getData(aniData), Direction::Start, m_sprite)
 {
-	m_sprite.setScale(WIDTH_WINDOW / 1137.f, WIDTH_WINDOW / 1137.f);
+	//m_sprite.setScale(WIDTH_WINDOW / 1137.f, WIDTH_WINDOW / 1137.f);
 }
 
 

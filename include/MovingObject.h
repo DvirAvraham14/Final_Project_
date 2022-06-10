@@ -6,10 +6,10 @@ class MovingObject :public GameObject
 public:
 	using GameObject::GameObject;
 	MovingObject(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f, Resources::Players aniData,Resources::SOUNDS sound);
-	virtual void drive()						= 0;
-	virtual void jump(float = 0)				= 0;
+	virtual void drive(Resources::Players player) = 0;
+	virtual void jump(float = 0, Resources::Players = Resources::Players::MaxPlayer) = 0;
 	virtual void CreateBody(sf::Vector2f pos)	= 0;
-	virtual void update(sf::Time)				= 0;
+	//virtual void update(sf::Time)				;
 	inline void setSpeet(float speed) { m_speed = speed; }
 	inline void setAni(Direction dir) { m_animation.direction(dir); }
 	float physicalMove(float vel, float desiredVel);

@@ -1,13 +1,15 @@
 #include <iostream>
 #include "Controller.h"
 
-int main() try
+int main() 
 {
-	Controller game;
-	game.run();
-
+	try {
+		Controller game;
+		game.run();
+	}
+	catch (std::exception& e) {
+		std::cout << e.what();
+	}
 	return EXIT_SUCCESS;
 }
-catch (std::exception& e) {
-	std::cout << e.what();
-}
+

@@ -12,10 +12,7 @@
 class Controller {
 public:
 	Controller();
-	~Controller() {
-		for (auto& screen : m_screen)
-			screen.reset();
-	}
+	~Controller();
 	void run();
 
 private:

@@ -40,6 +40,24 @@ namespace
 				enemy.m_data[static_cast<Direction>(i)].emplace_back(70 * rect, 0, 70, 48);
 		return enemy;
 	}
+
+	AnimationData CoinData() {
+		auto coin = AnimationData{};
+		for (auto i = 0; i < Direction::MaxDir; i++)
+			for(auto row = 0; row < 2 ; row++)
+				for (auto col = 0; col < 5; col++)
+					coin.m_data[static_cast<Direction>(i)].emplace_back(50 * col, 50* row, 50, 50);
+		return coin;
+	}
+
+	AnimationData TruckData() {
+		auto coin = AnimationData{};
+		for (auto i = 0; i < Direction::MaxDir; i++)
+			for (auto row = 0; row < 2; row++)
+				for (auto col = 0; col < 4; col++)
+					coin.m_data[static_cast<Direction>(i)].emplace_back(90 * col, 107 * row, 90, 107);
+		return coin;
+	}
 }
 
 Resources::Resources()
@@ -97,7 +115,9 @@ void Resources::loadSounds() {
 
 //__________________________________
 void Resources::loadAnimaData() {
-	m_animaData[Tricky] = m_animaData[Jake] = m_animaData[Spike] = SpikeData();
-	m_animaData[Enemy] = EnemyData();
+	m_animaData[Tricky]		= m_animaData[Jake] = m_animaData[Spike] = SpikeData();
+	m_animaData[P_Monster]	= EnemyData();
+	m_animaData[P_COIN]		= CoinData();
+	m_animaData[P_Truck]	= TruckData();
 }
 

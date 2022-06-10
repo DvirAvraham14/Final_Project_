@@ -18,7 +18,7 @@ void GameScreen::createObj() {
 	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture		, m_world, res::SOUNDS::Coins));
 
 	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(0, 550),
-		res::Players::Enemy, res::SOUNDS::Crash));
+		res::Players::P_Truck, res::SOUNDS::Crash));
 
 	createObstacles();
 	createCoins();
@@ -43,7 +43,7 @@ void GameScreen::createObstacles() {
 		case 4:
 			m_enemies.push_back(std::make_shared<Monster>(res::TEXTURE::Monster,
 				m_world, sf::Vector2f(obstacle.y, obstacle.z),
-				res::Players::Enemy, res::SOUNDS::KnifeStab));
+				res::Players::P_Monster, res::SOUNDS::KnifeStab));
 			break;
 
 		}
@@ -58,7 +58,7 @@ void GameScreen::createCoins() {
 		if (coin.m_isLine)
 			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS) {
 				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
-					m_world, sf::Vector2f(coin.m_pos.y + j, coin.m_pos.z - 20), res::SOUNDS::Coins, false));
+					m_world, sf::Vector2f(coin.m_pos.y + j, coin.m_pos.z - 20), res::SOUNDS::Coins));
 			}
 		else
 
@@ -66,7 +66,7 @@ void GameScreen::createCoins() {
 				if (i > coin.m_pos.x / 2)
 					j -= 2 * map::COINS_DIS;
 				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
-					m_world, sf::Vector2f(coin.m_pos.y + i * map::COINS_DIS, coin.m_pos.z - j - 20), res::SOUNDS::Coins, false));
+					m_world, sf::Vector2f(coin.m_pos.y + i * map::COINS_DIS, coin.m_pos.z - j - 20), res::SOUNDS::Coins));
 			}
 	}
 }
@@ -94,12 +94,14 @@ void GameScreen::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
 	for (auto& enemy : m_enemies)
 		enemy->update(delta);
 
-	for (auto i = 0; i < m_objects.size(); i++)
+	for (auto i = 0; i < m_objects.size(); i++) {
+		m_objects[i]->update(delta);
 		if (m_objects[i]->getDeleteStatus()) {
 			m_objects.erase(m_objects.begin() + i);
 			m_vehicels[SelectVehicle::currPlayer]->play();
 			m_coinCount++;
 		}
+	}
 }
 
 void GameScreen::draw(sf::RenderWindow& target) const {
@@ -110,5 +112,5 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	m_vehicels[SelectVehicle::currPlayer]->draw(target);
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
-	m_world->DebugDraw();
+	//m_world->DebugDraw();
 }

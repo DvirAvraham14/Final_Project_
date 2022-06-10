@@ -25,15 +25,16 @@ enum Players
 	SPIKE,
 	JAKE,
 };
+
 const float timeStep = 1.0f / 60.0f;
-const int32 velocityIterations = 8;
+const int32 velocityIterations = 7;
 const int32 positionIterations = 3;
 
 namespace map { 
 				const char DOT		 = 'd';
 				const char OBSTACLE  = 'o';
 				const char COINS	 = 'c';
-				const int  COINS_DIS =  70;
+				const int  COINS_DIS =  60;
 }
 
 struct CoinData
@@ -42,6 +43,5 @@ struct CoinData
 	bool m_isLine;
 };
 
-const float JUMP_HEIGHT[Resources::Players::MaxPlayer] = { 50,45,40,0 };
-const float MAX_SPEED[Resources::Players::MaxPlayer] = {35,40,45,10};
-const float MAX_SPEED_TRUCK		= 10;
+const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 50,45,40,0,0};
+const float MAX_SPEED[Resources::Players::MaxPlayer]	= {35,45,40,10,10};

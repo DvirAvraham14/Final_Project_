@@ -13,7 +13,6 @@
                                               "Spike.cpp"
                                               "Jake.cpp"
                                               "Tricky.cpp"
-                                              "ManageLevel.cpp"
                                               "MyContactListener.cpp"
                                               "CollisionHandler.cpp"
                                               "Ground.cpp"
@@ -29,4 +28,5 @@
                                               "RoadMap.cpp"
                                               "GameScreen.cpp"
                                               "Spikes.cpp"
+                                              "Coin.cpp"
                                               )

@@ -1,11 +1,11 @@
-#include"PlayerVehicles.h"
+#include "PlayerVehicles.h"
 
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	Resources::SOUNDS sound)
-	:MovingObject(texture, world, sf::Vector2f(200, 500), Resources::Players::Tricky, sound)
+	:MovingObject(texture, world, sf::Vector2f(6700, 450), Resources::Players::Tricky, sound)
 {
-	CreateBody(sf::Vector2f(200, 500));
+	CreateBody(sf::Vector2f(6700, 450));
 	setBox2dEnable(false);
 }
 
@@ -68,7 +68,28 @@ void PlayerVehicles::updatePosition() {
 		m_animation.direction(Direction::FrontFall);
 		angle = 0;
 	}
+	else if (temp < -45) {
+		m_animation.direction(Direction::FallBack);
+		angle = 0;
+	}
 	m_sprite.setRotation(angle);
 	m_sprite.setPosition(position.x, position.y);
 }
 
+void PlayerVehicles::drive(Resources::Players player) {
+	if (m_contacting) {
+		m_speed += (m_speed < MAX_SPEED[player]) ? 5 : 0;
+		float force = physicalMove(m_body->GetLinearVelocity().x, m_speed);
+		m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
+	}
+}
+
+void PlayerVehicles::jump(float height,Resources::Players player) {
+	if (m_contacting) {
+		m_animation.direction(Direction::Filp);
+		b2Vec2 vel = m_body->GetLinearVelocity();
+		float force = physicalMove(vel.y, ((height == 0) ? JUMP_HEIGHT[player] : height));
+		m_body->ApplyForce(b2Vec2(0, -force), m_body->GetWorldCenter(), true);
+		endContact();
+	}
+}

@@ -5,11 +5,11 @@ class PlayerVehicles : public MovingObject
 public:
 	
 	PlayerVehicles(Resources::TEXTURE, std::shared_ptr<b2World>, Resources::SOUNDS sound);
-	virtual void drive()				= 0;
-	virtual void jump(float = 0)		= 0;
+	virtual void drive(Resources::Players  = Resources::Players::MaxPlayer);
+	virtual void jump(float height=0, Resources::Players player= Resources::Players::MaxPlayer);
 	virtual void update(sf::Time delta);
 	virtual void CreateBody(sf::Vector2f pos);
-
+	//void coilliedSpikes();
 private:
 	void setSensor(float posXm, b2PolygonShape& poly, b2FixtureDef&, int id);
 	void setMassa(float);

@@ -15,6 +15,14 @@ Controller::Controller()
 	
 	createScreens();
 }
+
+//__________________________________
+Controller::~Controller() {
+	m_world->SetAllowSleeping(true);
+	for (auto& screen : m_screen)
+		screen.reset();
+}
+
 //__________________________________
 void Controller::run() {
 	sf::Vector2f cursorPosF;
@@ -25,24 +33,30 @@ void Controller::run() {
 	m_world->SetDebugDraw(&d);
 
 	while (m_window.isOpen()) {
-		m_currScreen = Btn::getScreen();
-		m_window.clear(sf::Color::White);
-		m_window.setView(*m_view);
-		sf::Event event;
-		cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
-		while (m_window.pollEvent(event)) {
-			if (m_currScreen != T_Screen::GAME)
-				m_screen[m_currScreen]->handleScreen(event, cursorPosF);
-			
-			if (event.type == sf::Event::Closed || event.type == sf::Keyboard::Escape)
-				m_window.close();
-		}
-		if (m_currScreen == T_Screen::GAME)
-			m_screen[m_currScreen]->handleScreen(event, cursorPosF);
+		try {
+			m_currScreen = Btn::getScreen();
+			m_window.clear(sf::Color::White);
+			m_window.setView(*m_view);
+			sf::Event event;
+			cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
+			while (m_window.pollEvent(event)) {
+				if (m_currScreen != T_Screen::GAME)
+					m_screen[m_currScreen]->handleScreen(event, cursorPosF);
 
-		m_screen[m_currScreen]->update();	
-		m_screen[m_currScreen]->draw(m_window);
-		m_window.display();
+				if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+					m_window.close();
+				}
+			}
+			if (m_currScreen == T_Screen::GAME)
+				m_screen[m_currScreen]->handleScreen(event, cursorPosF);
+
+			m_screen[m_currScreen]->update();
+			m_screen[m_currScreen]->draw(m_window);
+			m_window.display();
+		}
+		catch (std::exception& e) {
+			std::cout << "Exp:\t" << e.what() << ".\n";
+		}
 	}
 }
 

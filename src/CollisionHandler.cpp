@@ -15,8 +15,12 @@
 // primary collision-processing functions
 void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch, bool endTouch)
 {
-	if (feetToch) 
+	auto scateTouch = static_cast<PlayerVehicles*>(&scate);
+
+	if (feetToch) {
 		scate.startContact();
+		scateTouch->setRotate(false);
+	}
 }
 
 // secondary collision-processing functions that just
@@ -30,13 +34,14 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch, bool e
 
 void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool endTouch)
 {
-	auto scateTouchRailing = static_cast<Spike*>(&scate);
+	auto scateTouchRailing = static_cast<PlayerVehicles*>(&scate);
 
 	if (feetToch) {
+		std::cout << "feet\n";
 		railing.play();
 	}
 	else if(!endTouch && !feetToch){
-		scateTouchRailing->setEnableMove(false);
+		//scateTouchRailing->setEnableMove(false);
 		scateTouchRailing->setSpeet(-15);
 
 	}
@@ -57,25 +62,28 @@ void oppsiteScateRailing(GameObject& railing, GameObject& scate, bool feetToch, 
 
 void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endTouch)
 {
+		
 	if (scate.getSprite().getGlobalBounds().intersects(spikes.getSprite().getGlobalBounds())) {
-		std::cout << "not touching the ground\n";
-		auto obj = static_cast<Spike*>(&scate);
-		obj->startContact();
+		auto obj = static_cast<PlayerVehicles*>(&scate);
 		spikes.play();
-		obj->jump(20);
+		obj->jump(50);
+		//obj->setAni(Direction::FrontFall);
+	if (endTouch)
+		scate.undoCollision();
 	}
+
 }
 
 
 void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bool endTouch)
 {
-	scateSpikes(spikes, scate, feetToch, endTouch);
+	scateSpikes(scate, spikes, feetToch, endTouch);
 }
 
 
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
-	auto scateTouchflag = static_cast<Spike*>(&scate);
+	auto scateTouchflag = static_cast<PlayerVehicles*>(&scate);
 	scateTouchflag->setSpeet(-10);
 	scateTouchflag->setAni(Direction::Win);
 	endFlag.play();
@@ -92,7 +100,6 @@ void oppsiteEndFlag(GameObject& endFlag, GameObject& scate, bool feetToch, bool 
 void scateMonster(GameObject& scate, GameObject& monster, bool feetToch, bool endTouch)
 {
 	monster.play();
-	std::cout << typeid(monster).name();
 }
 
 
@@ -122,7 +129,6 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 	truckTouchscate->setEnableMove(false);
 	scateTouchTruck->setEnableMove(false);
 	scateTouchTruck->setAni(Direction::FrontFall);
-	std::cout << "LOST";
 }
 
 

@@ -19,8 +19,8 @@ void Monster::update(sf::Time delta) {
 	m_animation.update(delta);
 }
 
-void Monster::drive() {
-	m_speed = MAX_SPEED[Resources::Players::Enemy];
+void Monster::drive(Resources::Players player) {
+	m_speed = MAX_SPEED[Resources::Players::P_Monster];
 	if (m_body->GetPosition().x >= m_posB.x) {
 		m_goRight = false;
 		m_sprite.setScale(-1, 1);

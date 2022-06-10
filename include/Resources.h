@@ -11,7 +11,9 @@ public:
 		Tricky,
 		Spike,
 		Jake,
-		Enemy,
+		P_Monster,
+		P_Truck,
+		P_COIN,
 		MaxPlayer,
 	};
 

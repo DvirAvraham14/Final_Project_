@@ -21,7 +21,7 @@ void Spikes::CreateBody(sf::Vector2f pos) {
 
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 0.5f;
-	fixtureDef.friction = 0.01f;
+	fixtureDef.friction = 0.1f;
 	//fixtureDef.restitution = 0.3f;
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);

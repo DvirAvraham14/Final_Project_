@@ -9,16 +9,17 @@ Truck::Truck(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vec
 }
 
 void Truck::update(sf::Time time) {
-		drive();
+		drive(Resources::Players::P_Truck);
 		b2Vec2  position = m_body->GetPosition();
 		float	angle = 180 / b2_pi * m_body->GetAngle();
 		m_sprite.setPosition(position.x, position.y);
 		m_sprite.setRotation(angle);
+		m_animation.update(time);
 }
 
-void Truck::drive() {
+void Truck::drive(Resources::Players player) {
 	if (m_enableMove) {
-		m_speed += (m_speed < MAX_SPEED_TRUCK) ? 5 : 0;
+		m_speed += (m_speed < MAX_SPEED[player]) ? 5 : 0;
 		float force = physicalMove(m_body->GetLinearVelocity().x, m_speed);
 		m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
 	}
