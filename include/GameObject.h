@@ -21,12 +21,14 @@ public:
 
 	void play() {/*if(m_sound.getStatus()!=sf::Sound::Playing)*/ m_sound.play(); }
 	void stopPlay() {m_sound.stop(); }
+
 	void undoCollision() {
 		for (auto it = m_body->GetFixtureList(); it; it = it->GetNext()) {
 			if (it)
 				it->SetSensor(true);
 		}
 	}
+
 	void setGravity(float gravity) { m_body->SetGravityScale(gravity); }
 	void stopBody() { m_body->SetAwake(false); }
 	void removeObj() {

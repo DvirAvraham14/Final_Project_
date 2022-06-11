@@ -10,8 +10,7 @@ Animation::Animation(const AnimationData& data, Direction dir, sf::Sprite& sprit
 {
     auto size = m_data.m_data.find(m_dir)->second[m_index];
     m_sprite.setOrigin(size.width / 2, size.height / 2 + 30);
-   // if (sprite.getLocalBounds().height < 100)
-        update();
+    update();
 }
 
 void Animation::direction(Direction dir)
@@ -28,7 +27,7 @@ void Animation::update(sf::Time delta)
     m_elapsed += delta;
     if (m_elapsed >= AnimationTime)
     {
-        if ((m_dir == Direction::FrontFall) && m_index == m_data.m_data.find(m_dir)->second.size() - 1)
+        if ((m_dir == Direction::FrontFall || m_dir == Win) && m_index == m_data.m_data.find(m_dir)->second.size() - 1)
             return;
         m_elapsed -= AnimationTime;
         ++m_index;

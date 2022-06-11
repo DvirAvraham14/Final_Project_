@@ -44,4 +44,4 @@ struct CoinData
 };
 
 const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 50,45,40,0,0};
-const float MAX_SPEED[Resources::Players::MaxPlayer]	= {35,45,40,10,10};
+const float MAX_SPEED[Resources::Players::MaxPlayer]	= {30,30,20,10,10};

@@ -3,9 +3,9 @@
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	Resources::SOUNDS sound)
-	:MovingObject(texture, world, sf::Vector2f(6700, 450), Resources::Players::Tricky, sound)
+	:MovingObject(texture, world, sf::Vector2f(1000, 450), Resources::Players::Tricky, sound)
 {
-	CreateBody(sf::Vector2f(6700, 450));
+	CreateBody(sf::Vector2f(300, 450));
 	setBox2dEnable(false);
 }
 
@@ -21,7 +21,7 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape	= &dynamicBox;
-	fixtureDef.density	= 0.5f;
+	fixtureDef.density	= 1.0f;
 	fixtureDef.friction = 0.1f;
 
 
@@ -92,4 +92,11 @@ void PlayerVehicles::jump(float height,Resources::Players player) {
 		m_body->ApplyForce(b2Vec2(0, -force), m_body->GetWorldCenter(), true);
 		endContact();
 	}
+}
+
+void PlayerVehicles::coilliedSpikes() {
+	m_isDead = m_contacting = true;
+	m_body->SetLinearVelocity({ 0,0 });
+	this->undoCollision();
+	setAni(Direction::FrontFall);
 }

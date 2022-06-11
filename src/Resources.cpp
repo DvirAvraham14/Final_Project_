@@ -55,7 +55,7 @@ namespace
 		for (auto i = 0; i < Direction::MaxDir; i++)
 			for (auto row = 0; row < 2; row++)
 				for (auto col = 0; col < 4; col++)
-					coin.m_data[static_cast<Direction>(i)].emplace_back(90 * col, 107 * row, 90, 107);
+					coin.m_data[static_cast<Direction>(i)].emplace_back(90 * col, 100 * row, 90, 100);
 		return coin;
 	}
 }

@@ -5,5 +5,5 @@ void Spike::drive(Resources::Players player) {
 }
 
 void Spike::jump(float height,Resources::Players player) {
-	PlayerVehicles::jump(height, player);
+	PlayerVehicles::jump(height, Resources::Players::Spike);
 }

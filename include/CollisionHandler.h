@@ -20,6 +20,10 @@ public:
 private:
 	template<typename T>
 	void setCollisionPlayer(HitMap& table);
+	template<typename T>
+	void setTruckCollision(HitMap& table);
+
+	void setMonsterCollision(HitMap& table);
 	CollisionHandler() = default;
 	CollisionHandler(const CollisionHandler&) = delete;
 	void operator=(const CollisionHandler&) = delete;
@@ -32,13 +36,12 @@ private:
 	void oppsiteScateRailing(GameObject& scate, GameObject& ground, bool = false, bool = false);
 	void scateSpikes(GameObject& scate, GameObject& spikes, bool = false, bool = false);
 	void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool = false, bool = false);
-	void scateMonster(GameObject& scate, GameObject& monster, bool = false, bool = false);
-	void oppsiteScateMonster(GameObject& monster, GameObject& scate, bool = false, bool = false);
 
-	void truckRailing(GameObject& truck, GameObject& railing, bool = false, bool = false);
-	void oppsiteTruckRailing(GameObject& railing, GameObject& truck, bool = false, bool = false);
-	void truckMonster(GameObject& truck, GameObject& monster, bool = false, bool = false);
-	void oppsiteTruckMonster(GameObject& monster, GameObject& truck, bool = false, bool = false);
+	void spikeMonster(GameObject& spike, GameObject& monster, bool = false, bool = false);
+	void oppsiteSpikeMonster(GameObject& monster, GameObject& spike, bool = false, bool = false);
+
+	void staticCollision(GameObject& truck, GameObject& staticObj, bool feetToch, bool endTouch);
+	void oppsiteStaticCollision(GameObject& staticObj, GameObject& railing, bool feetToch, bool endTouch);
 
 	void oppsiteScateCoin(GameObject& coin, GameObject& scate, bool = false, bool = false);
 	void scateCoin(GameObject& scate, GameObject& coin, bool = false, bool = false);

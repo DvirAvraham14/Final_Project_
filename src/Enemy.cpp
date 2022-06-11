@@ -13,7 +13,8 @@ void Enemy::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(WIDTH_WINDOW / 33.3f, WIDTH_WINDOW / 33.5f);
+	dynamicBox.SetAsBox(m_sprite.getTextureRect().width / 2,
+		m_sprite.getTextureRect().height / 2);
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape = &dynamicBox;

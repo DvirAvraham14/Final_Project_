@@ -21,17 +21,19 @@ void Monster::update(sf::Time delta) {
 
 void Monster::drive(Resources::Players player) {
 	m_speed = MAX_SPEED[Resources::Players::P_Monster];
-	if (m_body->GetPosition().x >= m_posB.x) {
+	if (m_body->GetPosition().x >= m_posB.x) 
 		m_goRight = false;
-		m_sprite.setScale(-1, 1);
-	}
-	else if (m_body->GetPosition().x <= m_posA.x) {
-		m_goRight = true;
-		m_sprite.setScale(1, 1);
-	}
 
-	if (!m_goRight) 
+	else if (m_body->GetPosition().x <= m_posA.x) 
+		m_goRight = true;
+
+	if (!m_goRight) {
+		m_sprite.setScale(-1, 1);
 		m_speed *= -1;
+	}
+	else
+		m_sprite.setScale(1, 1);
+
 	
-		m_body->SetLinearVelocity(b2Vec2(m_speed, 0));
+	m_body->SetLinearVelocity(b2Vec2(m_speed, 0));
 }
