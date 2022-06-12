@@ -17,7 +17,7 @@ void GameScreen::createObj() {
 	m_vehicels.push_back(std::make_shared<Spike>(res::TEXTURE::SpikeTexture		, m_world, res::SOUNDS::Coins));
 	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture		, m_world, res::SOUNDS::Coins));
 
-	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(200, 550),
+	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(150, 550),
 		res::Players::P_Truck, res::SOUNDS::Crash));
 
 	createObstacles();
@@ -113,5 +113,5 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
 
-	//m_world->DebugDraw();
+	m_world->DebugDraw();
 }

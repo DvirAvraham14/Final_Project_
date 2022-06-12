@@ -30,6 +30,8 @@ const float timeStep = 1.0f / 60.0f;
 const int32 velocityIterations = 7;
 const int32 positionIterations = 3;
 
+const std::vector<sf::Vector2f>PIT_VEC = { {0,0},{0,200},{220,200},{220,0} };
+const int PIT_SIZE = 200;
 namespace map { 
 				const char DOT		 = 'd';
 				const char OBSTACLE  = 'o';
@@ -43,5 +45,5 @@ struct CoinData
 	bool m_isLine;
 };
 
-const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 50,45,40,0,0};
-const float MAX_SPEED[Resources::Players::MaxPlayer]	= {30,30,20,10,10};
+const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 40,35,45,0,0};
+const float MAX_SPEED[Resources::Players::MaxPlayer]	= {30,35,25,10,10};

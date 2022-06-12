@@ -17,10 +17,10 @@ void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch, bool end
 {
 	auto scateTouch = static_cast<PlayerVehicles*>(&scate);
 
-	if (feetToch) {
-		scate.startContact();
+	if (feetToch ) 
 		scateTouch->setRotate(false);
-	}
+	
+		scate.startContact();
 }
 
 // secondary collision-processing functions that just
@@ -38,12 +38,12 @@ void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool en
 
 	if (feetToch) {
 		scateTouchRailing->setRotate(true);
-		scateTouchRailing->startContact();
+		scateTouchRailing->setAni(Direction::Drive);
 		railing.play();
 	}
-	else if (!endTouch && !feetToch)
-		scateTouchRailing->setSpeet(-15);
-
+	else if (!endTouch && !feetToch) 
+		scateTouchRailing->setSpeet(-20);
+	
 	if (endTouch) 
 		railing.stopPlay();
 	
@@ -60,9 +60,7 @@ void oppsiteScateRailing(GameObject& railing, GameObject& scate, bool feetToch, 
 void scateSpikes(GameObject& scate, GameObject& spikes, bool feetToch, bool endTouch)
 {
 
-	std::cout << "feetTouch: " << feetToch << "\tendTouch: " << endTouch << "\n";
 	auto obj = static_cast<PlayerVehicles*>(&scate);
-
 	if (scate.getSprite().getGlobalBounds().intersects(spikes.getSprite().getGlobalBounds()) && !obj->isDead()) {
 		spikes.play();
 		obj->coilliedSpikes();

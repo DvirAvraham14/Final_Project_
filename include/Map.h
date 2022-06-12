@@ -1,7 +1,6 @@
 #pragma once
 #include "macro.h"
 using std::vector;
-const std::vector<sf::Vector2f>pitVec = { {0,0},{0,200},{220,200},{220,0} };
 
 class Map 
 {

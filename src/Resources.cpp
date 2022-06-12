@@ -37,7 +37,7 @@ namespace
 		auto enemy = AnimationData{};
 		for (auto i = 0; i < Direction::MaxDir; i++)
 			for (auto rect = 0; rect < 3; rect++)
-				enemy.m_data[static_cast<Direction>(i)].emplace_back(70 * rect, 0, 70, 48);
+				enemy.m_data[static_cast<Direction>(i)].emplace_back(50 * rect, 0, 50, 48);
 		return enemy;
 	}
 
@@ -55,7 +55,7 @@ namespace
 		for (auto i = 0; i < Direction::MaxDir; i++)
 			for (auto row = 0; row < 2; row++)
 				for (auto col = 0; col < 4; col++)
-					coin.m_data[static_cast<Direction>(i)].emplace_back(90 * col, 100 * row, 90, 100);
+					coin.m_data[static_cast<Direction>(i)].emplace_back(135 * col, 90 * row, 135, 90);
 		return coin;
 	}
 }

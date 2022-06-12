@@ -39,10 +39,10 @@ vector<sf::Vector2f> Map::readCord(std::string map) {
 			float x, y, z;
 			iss >> x >> y >> z;
 			if (x == 2) {
-				for (auto i = 0; i < pitVec.size(); i++)
-					points.push_back(sf::Vector2f(y, z) + pitVec[i]);
-				z += 200;
-				y += 100;
+				for (auto i = 0; i < PIT_VEC.size(); i++)
+					points.push_back(sf::Vector2f(y, z) + PIT_VEC[i]);
+				z += PIT_SIZE;
+				y += PIT_SIZE/2;
 			}
 
 			m_obstacles.push_back(sf::Vector3f(x, y, z));

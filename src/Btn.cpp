@@ -41,7 +41,6 @@ void Btn::Press(const sf::Vector2f cursur) {
 	
 		m_sound.play();
 		m_screen = m_func();
-		//std::cout << m_screen << "\n";
 	}
 }
 

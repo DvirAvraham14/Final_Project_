@@ -28,9 +28,18 @@ void Ground::CreateGround() {
 	b2Vec2* vs = new b2Vec2[size];
 	for (auto i = 0; i < size; i++)
 		vs[i].Set(m_road.getPoint(i).x, m_road.getPoint(i).y);
+	
+
 	b2ChainShape chain;
 	chain.CreateLoop(vs, size);
+
+	//b2FixtureDef fixtureDef;
+	//fixtureDef.shape = &chain;
+	//fixtureDef.density = 1.0f;
+	//fixtureDef.friction = 1.0f;
+	//m_body->CreateFixture(&fixtureDef);
 	m_body->CreateFixture(&chain, 1.0f);
+
 	m_body->SetUserData(this);
 }
 //------------------------------------------

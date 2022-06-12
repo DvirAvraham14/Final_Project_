@@ -19,9 +19,8 @@ void Enemy::CreateBody(sf::Vector2f pos) {
 
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 1.f;
+	fixtureDef.friction = 1.0f;
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
-	//setSensor(0, dynamicBox, fixtureDef, 1);
 
 }
