@@ -21,7 +21,8 @@ class GameScreen :public Screen
 {
 public:
 	using res = Resources;
-	GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view);
+	GameScreen(std::shared_ptr<sf::View> view);
+	~GameScreen() { m_world->SetAllowSleeping(true); }
 	virtual void draw(sf::RenderWindow& target) const;
 	void handleGame(sf::Time& delta);
 	void static setBg(Resources::TEXTURE bg) { m_choosenBg = bg; }
@@ -36,6 +37,8 @@ private:
 	int scoreCalculator();
 	void updateCoinsInfo();
 	void updateClockInfo();
+
+	MyContactListener							myContact;
 
 	sf::Text                                    m_coinText;
 	sf::Text                                    m_clockText;
@@ -54,9 +57,9 @@ private:
 	int							                m_coinCount = 0;
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
-	std::vector<std::shared_ptr<GameObject>>	m_objects;
-	std::vector<std::shared_ptr<MovingObject>>	m_vehicels;
-	std::vector<std::shared_ptr<MovingObject>>	m_enemies;
+	std::vector<std::unique_ptr<GameObject>>	m_objects;
+	std::vector<std::unique_ptr<MovingObject>>	m_vehicels;
+	std::vector<std::unique_ptr<MovingObject>>	m_enemies;
 
 	
 };
