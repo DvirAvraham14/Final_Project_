@@ -9,6 +9,7 @@
 #include "EndFlag.h"
 #include "Monster.h"
 #include "Coin.h"
+#include "Btn.h"
 
 
 
@@ -78,8 +79,10 @@ void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bo
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
 	auto scateTouchflag = static_cast<PlayerVehicles*>(&scate);
+	scateTouchflag->setEnd(true);
 	scateTouchflag->setSpeet(-10);
 	scateTouchflag->setAni(Direction::Win);
+	scateTouchflag->setScreen();
 	endFlag.play();
 	endFlag.stopBody();
 }
@@ -196,8 +199,14 @@ CollisionHandler::HitMap CollisionHandler::initializeCollisionMap()
 	setTruckCollision<Monster>(phm);
 	setTruckCollision<Coin>(phm);
 
-	phm[Key(typeid(Spikes), typeid(Truck))] = &SpikesTruck;
-	phm[Key(typeid(Truck), typeid(Spikes))] = &SpikesTruckOP;
+	phm[Key(typeid(Truck), typeid(Railing))] = &truckRailing;
+	phm[Key(typeid(Railing), typeid(Truck))] = &oppsiteTruckRailing;
+	phm[Key(typeid(Truck), typeid(Monster))] = &truckMonster;
+	phm[Key(typeid(Monster), typeid(Truck))] = &oppsiteTruckMonster;
+	phm[Key(typeid(Truck), typeid(Coin))]    = &truckCoin;
+	phm[Key(typeid(Coin), typeid(Truck))]    = &oppsiteTruckCoin;
+	phm[Key(typeid(Spikes), typeid(Truck))]  = &SpikesTruck;
+	phm[Key(typeid(Truck), typeid(Spikes))]  = &SpikesTruckOP;
 	return phm;
 }
 
@@ -227,32 +236,19 @@ void CollisionHandler::processCollision(GameObject& object1, GameObject& object2
 }
 
 template<typename T>
-void CollisionHandler::setCollisionPlayer(HitMap& phm) {
-	phm[Key(typeid(Ground), typeid(T))] = &groundOnJump;
-	phm[Key(typeid(T), typeid(Ground))] = &groundOnJumpOP;
+void CollisionHandler::setCollisionPlayer(HitMap &phm) {
+	phm[Key(typeid(Ground), typeid(T))]  = &groundOnJump;
+	phm[Key(typeid(T), typeid(Ground))]  = &groundOnJumpOP;
 	phm[Key(typeid(T), typeid(Railing))] = &scateRailing;
 	phm[Key(typeid(Railing), typeid(T))] = &oppsiteScateRailing;
-	phm[Key(typeid(T), typeid(Spikes))] = &scateSpikes;
-	phm[Key(typeid(Spikes), typeid(T))] = &oppsiteScateSpikes;
-	phm[Key(typeid(T), typeid(Truck))] = &scateTruck;
-	phm[Key(typeid(Truck), typeid(T))] = &oppsiteScateTruck;
+	phm[Key(typeid(T), typeid(Spikes))]  = &scateSpikes;
+	phm[Key(typeid(Spikes), typeid(T))]  = &oppsiteScateSpikes;
+	phm[Key(typeid(T), typeid(Monster))] = &scateMonster;
+	phm[Key(typeid(Monster), typeid(T))] = &oppsiteScateMonster;
+	phm[Key(typeid(T), typeid(Truck))]	 = &scateTruck;
+	phm[Key(typeid(Truck), typeid(T))]	 = &oppsiteScateTruck;
 	phm[Key(typeid(T), typeid(EndFlag))] = &scateEndFlag;
 	phm[Key(typeid(EndFlag), typeid(T))] = &oppsiteEndFlag;
-	phm[Key(typeid(T), typeid(Coin))] = &scateCoin;
-	phm[Key(typeid(Coin), typeid(T))] = &oppsiteScateCoin;
-}
-
-template<typename T>
-void CollisionHandler::setTruckCollision(HitMap& phm) {
-	phm[Key(typeid(Truck), typeid(T))] = &staticCollision;
-	phm[Key(typeid(T), typeid(Truck))] = &oppsiteStaticCollision;
-}
-
-void CollisionHandler::setMonsterCollision(HitMap& phm) {
-	phm[Key(typeid(Spike), typeid(Monster))] = &spikeMonster;
-	phm[Key(typeid(Monster), typeid(Spike))] = &oppsiteSpikeMonster;
-	phm[Key(typeid(Tricky), typeid(Monster))] = &trickyMonster;
-	phm[Key(typeid(Monster), typeid(Tricky))] = &oppsiteTrickyMonster;
-	phm[Key(typeid(Jake), typeid(Monster))] = &jakeMonster;
-	phm[Key(typeid(Monster), typeid(Jake))] = &oppsiteJakeMonster;
+	phm[Key(typeid(T), typeid(Coin))]	 = &scateCoin;
+	phm[Key(typeid(Coin), typeid(T))]	 = &oppsiteScateCoin;
 }

@@ -1,15 +1,12 @@
 #include "Controller.h"
 
-T_Screen Btn::m_screen = T_Screen::MENU;
-int SelectVehicle::currPlayer = Resources::Players::Spike;
-Resources::TEXTURE GameScreen::m_choosenBg = Resources::TEXTURE::CITY_NIGHT;
-
 Controller::Controller()
 {
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 	m_window.create(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW, desktop.bitsPerPixel),
 		"Death Race",
 		sf::Style::Titlebar | sf::Style::Close);
+
 	*m_view =sf::View(m_window.getDefaultView());
 	m_world->SetContactListener(&myContact);
 	
@@ -18,6 +15,7 @@ Controller::Controller()
 
 //__________________________________
 Controller::~Controller() {
+
 	m_world->SetAllowSleeping(true);
 	for (auto& screen : m_screen)
 		screen.reset();
@@ -34,24 +32,26 @@ void Controller::run() {
 
 	while (m_window.isOpen()) {
 		try {
-			m_currScreen = Btn::getScreen();
+			
+			if(Btn::getScreen()==SCORE)
+				m_view->setCenter(m_window.getDefaultView().getCenter());
 			m_window.clear(sf::Color::White);
 			m_window.setView(*m_view);
 			sf::Event event;
 			cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
+
 			while (m_window.pollEvent(event)) {
-				if (m_currScreen != T_Screen::GAME)
-					m_screen[m_currScreen]->handleScreen(event, cursorPosF);
+				if (Btn::getScreen() != T_Screen::GAME)
+					m_screen[Btn::getScreen()]->handleScreen(event, cursorPosF);
 
 				if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
 					m_window.close();
 				}
 			}
-			if (m_currScreen == T_Screen::GAME)
-				m_screen[m_currScreen]->handleScreen(event, cursorPosF);
-
-			m_screen[m_currScreen]->update();
-			m_screen[m_currScreen]->draw(m_window);
+			auto delta = m_gameClock.getElapsedTime();
+			m_gameClock.restart();
+			m_screen[Btn::getScreen()]->handleGame(delta);
+			m_screen[Btn::getScreen()]->draw(m_window);
 			m_window.display();
 		}
 		catch (std::exception& e) {
@@ -61,9 +61,12 @@ void Controller::run() {
 }
 
 void Controller::createScreens() {
+
 	m_screen.push_back(std::make_unique<Menu>());
+	m_screen.push_back(std::make_unique<Help>());
 	m_screen.push_back(std::make_unique<RoadMap>());
 	m_screen.push_back(std::make_unique<SelectVehicle>());
 	m_screen.push_back(std::make_unique<SelectArea>());
 	m_screen.push_back(std::make_unique<GameScreen>(m_world, m_view));
+	m_screen.push_back(std::make_unique<ScoreScreen>());
 }

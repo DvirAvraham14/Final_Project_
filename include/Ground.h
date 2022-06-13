@@ -9,5 +9,4 @@ public:
 	int getEndPoint() const ;
 private:
 	sf::ConvexShape m_road;
-	virtual void CreateBody(sf::Vector2f pos) {}
 };

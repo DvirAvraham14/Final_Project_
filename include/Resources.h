@@ -47,6 +47,12 @@ public:
 		Flag,
 		Truck,
 		Coin,
+		Score,
+		NEXT,
+		STAR,
+		HELP_CENTER1,
+		HELP_CENTER2,
+		CLOCK,
 		MaxTexture,
 	};
 
@@ -57,6 +63,7 @@ public:
 		KnifeStab,
 		Crash,
 		Coins,
+		UNLOCK,
 		MaxSounds,
 	};
 
@@ -95,6 +102,12 @@ private:
 						"Flag.png",
 						"truck.png",
 						"coin.png",
+						"score.png",
+						"next.png",
+						"star.png",
+						"HelpCenter1.png",
+						"HelpCenter2.png",
+						"clock.png",
 										
 	};	
 
@@ -105,6 +118,7 @@ private:
 							"KnifeStab.wav",
 							"crash.wav",
 							"coin.wav",
+							"unlock.wav"
 						
 	};
 

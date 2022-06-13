@@ -66,7 +66,7 @@ Resources::Resources()
 	m_animaData(MaxPlayer)
 {
 
-	if (!m_font.loadFromFile("gameFont.otf"))
+	if (!m_font.loadFromFile("gameFont.TTf"))
 		throw "Font error\n";
 
 	loadTextur();

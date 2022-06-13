@@ -29,4 +29,6 @@
                                               "GameScreen.cpp"
                                               "Spikes.cpp"
                                               "Coin.cpp"
+                                              "ScoreScreen.cpp"
+                                              "Help.cpp"
                                               )

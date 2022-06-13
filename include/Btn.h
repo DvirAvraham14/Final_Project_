@@ -9,7 +9,8 @@ private:
 	sf::Vector2f						m_position;
 	sf::Sound							m_sound;
 	std::function<T_Screen()>           m_func;
-	T_Screen static                     m_screen;
+	T_Screen static                     m_currScreen;
+	
 public:
 	Btn() = default;
 	Btn(float, float, Resources::TEXTURE sprite, std::function<T_Screen()> func=nullptr);
@@ -18,8 +19,10 @@ public:
 	void Press(const sf::Vector2f cursur);
 	void updateSprite(Resources::TEXTURE);
 	auto getPosition() const { return m_position; };
-	int static getScreen() { return static_cast<int>(m_screen); };
 	void updatFunc(std::function<T_Screen()> func) { m_func = func; };
 	void unlock(std::function<T_Screen()> func);
 	void draw(sf::RenderWindow &window) const;
+	bool isLock() const;
+	T_Screen static getScreen(){ return m_currScreen; }
+	void static setScreen(T_Screen screen) { m_currScreen = screen; }
 };

@@ -15,6 +15,7 @@
 #include "Map.h"
 #include "Coin.h"
 #include "macro.h"
+#include "ScoreScreen.h"
 
 class GameScreen :public Screen
 {
@@ -22,21 +23,36 @@ public:
 	using res = Resources;
 	GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view);
 	virtual void draw(sf::RenderWindow& target) const;
-	virtual void handleScreen(sf::Event event, const sf::Vector2f cursorPos);
-	Resources::TEXTURE static                   m_choosenBg;
+	void handleGame(sf::Time& delta);
+	void static setBg(Resources::TEXTURE bg) { m_choosenBg = bg; }
+	
 private:
 	void createObj();
 	void createObstacles();
 	void createCoins();
 	void updateLevel();
+	void setClock();
+	int scoreCalculator();
+
+	void drawCoinsInfo(sf::RenderWindow& target) const;
+	void drawClockInfo(sf::RenderWindow& target) const;
+	void drawTextInfo(sf::RenderWindow& target, sf::Vector2f pos, std::string oss) const;
+
+	bool                                        m_lost = false;
+	std::string                                 m_time;
+	int                                         m_minutes = 0;
+	Resources::TEXTURE static                   m_choosenBg;
 	std::shared_ptr<sf::View>					m_view;
 	sf::Sprite                                  m_gameBg;
-	sf::Clock					                m_gameClock;
-	int							                m_level		= 1;
+	sf::Time									m_timePass;
+	int							                m_level		= 0;
+	int                                         m_totalCoins = 0;
 	int							                m_coinCount = 0;
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
 	std::vector<std::shared_ptr<GameObject>>	m_objects;
 	std::vector<std::shared_ptr<MovingObject>>	m_vehicels;
 	std::vector<std::shared_ptr<MovingObject>>	m_enemies;
+
+	
 };

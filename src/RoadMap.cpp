@@ -4,6 +4,7 @@ RoadMap::RoadMap()
 	:Screen(Resources::TEXTURE::MAP_ROAD, T_Screen::MENU)
 {
 	lockLevels();
+	m_sound.setBuffer(Resources::instance().getSound(Resources::UNLOCK));
 }
 
 void RoadMap::lockLevels() {
@@ -31,22 +32,29 @@ void RoadMap::setLock(std::vector<sf::Vector2f> position) {
 	lock.setScale(WIDTH_WINDOW / 1420.0f, WIDTH_WINDOW / 1420.0f);
 	for (auto& i : position) {
 		m_buttons.push_back(Btn(i, lock));
-	}
-	Unlock(1);
+	};
 }
 
 void RoadMap::Unlock(int index) {
 	m_buttons[index].unlock([&]() ->T_Screen {return SELECT_VEHICLE; });
+	this->setNextLevel(false);
 }
 
 void RoadMap::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
 	for (auto& btn : m_buttons)
 		if (event.type == sf::Event::MouseButtonReleased)
 			btn.Press(cursorPos);
+	if (this->getNextLevel()) {
+		m_sound.play();
+		Unlock(getLevel());
+	}
 }
 
+int RoadMap::getLevel() {
+	for (auto i = 1; i < m_buttons.size(); i++)
+		if (m_buttons[i].isLock())
+			return i;
+}
 void RoadMap::draw(sf::RenderWindow& target) const {
 	Draw(target);
-	for (auto& i : m_locks)
-		i.draw(target);
 }

@@ -19,6 +19,7 @@ void Map::createMap(int index) {
 
 
 vector<sf::Vector2f> Map::readCord(std::string map) {
+
 	std::ifstream file;
 	std::string line;
 	std::vector<sf::Vector2f> points;

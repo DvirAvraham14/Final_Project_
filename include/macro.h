@@ -13,10 +13,12 @@ const int HEIGHT_WINDOW = WIDTH_WINDOW/1.6;
 enum T_Screen
 {
 	MENU = 0,
+	HELP,
 	SELECT_LEVEL,
 	SELECT_VEHICLE,
 	SELECT_AREA,
 	GAME,
+	SCORE,
 };
 
 enum Players
@@ -24,6 +26,16 @@ enum Players
 	TRICKY = 0,
 	SPIKE,
 	JAKE,
+};
+
+enum OBJECT
+{
+	GROUND = 0,
+	RAILING,
+	SPIKES,
+	FLAG,
+	MONSTER,
+
 };
 
 const float timeStep = 1.0f / 60.0f;

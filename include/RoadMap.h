@@ -10,7 +10,8 @@ public:
 	virtual void handleScreen(sf::Event event, const sf::Vector2f cursorPos);
 	void Unlock(int index);
 private:
+	sf::Sound m_sound;
 	void lockLevels();
 	void setLock(std::vector<sf::Vector2f> position);
-	std::vector<Btn> m_locks;
+	int getLevel();
 };
