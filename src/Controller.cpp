@@ -49,7 +49,6 @@ void Controller::run() {
 				}
 			}
 			auto delta = m_gameClock.restart();
-			//m_gameClock.restart();
 			m_screen[Btn::getScreen()]->handleGame(delta);
 			m_screen[Btn::getScreen()]->draw(m_window);
 			m_window.display();

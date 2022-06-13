@@ -6,6 +6,8 @@ GameScreen::GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View>
 	:m_world(world), m_view(view)
 {
 	updateLevel();
+	createObj();
+	setGameInfo();
 }
 
 void GameScreen::updateLevel() {
@@ -16,7 +18,8 @@ void GameScreen::updateLevel() {
 	m_vehicels.clear();
 	m_enemies.clear();
 	m_coinCount = 0;
-	createObj();
+	m_timePass = sf::Time().Zero;
+	
 }
 
 
@@ -33,7 +36,6 @@ void GameScreen::createObj() {
 
 	createObstacles();
 	createCoins();
-
 }
 
 void GameScreen::createObstacles() {
@@ -84,6 +86,24 @@ void GameScreen::createCoins() {
 	}
 }
 
+void GameScreen::setGameInfo() {
+	m_clockInfo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::CLOCK));
+	m_clockInfo.setScale(0.9, 0.8);
+
+	m_coinInfo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::Coin));
+	m_coinInfo.setTextureRect(sf::IntRect(0, 50, 50, 50));
+	m_coinInfo.setScale(1, 1.2);
+
+	m_font = Resources::instance().getFont();
+
+	m_clockText.Bold;
+	m_clockText.setFont(m_font);
+	m_clockText.setColor(sf::Color::Black);
+	m_clockText.setScale(1.4, 1.4);
+
+	m_coinText = m_clockText;
+
+}
 void GameScreen::handleGame(sf::Time& delta) {
 
 	m_gameBg.setTexture(Resources::instance().getTexture(m_choosenBg, true));
@@ -116,6 +136,8 @@ void GameScreen::handleGame(sf::Time& delta) {
 	}
 
 	setClock();
+	updateCoinsInfo();
+	updateClockInfo();
 }
 
 int GameScreen::scoreCalculator() {
@@ -155,48 +177,27 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
 
-	drawCoinsInfo(target);
-	drawClockInfo(target);
+	//target.draw(m_clockText);
+	//target.draw(m_clockInfo);
+	target.draw(m_coinText);
+	target.draw(m_coinInfo);
 }
 
-void GameScreen::drawCoinsInfo(sf::RenderWindow& target) const {
+void GameScreen::updateCoinsInfo()  {
 
-	sf::Sprite sprite;
-	sprite.setTexture(Resources::instance().getTexture(Resources::TEXTURE::Coin));
-	sprite.setTextureRect(sf::IntRect(0,50,50,50));
-	sprite.setPosition(target.getView().getCenter().x+300, HEIGHT_WINDOW / 5.f);
-	sprite.setScale(1,1.2);
+	m_coinInfo.setPosition(m_view->getCenter().x + 300, HEIGHT_WINDOW / 5.f);
 
 	std::ostringstream oss;
 	oss << "X " << m_coinCount;
-	drawTextInfo(target, { target.getView().getCenter().x + 360, HEIGHT_WINDOW / 4.75f }, oss.str());
-
-	target.draw(sprite);
+	m_coinText.setString(oss.str());
+	m_coinText.setPosition({ m_view->getCenter().x + 360, HEIGHT_WINDOW / 4.75f });
 }
 
-void GameScreen::drawClockInfo(sf::RenderWindow& target) const {
-
-	sf::Sprite sprite;
-	sprite.setTexture(Resources::instance().getTexture(Resources::TEXTURE::CLOCK));
-	sprite.setPosition(target.getView().getCenter().x + 90, HEIGHT_WINDOW / 4.6f);
-	sprite.setScale(0.9, 0.8);
-
+void GameScreen::updateClockInfo() {
+	m_clockInfo.setPosition(m_view->getCenter().x + 90, HEIGHT_WINDOW / 4.6f);
+	
 	std::ostringstream oss;
 	oss << "X " << m_time;
-	drawTextInfo(target, { target.getView().getCenter().x + 136, HEIGHT_WINDOW / 4.75f }, oss.str());
-	target.draw(sprite);
-}
-
-void GameScreen::drawTextInfo(sf::RenderWindow& target, sf::Vector2f pos, std::string oss) const {
-
-	sf::Font font = Resources::instance().getFont();
-	sf::Text text;
-	text.Bold;
-	text.setFont(font);
-	text.setString(oss);
-	text.setColor(sf::Color::Black);
-	text.setScale(1.4, 1.4);
-	text.setPosition(pos);
-
-	target.draw(text);
+	m_clockText.setString(oss.str());
+	m_clockText.setPosition({ m_view->getCenter().x + 136, HEIGHT_WINDOW / 4.75f });
 }

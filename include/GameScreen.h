@@ -30,14 +30,18 @@ private:
 	void createObj();
 	void createObstacles();
 	void createCoins();
+	void setGameInfo();
 	void updateLevel();
 	void setClock();
 	int scoreCalculator();
+	void updateCoinsInfo();
+	void updateClockInfo();
 
-	void drawCoinsInfo(sf::RenderWindow& target) const;
-	void drawClockInfo(sf::RenderWindow& target) const;
-	void drawTextInfo(sf::RenderWindow& target, sf::Vector2f pos, std::string oss) const;
-
+	sf::Text                                    m_coinText;
+	sf::Text                                    m_clockText;
+	sf::Font                                    m_font;
+	sf::Sprite                                  m_clockInfo;
+	sf::Sprite                                  m_coinInfo;
 	bool                                        m_lost = false;
 	std::string                                 m_time;
 	int                                         m_minutes = 0;

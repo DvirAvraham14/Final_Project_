@@ -15,8 +15,7 @@ GameObject::GameObject(std::shared_ptr<b2World> world)
 	:m_world(world),
 	m_body(nullptr),
 	m_contacting(false)
-{
-}
+{}
 
 void GameObject::draw(sf::RenderWindow& target) const {
 	target.draw(m_sprite);
