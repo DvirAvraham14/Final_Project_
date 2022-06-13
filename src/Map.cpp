@@ -12,7 +12,7 @@ void Map::createMap(int index) {
 		m_road.setPoint(i, sf::Vector2f(points[i].x, points[i].y));
 	m_road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, INT32_MAX));
 	m_road.setPoint(points.size() + 1, sf::Vector2f(0, INT32_MAX));
-	m_road.setOutlineThickness(WIDTH_WINDOW/-33.3f);
+	m_road.setOutlineThickness(WIDTH_WINDOW / -33.3f);
 	m_road.setOutlineColor(sf::Color(0x373737FF));
 	m_road.setFillColor(sf::Color(0x555555FF));
 }
@@ -39,10 +39,10 @@ vector<sf::Vector2f> Map::readCord(std::string map) {
 			float x, y, z;
 			iss >> x >> y >> z;
 			if (x == 2) {
-				for (auto i = 0; i < pitVec.size(); i++)
-					points.push_back(sf::Vector2f(y, z) + pitVec[i]);
-				z += 200;
-				y += 100;
+				for (auto i = 0; i < PIT_VEC.size(); i++)
+					points.push_back(sf::Vector2f(y, z) + PIT_VEC[i]);
+				z += PIT_SIZE;
+				y += PIT_SIZE / 2;
 			}
 
 			m_obstacles.push_back(sf::Vector3f(x, y, z));
@@ -52,8 +52,8 @@ vector<sf::Vector2f> Map::readCord(std::string map) {
 			std::istringstream iss(line);
 			bool line;
 			float x, y, z;
-			iss >> x >> y >> z>>line;
-			m_coins.push_back({ sf::Vector3f(x, y, z) ,line});
+			iss >> x >> y >> z >> line;
+			m_coins.push_back({ sf::Vector3f(x, y, z) ,line });
 		}
 	}
 	return points;

@@ -1,6 +1,6 @@
 #include "Btn.h"
 
-
+T_Screen Btn::m_currScreen = T_Screen::MENU;
 //that class will show button or title on the board
 
 Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<T_Screen()> func)
@@ -40,8 +40,7 @@ void Btn::Press(const sf::Vector2f cursur) {
 	if (m_func && this->m_sprite.getGlobalBounds().contains(cursur)) {
 	
 		m_sound.play();
-		m_screen = m_func();
-		//std::cout << m_screen << "\n";
+		m_currScreen = m_func();
 	}
 }
 
@@ -61,3 +60,10 @@ void Btn::unlock(std::function<T_Screen()> func) {
 	m_sprite.setColor(sf::Color{ 0x00FF000F });
 	m_func = func;
  }
+
+//__________________________________
+bool Btn::isLock() const{
+	if (m_sprite.getColor() == sf::Color{ 0x00FF000F })
+		return false;
+	return true;
+}

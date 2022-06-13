@@ -15,5 +15,5 @@ private:
 	std::vector<sf::Vector2f> readCord(std::string map);
 	sf::ConvexShape			  m_road;
 	std::vector<sf::Vector3f> m_obstacles;
-	std::vector<CoinData>	 m_coins;
+	std::vector<CoinData>	  m_coins;
 };

@@ -13,10 +13,12 @@ const int HEIGHT_WINDOW = WIDTH_WINDOW/1.6;
 enum T_Screen
 {
 	MENU = 0,
+	HELP,
 	SELECT_LEVEL,
 	SELECT_VEHICLE,
 	SELECT_AREA,
 	GAME,
+	SCORE,
 };
 
 enum Players
@@ -26,15 +28,27 @@ enum Players
 	JAKE,
 };
 
+enum OBJECT
+{
+	GROUND = 0,
+	RAILING,
+	SPIKES,
+	FLAG,
+	MONSTER,
+
+};
+
 const float timeStep = 1.0f / 60.0f;
 const int32 velocityIterations = 7;
 const int32 positionIterations = 3;
 
-namespace map { 
-				const char DOT		 = 'd';
-				const char OBSTACLE  = 'o';
-				const char COINS	 = 'c';
-				const int  COINS_DIS =  60;
+const std::vector<sf::Vector2f>PIT_VEC = { {0,0},{0,200},{220,200},{220,0} };
+const int PIT_SIZE = 200;
+namespace map {
+	const char DOT = 'd';
+	const char OBSTACLE = 'o';
+	const char COINS = 'c';
+	const int  COINS_DIS = 60;
 }
 
 struct CoinData
@@ -43,5 +57,5 @@ struct CoinData
 	bool m_isLine;
 };
 
-const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 50,45,40,0,0};
-const float MAX_SPEED[Resources::Players::MaxPlayer]	= {35,45,40,10,10};
+const float JUMP_HEIGHT[Resources::Players::MaxPlayer] = { 45,40,50,0,0 };
+const float MAX_SPEED[Resources::Players::MaxPlayer] = { 30,35,25,10,15 };

@@ -1,12 +1,12 @@
 #include"Monster.h"
 Monster::Monster(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::Players aniData, Resources::SOUNDS sound)
-	:Enemy(texture, world, pos, aniData,sound),
+	:Enemy(texture, world, pos, aniData, sound),
 	m_posA(pos),
-	m_posB(pos + sf::Vector2f(200,0))
-	
+	m_posB(pos + sf::Vector2f(200, 0))
+
 {
 	auto size = m_sprite.getGlobalBounds();
-	m_sprite.setOrigin(size.width/2, size.height/2);
+	m_sprite.setOrigin(size.width / 2, size.height / 2);
 
 }
 
@@ -21,17 +21,19 @@ void Monster::update(sf::Time delta) {
 
 void Monster::drive(Resources::Players player) {
 	m_speed = MAX_SPEED[Resources::Players::P_Monster];
-	if (m_body->GetPosition().x >= m_posB.x) {
+	if (m_body->GetPosition().x >= m_posB.x)
 		m_goRight = false;
-		m_sprite.setScale(-1, 1);
-	}
-	else if (m_body->GetPosition().x <= m_posA.x) {
-		m_goRight = true;
-		m_sprite.setScale(1, 1);
-	}
 
-	if (!m_goRight) 
+	else if (m_body->GetPosition().x <= m_posA.x)
+		m_goRight = true;
+
+	if (!m_goRight) {
+		m_sprite.setScale(-1, 1);
 		m_speed *= -1;
-	
-		m_body->SetLinearVelocity(b2Vec2(m_speed, 0));
+	}
+	else
+		m_sprite.setScale(1, 1);
+
+
+	m_body->SetLinearVelocity(b2Vec2(m_speed, 0));
 }

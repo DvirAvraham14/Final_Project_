@@ -16,7 +16,6 @@
                                               "MyContactListener.cpp"
                                               "CollisionHandler.cpp"
                                               "Ground.cpp"
-                                              "Obstacles.cpp"
                                               "StaticObject.cpp"
                                               "EndFlag.cpp"
                                               "Enemy.cpp"
@@ -29,4 +28,6 @@
                                               "GameScreen.cpp"
                                               "Spikes.cpp"
                                               "Coin.cpp"
+                                              "ScoreScreen.cpp"
+                                              "Help.cpp"
                                               )

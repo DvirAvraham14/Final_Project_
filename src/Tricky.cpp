@@ -6,5 +6,5 @@ void Tricky::drive(Resources::Players player) {
 }
 
 void Tricky::jump(float height, Resources::Players player) {
-	PlayerVehicles::jump(height,player);
+	PlayerVehicles::jump(height, Resources::Players::Tricky);
 }

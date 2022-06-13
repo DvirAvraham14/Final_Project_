@@ -19,9 +19,9 @@ void Menu::createButtons() {
 	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.4f, Resources::TEXTURE::PLAY,
 		[&]()->T_Screen{return SELECT_LEVEL; }));
 
-	m_buttons.push_back(Btn(WIDTH_WINDOW / 17, HEIGHT_WINDOW / 10, Resources::TEXTURE::HELP,[]()->T_Screen {return MENU; }));
+	m_buttons.push_back(Btn(WIDTH_WINDOW / 17, HEIGHT_WINDOW / 10, Resources::TEXTURE::HELP,[]()->T_Screen {return HELP; }));
 	m_buttons.push_back(Btn(WIDTH_WINDOW / 17, HEIGHT_WINDOW / 4, Resources::TEXTURE::SOUND, [&]()->T_Screen
-		{ this->mute(m_buttons.capacity() - 1); return MENU; }));
+		{ this->mute(m_buttons.size() - 1); return MENU; }));
 }
 
 void Menu::mute(int index) {

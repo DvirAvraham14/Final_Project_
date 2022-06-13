@@ -40,8 +40,6 @@ void Animation::update(sf::Time delta)
 void Animation::update()
 {
     m_sprite.setTextureRect(m_data.m_data.find(m_dir)->second[m_index]);
-    if (Btn::getScreen() == GAME)
-        m_sprite.setScale(0.6, 0.6);
 }
 
 void Animation::AutoSwitch() {

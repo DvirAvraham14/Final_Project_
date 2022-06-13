@@ -9,12 +9,16 @@ Truck::Truck(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vec
 }
 
 void Truck::update(sf::Time time) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		m_drive = true;
+	if (m_drive)
 		drive(Resources::Players::P_Truck);
-		b2Vec2  position = m_body->GetPosition();
-		float	angle = 180 / b2_pi * m_body->GetAngle();
-		m_sprite.setPosition(position.x, position.y);
-		m_sprite.setRotation(angle);
-		m_animation.update(time);
+
+	b2Vec2  position = m_body->GetPosition();
+	float	angle = 180 / b2_pi * m_body->GetAngle();
+	m_sprite.setPosition(position.x, position.y);
+	m_sprite.setRotation(angle);
+	m_animation.update(time);
 }
 
 void Truck::drive(Resources::Players player) {

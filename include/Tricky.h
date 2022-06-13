@@ -8,7 +8,7 @@ public:
 
 	//virtual void draw(sf::RenderWindow& target) const;
 	virtual void drive(Resources::Players = Resources::Players::Jake);
-	virtual void jump(float = 0,Resources::Players = Resources::Players::Tricky);
+	virtual void jump(float = 0, Resources::Players = Resources::Players::Tricky);
 
 	//float physicalMove(float , float );
 private:
