@@ -3,8 +3,8 @@
 Truck::Truck(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::Players aniData, Resources::SOUNDS sound)
 	:Enemy(texture, world, pos, aniData, sound)
 {
-	auto size = m_sprite.getGlobalBounds();
-	m_sprite.setOrigin(size.width / 2, size.height / 2);
+	auto size = m_sprite.getTextureRect();
+	m_sprite.setOrigin(size.width / 2, size.height / 2 );
 
 }
 
