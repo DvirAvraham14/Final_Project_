@@ -35,10 +35,11 @@ void groundOnJumpOP(GameObject& scate, GameObject& ground, bool feetToch, bool e
 void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool endTouch)
 {
 	auto scateTouchRailing = static_cast<PlayerVehicles*>(&scate);
+	scateTouchRailing->setAni(Direction::Drive);
 
 	if (feetToch) {
 		scateTouchRailing->setRotate(true);
-		scateTouchRailing->setAni(Direction::Drive);
+		scateTouchRailing->startContact();
 		railing.play();
 	}
 	else if (!endTouch && !feetToch) 
@@ -119,7 +120,6 @@ void jakeMonster(GameObject& jake, GameObject& monster, bool feetToch, bool endT
 	auto jakeTouchMonster = static_cast<PlayerVehicles*>(&jake);
 	jakeTouchMonster->setAni(Direction::FrontFall);
 	jakeTouchMonster->setEnableMove(false);
-
 }
 
 
@@ -148,7 +148,7 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 	auto truckTouchscate = static_cast<Truck*>(&truck);
 	auto scateTouchTruck = static_cast<PlayerVehicles*>(&scate);
 	truckTouchscate->setEnableMove(false);
-	scateTouchTruck->setEnableMove(false);
+	scateTouchTruck->stopBody();
 	scateTouchTruck->setAni(Direction::FrontFall);
 }
 

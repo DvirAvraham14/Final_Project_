@@ -21,3 +21,9 @@ GameObject::GameObject(std::shared_ptr<b2World> world)
 void GameObject::draw(sf::RenderWindow& target) const {
 	target.draw(m_sprite);
 }
+void GameObject::undoCollision() {
+	for (auto it = m_body->GetFixtureList(); it; it = it->GetNext()) {
+		if (it)
+			it->SetSensor(true);
+	}
+}

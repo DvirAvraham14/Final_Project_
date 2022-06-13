@@ -45,5 +45,5 @@ struct CoinData
 	bool m_isLine;
 };
 
-const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 40,35,45,0,0};
-const float MAX_SPEED[Resources::Players::MaxPlayer]	= {30,35,25,10,10};
+const float JUMP_HEIGHT[Resources::Players::MaxPlayer]	= { 45,40,50,0,0};
+const float MAX_SPEED[Resources::Players::MaxPlayer]	= {30,35,25,10,15};

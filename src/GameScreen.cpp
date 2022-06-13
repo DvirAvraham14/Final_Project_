@@ -113,5 +113,5 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
 
-	m_world->DebugDraw();
+	//m_world->DebugDraw();
 }

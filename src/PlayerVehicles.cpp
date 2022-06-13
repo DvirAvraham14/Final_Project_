@@ -29,8 +29,8 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
 
-	setSensor(-10,  fixtureDef, 1);
-	setSensor(10, fixtureDef, 1);
+	setSensor(-10,  fixtureDef, 1);//first wheel
+	setSensor(10, fixtureDef, 1);//secound wheel
 	setMassa(10.0f);
 }
 
@@ -71,7 +71,7 @@ void PlayerVehicles::updatePosition() {
 	auto temp = std::fmod(angle, 360);
 	if (std::abs(temp) > 45 && !m_isDead) {
 		m_animation.direction(Direction::FrontFall);
-		stopBody();
+		undoCollision();
 		angle = 0;
 	}
 
