@@ -8,7 +8,6 @@ Controller::Controller()
 		sf::Style::Titlebar | sf::Style::Close);
 
 	*m_view =sf::View(m_window.getDefaultView());
-	m_world->SetContactListener(&myContact);
 	
 	createScreens();
 	m_gameMusic.setBuffer(Resources::instance().getSound(Resources::GAME_MUSIC));
@@ -66,6 +65,6 @@ void Controller::createScreens() {
 	m_screen.push_back(std::make_unique<RoadMap>());
 	m_screen.push_back(std::make_unique<SelectVehicle>());
 	m_screen.push_back(std::make_unique<SelectArea>());
-	m_screen.push_back(std::make_unique<GameScreen>(m_world, m_view));
+	m_screen.push_back(std::make_unique<GameScreen>(m_view));
 	m_screen.push_back(std::make_unique<ScoreScreen>());
 }

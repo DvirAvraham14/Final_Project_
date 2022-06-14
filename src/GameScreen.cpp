@@ -5,8 +5,8 @@ sf::Text GameScreen::m_coinText = sf::Text();
 int	GameScreen::m_level = 0;
 Resources::TEXTURE GameScreen::m_choosenBg = Resources::TEXTURE::CITY_NIGHT;
 
-GameScreen::GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view)
-	:m_world(world), m_view(view)
+GameScreen::GameScreen(std::shared_ptr<sf::View> view)
+	:m_world(std::make_shared<b2World>(b2Vec2(0.0f, 9.8f))), m_view(view)
 {
 	createObj();
 	updateLevel();
@@ -48,18 +48,18 @@ void GameScreen::createObstacles() {
 	for (auto& obstacle : obstacles) {
 		switch (int(obstacle.x)) {
 		case RAILING:
-			m_objects.push_back(std::make_shared<Railing>(res::TEXTURE::RAILING, m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::SLIDE));
+			m_objects.push_back(std::make_unique<Railing>(res::TEXTURE::RAILING, m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::SLIDE));
 			break;
 		case SPIKES:
-			m_objects.push_back(std::make_shared<Spikes>(res::TEXTURE::SPIKES,
+			m_objects.push_back(std::make_unique<Spikes>(res::TEXTURE::SPIKES,
 				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::KnifeStab));
 			break;
 		case FLAG:
-			m_objects.push_back(std::make_shared<EndFlag>(res::TEXTURE::Flag,
-				m_world, sf::Vector2f(obstacle.y, obstacle.z-20), res::SOUNDS::Winning));
+			m_objects.push_back(std::make_unique<EndFlag>(res::TEXTURE::Flag,
+				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::Winning, false));
 			break;
 		case MONSTER:
-			m_enemies.push_back(std::make_shared<Monster>(res::TEXTURE::Monster,
+			m_enemies.push_back(std::make_unique<Monster>(res::TEXTURE::Monster,
 				m_world, sf::Vector2f(obstacle.y, obstacle.z),
 				res::Players::P_Monster, res::SOUNDS::KnifeStab));
 			break;
@@ -75,7 +75,7 @@ void GameScreen::createCoins() {
 	for (auto& coin : coins) {
 		if (coin.m_isLine)
 			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS) {
-				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
+				m_objects.push_back(std::make_unique<Coin>(res::TEXTURE::Coin,
 					m_world, sf::Vector2f(coin.m_pos.y + j, coin.m_pos.z - 20), res::SOUNDS::Coins));
 				m_totalCoins++;
 			}
@@ -84,7 +84,7 @@ void GameScreen::createCoins() {
 			for (auto i = 0, j = 0; i < coin.m_pos.x; i++, j += map::COINS_DIS) {
 				if (i > coin.m_pos.x / 2)
 					j -= 2 * map::COINS_DIS;
-				m_objects.push_back(std::make_shared<Coin>(res::TEXTURE::Coin,
+				m_objects.push_back(std::make_unique<Coin>(res::TEXTURE::Coin,
 					m_world, sf::Vector2f(coin.m_pos.y + i * map::COINS_DIS, coin.m_pos.z - j - 20), res::SOUNDS::Coins));
 				m_totalCoins++;
 			}
