@@ -28,7 +28,7 @@ void SelectArea::createButtons() {
 	m_buttons.push_back(Btn({ WIDTH_WINDOW / 1.05f,HEIGHT_WINDOW / 2.2f }, arrow,
 		[&]() ->T_Screen {if (m_currBg == 3) m_currBg = 0; else  m_currBg++;  updateRect(); return SELECT_AREA; }));
 	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 1.25f, Resources::TEXTURE::SELECT_A,
-		[&]() ->T_Screen {GameScreen::setBg(Resources::TEXTURE(m_currBg + 14)); return GAME; }));
+		[&]() ->T_Screen {GameData::instance().setCurrBg(Resources::TEXTURE(m_currBg + 14)); return SELECT_LEVEL; }));
 }
 
 //______________________________________________________

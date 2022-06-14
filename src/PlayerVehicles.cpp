@@ -3,9 +3,9 @@
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	Resources::SOUNDS sound)
-	:MovingObject(texture, world, sf::Vector2f(300, 450), Resources::Players::Tricky, sound)
+	:MovingObject(texture, world, sf::Vector2f(250, 500), Resources::Players::Tricky, sound)
 {
-	CreateBody(sf::Vector2f(300, 450));
+	CreateBody(sf::Vector2f(250, 500));
 	m_sprite.setScale(0.6, 0.6);
 	setBox2dEnable(false);
 }
@@ -35,17 +35,8 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 
 void PlayerVehicles::setSensor(float posX, b2FixtureDef& fixtureDef, int id) {
 
-	//b2CircleShape circle;
-	//circle.m_radius = 5;
-	//circle.m_type = circle.e_circle;
-	//
-
-	//b2Fixture* m_footSensorFixture;
-	//fixtureDef.isSensor = true;
-	//m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
-	//m_footSensorFixture->SetUserData((void*)id);
 	b2CircleShape circle;
-	circle.m_radius = 5;
+	circle.m_radius = 4;
 	circle.m_type = circle.e_circle;
 
 	circle.m_p = b2Vec2(m_sprite.getPosition().x + posX, m_sprite.getPosition().y + 40);
@@ -83,10 +74,10 @@ void PlayerVehicles::updatePosition() {
 	auto temp = std::fmod(angle, 360);
 	if (std::abs(temp) > 45 && !m_isDead) {
 		m_animation.direction(Direction::FrontFall);
-		stopBody();
 		angle = 0;
+		setEnableMove(false);
+		m_isDead = true;
 	}
-
 	m_sprite.setRotation(angle);
 	m_sprite.setPosition(position.x, position.y);
 }

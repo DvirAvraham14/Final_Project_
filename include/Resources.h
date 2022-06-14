@@ -76,7 +76,7 @@ public:
 	const sf::Texture& getTexture(TEXTURE, bool = false);
 	const AnimationData& getData(Players);
 private:
-	std::string				m_textPath[MaxTexture] = {
+	std::string			m_textPath[MaxTexture] = {
 						"background.png",
 						"play.png",
 						"help.png",

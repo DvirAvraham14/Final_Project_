@@ -1,9 +1,7 @@
 #include"SelectVehicle.h"
 
-int SelectVehicle::m_currPlayer = Resources::Players::Spike;
-
 SelectVehicle::SelectVehicle()
-	:Screen(Resources::TEXTURE::SELECTION, T_Screen::SELECT_LEVEL),
+	:Screen(Resources::TEXTURE::SELECTION, T_Screen::MENU),
 	m_ani(Resources::instance().getData(player::Spike), Direction::Win, m_player)
 {
 	creatNameFrame();
@@ -46,7 +44,7 @@ void SelectVehicle::creatNameFrame() {
 
 void SelectVehicle::creatPlayersName() {
 
-	m_names.setTextureRect(m_playerName[m_currPlayer]);
+	m_names.setTextureRect(m_playerName[GameData::instance().getPlayer()]);
 	m_names.setOrigin(m_names.getGlobalBounds().width / 2, m_names.getGlobalBounds().height / 2);
 	m_names.setPosition(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 4.0f);
 	m_names.setTexture(Resources::instance().getTexture(Resources::TEXTURE::NAMES));
@@ -56,22 +54,22 @@ void SelectVehicle::creatPlayersName() {
 
 T_Screen SelectVehicle::changePlayer(bool next) {
 	if (next) {
-		SelectVehicle::m_currPlayer++;
-		if (SelectVehicle::m_currPlayer > player::Jake)
-			SelectVehicle::m_currPlayer = player::Tricky;
+		GameData::instance().chooseplayer(1);
+		if (GameData::instance().getPlayer() > player::Jake)
+			GameData::instance().setPlayer(player::Tricky);
 	}
 	else {
-		SelectVehicle::m_currPlayer--;
-		if (SelectVehicle::m_currPlayer < player::Tricky)
-			SelectVehicle::m_currPlayer = player::Jake;
+		GameData::instance().chooseplayer(-1);
+		if (GameData::instance().getPlayer() < player::Tricky)
+			GameData::instance().setPlayer(player::Jake);
 	}
 	updateRect();
-	m_player.setTexture(Resources::instance().getTexture(static_cast<Resources::TEXTURE>(22 + m_currPlayer)));
+	m_player.setTexture(Resources::instance().getTexture(static_cast<Resources::TEXTURE>(22 + GameData::instance().getPlayer())));
 	return SELECT_VEHICLE;
 }
 
 void SelectVehicle::updateRect() {
-	m_names.setTextureRect(m_playerName[m_currPlayer]);
+	m_names.setTextureRect(m_playerName[GameData::instance().getPlayer()]);
 }
 
 void SelectVehicle::handleGame(sf::Time& delta) {

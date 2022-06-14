@@ -19,10 +19,9 @@ void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch, bool end
 {
 	auto scateTouch = static_cast<PlayerVehicles*>(&scate);
 
-	if (feetToch) {
+	if (feetToch)
 		scateTouch->setRotate(false);
-		std::cout << "feet\n";
-	}
+
 	scate.startContact();
 }
 
@@ -44,9 +43,8 @@ void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool en
 		scateTouchRailing->setRotate(true);
 		scateTouchRailing->startContact();
 		railing.play();
-		std::cout << "feet\n";
 	}
-	else if (!endTouch)
+	else if (!endTouch && !feetToch)
 		scateTouchRailing->setSpeet(-20);
 
 	if (endTouch)
@@ -87,8 +85,6 @@ void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool en
 		scateTouchflag->setSpeet(-10);
 		scateTouchflag->setAni(Direction::Win);
 		scateTouchflag->setEnd(true);
-		Btn::setScreen(SCORE);
-		sf::sleep(sf::milliseconds(1000));
 	}
 }
 
@@ -158,6 +154,7 @@ void scateTruck(GameObject& scate, GameObject& truck, bool feetToch, bool endTou
 	truckTouchscate->setEnableMove(false);
 	scateTouchTruck->stopBody();
 	scateTouchTruck->setAni(Direction::FrontFall);
+	scateTouchTruck->setIsDead(true);
 }
 
 

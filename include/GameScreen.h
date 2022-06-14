@@ -22,15 +22,10 @@ class GameScreen :public Screen
 public:
 	using res = Resources;
 	GameScreen() = default;
-	GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view);
+	GameScreen(std::shared_ptr<sf::View> view);
 	virtual void draw(sf::RenderWindow& target) const;
 	void handleGame(sf::Time& delta);
-	void static setBg(Resources::TEXTURE bg) { m_choosenBg = bg; }
-	void static setLevel(int level) { m_level = level; }
-	int static getLevel() { return m_level; }
-	sf::Text static getCoinText() { return m_coinText; }
-	sf::Text static getClockText() { return m_clockText; }
-	
+
 private:
 	void createObj();
 	void createObstacles();
@@ -42,9 +37,8 @@ private:
 	int scoreCalculator();
 	void updateCoinsInfo();
 	void updateClockInfo();
+	bool screenTimer(sf::Time delta);
 
-	sf::Text static                             m_coinText;
-	sf::Text static                             m_clockText;
 	sf::Font                                    m_font;
 	sf::Sprite                                  m_clockInfo;
 	sf::Sprite                                  m_coinInfo;
@@ -52,18 +46,18 @@ private:
 	std::string                                 m_time;
 	int                                         m_coinCount = 0;
 	int                                         m_minutes = 0;
-	Resources::TEXTURE static                   m_choosenBg;
 	std::shared_ptr<sf::View>					m_view;
 	sf::Sprite                                  m_gameBg;
 	sf::Time									m_timePass;
-	int	static						            m_level;
 	int                                         m_totalCoins = 0;
-	
+	float										m_screenDelay;
+
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
-	std::vector<std::shared_ptr<GameObject>>	m_objects;
-	std::vector<std::shared_ptr<MovingObject>>	m_vehicels;
-	std::vector<std::shared_ptr<MovingObject>>	m_enemies;
+	MyContactListener							m_contactListner;
+	std::vector<std::unique_ptr<GameObject>>	m_objects;
+	std::vector<std::unique_ptr<MovingObject>>	m_vehicels;
+	std::vector<std::unique_ptr<MovingObject>>	m_enemies;
 
-	
+
 };

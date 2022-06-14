@@ -1,7 +1,7 @@
 #include"RoadMap.h"
 
 RoadMap::RoadMap() 
-	:Screen(Resources::TEXTURE::MAP_ROAD, T_Screen::MENU)
+	:Screen(Resources::TEXTURE::MAP_ROAD, T_Screen::SELECT_AREA)
 {
 	lockLevels();
 	m_sound.setBuffer(Resources::instance().getSound(Resources::UNLOCK));
@@ -35,12 +35,10 @@ void RoadMap::setLock(std::vector<sf::Vector2f> position) {
 	};
 }
 
-void RoadMap::Unlock(int index) {	
-	if(index == 1)
-		m_buttons[index].unlock([&]() ->T_Screen {if (!m_firstRound) GameScreen::setLevel(index); else m_firstRound = false; return SELECT_VEHICLE; });
-	else
-		m_buttons[index].unlock([&]() ->T_Screen {GameScreen::setLevel(index); return GAME; });
-	this->setNextLevel(false);
+void RoadMap::Unlock(int index) {
+	std::cout << index;
+	m_buttons[index].unlock([&]() ->T_Screen {GameData::instance().setLevel(index); return GAME; });
+	GameData::instance().setIsNextLevel(false);
 }
 
 void RoadMap::handleMouse(sf::Event event, const sf::Vector2f cursorPos) {
@@ -57,9 +55,9 @@ void RoadMap::handleMouse(sf::Event event, const sf::Vector2f cursorPos) {
 }
 
 void RoadMap::handleScreen() {
-	if (this->getNextLevel()) {
+	if (GameData::instance().getIsNextLevel()) {
 		m_sound.play();
-		Unlock(GameScreen::getLevel());
+		Unlock(GameData::instance().getLevel());
 	}
 }
 

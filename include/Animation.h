@@ -5,6 +5,7 @@
 #include "Btn.h"
 #include "AnimationData.h"
 #include <SFML/Graphics.hpp>
+#include "GameData.h"
 
 class Animation
 {

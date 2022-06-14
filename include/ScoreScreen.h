@@ -9,9 +9,7 @@ public:
 	ScoreScreen();
 	virtual void draw(sf::RenderWindow& target) const;
 	virtual void handleScreen();
-	void static setNumOfStars(int stars) { m_numOfStars = stars; }
 private:
-	int static m_numOfStars;
 	void createButtons();
 	void setStarsPos();
 	void setStarsData(std::vector<sf::Vector2f> starsPos);

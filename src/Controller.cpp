@@ -8,7 +8,6 @@ Controller::Controller()
 		sf::Style::Titlebar | sf::Style::Close);
 
 	*m_view =sf::View(m_window.getDefaultView());
-	m_world->SetContactListener(&myContact);
 	
 	createScreens();
 	m_gameMusic.setBuffer(Resources::instance().getSound(Resources::GAME_MUSIC));
@@ -20,17 +19,13 @@ Controller::Controller()
 void Controller::run() {
 	sf::Vector2f cursorPosF;
 	
-	// debug draw
-	DebugDraw d(m_window);
-	d.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
-	m_world->SetDebugDraw(&d);
 	m_gameMusic.play();
 	while (m_window.isOpen()) {
 		try {
 			
-			if(Btn::getScreen()==SCORE)
+			if(GameData::instance().getScreen() ==SCORE)
 				m_view->setCenter(m_window.getDefaultView().getCenter());
-			if (Btn::getScreen() == GAME)
+			if (GameData::instance().getScreen() == GAME)
 				m_gameMusic.setVolume(30);
 			else
 				m_gameMusic.setVolume(70);
@@ -40,17 +35,17 @@ void Controller::run() {
 			cursorPosF = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 
 			while (m_window.pollEvent(event)) {
-				if (Btn::getScreen() != T_Screen::GAME)
-					m_screen[Btn::getScreen()]->handleMouse(event, cursorPosF);
+				if (GameData::instance().getScreen() != T_Screen::GAME)
+					m_screen[GameData::instance().getScreen()]->handleMouse(event, cursorPosF);
 
 				if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
 					m_window.close();
 				}
 			}
 			auto delta = m_gameClock.restart();
-			m_screen[Btn::getScreen()]->handleGame(delta);
-			m_screen[Btn::getScreen()]->handleScreen();
-			m_screen[Btn::getScreen()]->draw(m_window);
+			m_screen[GameData::instance().getScreen()]->handleGame(delta);
+			m_screen[GameData::instance().getScreen()]->handleScreen();
+			m_screen[GameData::instance().getScreen()]->draw(m_window);
 			m_window.display();
 		}
 		catch (std::exception& e) {
@@ -63,9 +58,9 @@ void Controller::createScreens() {
 
 	m_screen.push_back(std::make_unique<Menu>());
 	m_screen.push_back(std::make_unique<Help>());
-	m_screen.push_back(std::make_unique<RoadMap>());
 	m_screen.push_back(std::make_unique<SelectVehicle>());
 	m_screen.push_back(std::make_unique<SelectArea>());
-	m_screen.push_back(std::make_unique<GameScreen>(m_world, m_view));
+	m_screen.push_back(std::make_unique<RoadMap>());
+	m_screen.push_back(std::make_unique<GameScreen>(m_view));
 	m_screen.push_back(std::make_unique<ScoreScreen>());
 }

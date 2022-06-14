@@ -42,7 +42,7 @@ void Animation::update()
 }
 
 void Animation::AutoSwitch() {
-    if (Btn::getScreen() == GAME && m_dir == Direction::Filp || m_dir == Direction::Start || m_dir == Direction::Push)
+    if (GameData::instance().getScreen() == GAME && m_dir == Direction::Filp || m_dir == Direction::Start || m_dir == Direction::Push)
         if (m_index == m_data.m_data.find(m_dir)->second.size() - 1) {
             m_dir = Direction::Drive;
             m_index = 0;

@@ -30,4 +30,5 @@
                                               "Coin.cpp"
                                               "ScoreScreen.cpp"
                                               "Help.cpp"
+                                              "GameData.cpp"
                                               )

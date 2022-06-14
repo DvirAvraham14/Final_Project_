@@ -11,7 +11,7 @@ public:
 	virtual void CreateBody(sf::Vector2f pos);
 	void coilliedSpikes();
 	bool getCollideStatus() const { return m_body->GetFixtureList()->IsSensor(); }
-	bool isDead() const { return m_isDead; }
+
 private:
 	void setSensor(float posXm, b2FixtureDef&, int id);
 	void setMassa(float);
@@ -28,5 +28,4 @@ private:
 			m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
 		}
 	}
-	bool m_isDead = false;
 };

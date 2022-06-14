@@ -1,7 +1,5 @@
 #include"Screen.h"
 
-bool Screen::m_nextLevel = true;
-
 Screen::Screen(Resources::TEXTURE texture, T_Screen curr )
 	:m_curr(curr)
 {

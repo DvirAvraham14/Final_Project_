@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "macro.h"
+#include "GameData.h"
 
 //that class will show button or title on the board
 class Btn {
@@ -9,7 +10,6 @@ private:
 	sf::Vector2f						m_position;
 	sf::Sound							m_sound;
 	std::function<T_Screen()>           m_func;
-	T_Screen static                     m_currScreen;
 	
 public:
 	Btn() = default;
@@ -24,6 +24,4 @@ public:
 	void unlock(std::function<T_Screen()> func);
 	void draw(sf::RenderWindow &window) const;
 	bool isLock() const;
-	T_Screen static getScreen(){ return m_currScreen; }
-	void static setScreen(T_Screen screen) { m_currScreen = screen; }
 };

@@ -1,8 +1,5 @@
 #include "Btn.h"
 
-T_Screen Btn::m_currScreen = T_Screen::MENU;
-//that class will show button or title on the board
-
 Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<T_Screen()> func)
 	:m_position({ x, y }), m_func(func)
 {
@@ -52,8 +49,8 @@ void Btn::Press(const sf::Vector2f cursur) {
 	if (m_func && this->m_sprite.getGlobalBounds().contains(cursur)) {
 	
 		m_sound.play();
-		m_currScreen = m_func();
-		if (m_currScreen == GAME) {
+		GameData::instance().setScreen(m_func());
+		if (GameData::instance().getScreen() == GAME) {
 			m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::UNLOCK));
 			m_sound.play();
 		}
