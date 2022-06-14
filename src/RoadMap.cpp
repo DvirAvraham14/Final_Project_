@@ -35,26 +35,34 @@ void RoadMap::setLock(std::vector<sf::Vector2f> position) {
 	};
 }
 
-void RoadMap::Unlock(int index) {
-	m_buttons[index].unlock([&]() ->T_Screen {return SELECT_VEHICLE; });
+void RoadMap::Unlock(int index) {	
+	if(index == 1)
+		m_buttons[index].unlock([&]() ->T_Screen {if (!m_firstRound) GameScreen::setLevel(index); else m_firstRound = false; return SELECT_VEHICLE; });
+	else
+		m_buttons[index].unlock([&]() ->T_Screen {GameScreen::setLevel(index); return GAME; });
 	this->setNextLevel(false);
 }
 
-void RoadMap::handleScreen(sf::Event event, const sf::Vector2f cursorPos) {
-	for (auto& btn : m_buttons)
-		if (event.type == sf::Event::MouseButtonReleased)
-			btn.Press(cursorPos);
-	if (this->getNextLevel()) {
-		m_sound.play();
-		Unlock(getLevel());
+void RoadMap::handleMouse(sf::Event event, const sf::Vector2f cursorPos) {
+	for (auto i = 0; i < m_buttons.size(); i++) {
+		if (event.type == sf::Event::MouseMoved) {
+			if (i == 0)
+				m_buttons[i].hover(cursorPos);
+			else
+				m_buttons[i].Mark(cursorPos);
+		}
+		else if (event.type == sf::Event::MouseButtonReleased)
+			m_buttons[i].Press(cursorPos);
 	}
 }
 
-int RoadMap::getLevel() {
-	for (auto i = 1; i < m_buttons.size(); i++)
-		if (m_buttons[i].isLock())
-			return i;
+void RoadMap::handleScreen() {
+	if (this->getNextLevel()) {
+		m_sound.play();
+		Unlock(GameScreen::getLevel());
+	}
 }
+
 void RoadMap::draw(sf::RenderWindow& target) const {
 	Draw(target);
 }

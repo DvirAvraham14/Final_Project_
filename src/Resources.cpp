@@ -51,12 +51,20 @@ namespace
 	}
 
 	AnimationData TruckData() {
-		auto coin = AnimationData{};
+		auto truck = AnimationData{};
 		for (auto i = 0; i < Direction::MaxDir; i++)
 			for (auto row = 0; row < 2; row++)
 				for (auto col = 0; col < 4; col++)
-					coin.m_data[static_cast<Direction>(i)].emplace_back(135 * col, 90 * row, 135, 90);
-		return coin;
+					truck.m_data[static_cast<Direction>(i)].emplace_back(135 * col, 90 * row, 135, 90);
+		return truck;
+	}
+
+	AnimationData FlagData() {
+		auto flag = AnimationData{};
+		for (auto i = 0; i < Direction::MaxDir; i++)
+				for (auto col = 0; col < 10; col++)
+					flag.m_data[static_cast<Direction>(i)].emplace_back(80 * col, 0, 80, 100);
+		return flag;
 	}
 }
 
@@ -119,5 +127,6 @@ void Resources::loadAnimaData() {
 	m_animaData[P_Monster]	= EnemyData();
 	m_animaData[P_COIN]		= CoinData();
 	m_animaData[P_Truck]	= TruckData();
+	m_animaData[P_FLAG]     = FlagData();
 }
 

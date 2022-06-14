@@ -21,10 +21,15 @@ class GameScreen :public Screen
 {
 public:
 	using res = Resources;
+	GameScreen() = default;
 	GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view);
 	virtual void draw(sf::RenderWindow& target) const;
 	void handleGame(sf::Time& delta);
 	void static setBg(Resources::TEXTURE bg) { m_choosenBg = bg; }
+	void static setLevel(int level) { m_level = level; }
+	int static getLevel() { return m_level; }
+	sf::Text static getCoinText() { return m_coinText; }
+	sf::Text static getClockText() { return m_clockText; }
 	
 private:
 	void createObj();
@@ -32,26 +37,28 @@ private:
 	void createCoins();
 	void setGameInfo();
 	void updateLevel();
+	void restartInfo();
 	void setClock();
 	int scoreCalculator();
 	void updateCoinsInfo();
 	void updateClockInfo();
 
-	sf::Text                                    m_coinText;
-	sf::Text                                    m_clockText;
+	sf::Text static                             m_coinText;
+	sf::Text static                             m_clockText;
 	sf::Font                                    m_font;
 	sf::Sprite                                  m_clockInfo;
 	sf::Sprite                                  m_coinInfo;
 	bool                                        m_lost = false;
 	std::string                                 m_time;
+	int                                         m_coinCount = 0;
 	int                                         m_minutes = 0;
 	Resources::TEXTURE static                   m_choosenBg;
 	std::shared_ptr<sf::View>					m_view;
 	sf::Sprite                                  m_gameBg;
 	sf::Time									m_timePass;
-	int							                m_level		= 0;
+	int	static						            m_level;
 	int                                         m_totalCoins = 0;
-	int							                m_coinCount = 0;
+	
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
 	std::vector<std::shared_ptr<GameObject>>	m_objects;

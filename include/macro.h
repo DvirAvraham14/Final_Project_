@@ -35,6 +35,7 @@ enum OBJECT
 	SPIKES,
 	FLAG,
 	MONSTER,
+	TRUCK,
 
 };
 

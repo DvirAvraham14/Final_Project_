@@ -17,6 +17,7 @@ public:
 	Btn(sf::Vector2f pos, sf::Sprite sprite, std::function<T_Screen()> func = nullptr);
 	void hover(const sf::Vector2f cursur);
 	void Press(const sf::Vector2f cursur);
+	void Mark(const sf::Vector2f cursur);
 	void updateSprite(Resources::TEXTURE);
 	auto getPosition() const { return m_position; };
 	void updatFunc(std::function<T_Screen()> func) { m_func = func; };

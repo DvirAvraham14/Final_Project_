@@ -19,9 +19,10 @@ void groundOnJump(GameObject& Ground, GameObject& scate, bool feetToch, bool end
 {
 	auto scateTouch = static_cast<PlayerVehicles*>(&scate);
 
-	if (feetToch)
+	if (feetToch) {
 		scateTouch->setRotate(false);
-
+		std::cout << "feet\n";
+	}
 	scate.startContact();
 }
 
@@ -39,12 +40,13 @@ void scateRailing(GameObject& scate, GameObject& railing, bool feetToch, bool en
 	auto scateTouchRailing = static_cast<PlayerVehicles*>(&scate);
 	scateTouchRailing->setAni(Direction::Drive);
 
-	if (feetToch) {
+	if (feetToch && !endTouch) {
 		scateTouchRailing->setRotate(true);
 		scateTouchRailing->startContact();
 		railing.play();
+		std::cout << "feet\n";
 	}
-	else if (!endTouch && !feetToch)
+	else if (!endTouch)
 		scateTouchRailing->setSpeet(-20);
 
 	if (endTouch)
@@ -80,12 +82,14 @@ void oppsiteScateSpikes(GameObject& spikes, GameObject& scate, bool feetToch, bo
 void scateEndFlag(GameObject& scate, GameObject& endFlag, bool feetToch, bool endTouch)
 {
 	auto scateTouchflag = static_cast<PlayerVehicles*>(&scate);
-	scateTouchflag->setSpeet(-10);
-	scateTouchflag->setAni(Direction::Win);
-	scateTouchflag->setEnd(true);
-	Btn::setScreen(SCORE);
-	endFlag.play();
-	endFlag.stopBody();
+	if (!scateTouchflag->getIsEnd()) {
+		endFlag.play();
+		scateTouchflag->setSpeet(-10);
+		scateTouchflag->setAni(Direction::Win);
+		scateTouchflag->setEnd(true);
+		Btn::setScreen(SCORE);
+		sf::sleep(sf::milliseconds(1000));
+	}
 }
 
 

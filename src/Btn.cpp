@@ -35,12 +35,29 @@ void Btn::hover(const sf::Vector2f cursur) {
 	}
 }
 
+
+//__________________________________
+void Btn::Mark(const sf::Vector2f cursur) {
+	if (m_func) {
+
+		if (this->m_sprite.getGlobalBounds().contains(cursur))
+			m_sprite.setColor(sf::Color(0x37373737));
+
+		else
+			m_sprite.setColor(sf::Color(0x00FF000F));
+	}
+}
 //__________________________________
 void Btn::Press(const sf::Vector2f cursur) {
 	if (m_func && this->m_sprite.getGlobalBounds().contains(cursur)) {
 	
 		m_sound.play();
 		m_currScreen = m_func();
+		if (m_currScreen == GAME) {
+			m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::UNLOCK));
+			m_sound.play();
+		}
+
 	}
 }
 
@@ -57,6 +74,7 @@ void Btn::draw(sf::RenderWindow& window) const {
 
 //__________________________________
 void Btn::unlock(std::function<T_Screen()> func) {
+	m_sprite.setTexture(Resources::instance().getTexture(Resources::TEXTURE::EMPTY_B));
 	m_sprite.setColor(sf::Color{ 0x00FF000F });
 	m_func = func;
  }

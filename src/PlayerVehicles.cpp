@@ -25,7 +25,6 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.1f;
 
-
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
 
@@ -36,13 +35,26 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 
 void PlayerVehicles::setSensor(float posX, b2FixtureDef& fixtureDef, int id) {
 
+	//b2CircleShape circle;
+	//circle.m_radius = 5;
+	//circle.m_type = circle.e_circle;
+	//
+
+	//b2Fixture* m_footSensorFixture;
+	//fixtureDef.isSensor = true;
+	//m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
+	//m_footSensorFixture->SetUserData((void*)id);
 	b2CircleShape circle;
-	circle.m_radius = 4;
+	circle.m_radius = 5;
 	circle.m_type = circle.e_circle;
-	b2Fixture* m_footSensorFixture;
-	fixtureDef.isSensor = true;
-	m_footSensorFixture = m_body->CreateFixture(&fixtureDef);
-	m_footSensorFixture->SetUserData((void*)id);
+
+	circle.m_p = b2Vec2(m_sprite.getPosition().x + posX, m_sprite.getPosition().y + 40);
+
+	b2FixtureDef footSensorFixtureDef;
+	footSensorFixtureDef.isSensor = true;
+	footSensorFixtureDef.shape = &circle;
+	footSensorFixtureDef.userData = (void*)id;
+	m_body->CreateFixture(&footSensorFixtureDef);
 }
 
 void PlayerVehicles::setMassa(float weight) {
@@ -71,7 +83,7 @@ void PlayerVehicles::updatePosition() {
 	auto temp = std::fmod(angle, 360);
 	if (std::abs(temp) > 45 && !m_isDead) {
 		m_animation.direction(Direction::FrontFall);
-		undoCollision();
+		stopBody();
 		angle = 0;
 	}
 

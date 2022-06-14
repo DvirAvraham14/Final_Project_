@@ -12,7 +12,7 @@ Screen::Screen(Resources::TEXTURE texture, T_Screen curr )
 }
 
 
-void Screen::handleScreen(sf::Event event, const sf::Vector2f cursorPos)
+void Screen::handleMouse(sf::Event event, const sf::Vector2f cursorPos)
 {
 	for (auto& btn : m_buttons) {
 		if (event.type == sf::Event::MouseMoved)

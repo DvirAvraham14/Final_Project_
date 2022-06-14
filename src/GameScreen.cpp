@@ -1,45 +1,49 @@
 #include "GameScreen.h"
 
+sf::Text GameScreen::m_clockText = sf::Text();
+sf::Text GameScreen::m_coinText = sf::Text();
+int	GameScreen::m_level = 0;
 Resources::TEXTURE GameScreen::m_choosenBg = Resources::TEXTURE::CITY_NIGHT;
 
 GameScreen::GameScreen(std::shared_ptr<b2World> world, std::shared_ptr<sf::View> view)
 	:m_world(world), m_view(view)
 {
-	updateLevel();
 	createObj();
+	updateLevel();
 	setGameInfo();
 }
 
 void GameScreen::updateLevel() {
 
+	restartInfo();
 	m_level++;
 	m_map.createMap(m_level);
-	m_objects.clear();
-	m_vehicels.clear();
-	m_enemies.clear();
-	m_coinCount = 0;
-	m_timePass = sf::Time().Zero;
-	
-}
-
-
-void GameScreen::createObj() {
-
-	m_objects.push_back(std::make_shared<Ground>(m_level, m_map.getRoad(), m_world));
-
-	m_vehicels.push_back(std::make_shared<Tricky>(res::TEXTURE::TrickyTexture, m_world, res::SOUNDS::Coins));
-	m_vehicels.push_back(std::make_shared<Spike>(res::TEXTURE::SpikeTexture, m_world, res::SOUNDS::Coins));
-	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture, m_world, res::SOUNDS::Coins));
-
-	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(100, 550),
+	m_objects.push_back(std::make_shared<Ground>(m_map.getRoad(), m_world));
+	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(100, 500),
 		res::Players::P_Truck, res::SOUNDS::Crash));
-
 	createObstacles();
 	createCoins();
 }
 
+void GameScreen::restartInfo() {
+	m_coinCount = 0;
+	m_timePass = sf::Time().Zero;
+	m_objects.clear();
+	m_enemies.clear();
+	m_vehicels[SelectVehicle::getPlayer()]->setEnd(false);
+	m_vehicels[SelectVehicle::getPlayer()]->setPosition({ 250, 450 });
+}
+
+void GameScreen::createObj() {
+
+	m_vehicels.push_back(std::make_shared<Tricky>(res::TEXTURE::TrickyTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_shared<Spike>(res::TEXTURE::SpikeTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture, m_world, res::SOUNDS::Coins));
+}
+
 void GameScreen::createObstacles() {
 
+	
 	std::vector<sf::Vector3f> obstacles = m_map.getObstacels();
 	for (auto& obstacle : obstacles) {
 		switch (int(obstacle.x)) {
@@ -52,7 +56,7 @@ void GameScreen::createObstacles() {
 			break;
 		case FLAG:
 			m_objects.push_back(std::make_shared<EndFlag>(res::TEXTURE::Flag,
-				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::Winning, false));
+				m_world, sf::Vector2f(obstacle.y, obstacle.z-20), res::SOUNDS::Winning));
 			break;
 		case MONSTER:
 			m_enemies.push_back(std::make_shared<Monster>(res::TEXTURE::Monster,
@@ -65,6 +69,7 @@ void GameScreen::createObstacles() {
 }
 
 void GameScreen::createCoins() {
+
 	std::vector<CoinData> coins = m_map.getCoins();
 
 	for (auto& coin : coins) {
@@ -130,14 +135,15 @@ void GameScreen::handleGame(sf::Time& delta) {
 			m_coinCount++;
 		}
 	}
-	if (m_vehicels[SelectVehicle::getPlayer()]->getIsEnd()) {
-		ScoreScreen::setNumOfStars(scoreCalculator());
-		updateLevel();
-	}
-
 	setClock();
 	updateCoinsInfo();
 	updateClockInfo();
+	if (m_vehicels[SelectVehicle::getPlayer()]->getIsEnd()) {
+		m_clockText.setString(m_time);
+		m_coinText.setString(std::to_string(m_coinCount));
+		ScoreScreen::setNumOfStars(scoreCalculator());
+		updateLevel();
+	}
 }
 
 int GameScreen::scoreCalculator() {
@@ -177,8 +183,9 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	for (auto& enemy : m_enemies)
 		enemy->draw(target);
 
-	//target.draw(m_clockText);
-	//target.draw(m_clockInfo);
+	//m_world->DebugDraw();
+	target.draw(m_clockText);
+	target.draw(m_clockInfo);
 	target.draw(m_coinText);
 	target.draw(m_coinInfo);
 }

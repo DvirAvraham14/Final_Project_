@@ -14,6 +14,7 @@ public:
 	inline void setAni(Direction dir) { m_animation.direction(dir); }
 	float physicalMove(float vel, float desiredVel);
 	virtual inline void setRotate(bool set) { m_body->SetFixedRotation(set); }
+	void setPosition(sf::Vector2f pos) { m_body->SetTransform(b2Vec2(pos.x,pos.y), 0); }
 	void setEnableMove(bool moveSatuse) { m_enableMove = moveSatuse; }
 	void setBox2dEnable(bool value) { m_body->SetEnabled(value); }
 	void setEnd(bool end) { m_isEnd = end; }

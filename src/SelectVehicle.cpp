@@ -65,7 +65,6 @@ T_Screen SelectVehicle::changePlayer(bool next) {
 		if (SelectVehicle::m_currPlayer < player::Tricky)
 			SelectVehicle::m_currPlayer = player::Jake;
 	}
-	//SelectVehicle::m_currPlayer %= 3;
 	updateRect();
 	m_player.setTexture(Resources::instance().getTexture(static_cast<Resources::TEXTURE>(22 + m_currPlayer)));
 	return SELECT_VEHICLE;
@@ -76,12 +75,9 @@ void SelectVehicle::updateRect() {
 }
 
 void SelectVehicle::handleGame(sf::Time& delta) {
-	update(delta);
+	m_ani.update(delta); 
 }
 
-void SelectVehicle::update(sf::Time& delta) {
-	m_ani.update(delta);
-}
 
 void SelectVehicle::draw(sf::RenderWindow& target) const {
 	Draw(target);

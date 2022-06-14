@@ -2,7 +2,7 @@
 
 //------------------------------------------
 
-Ground::Ground(const int level, sf::ConvexShape road, std::shared_ptr<b2World> world)
+Ground::Ground(sf::ConvexShape road, std::shared_ptr<b2World> world)
 	:m_road(std::move(road))
 {
 	m_world = world;

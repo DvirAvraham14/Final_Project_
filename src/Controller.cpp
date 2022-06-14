@@ -11,14 +11,9 @@ Controller::Controller()
 	m_world->SetContactListener(&myContact);
 	
 	createScreens();
-}
-
-//__________________________________
-Controller::~Controller() {
-
-	m_world->SetAllowSleeping(true);
-	for (auto& screen : m_screen)
-		screen.reset();
+	m_gameMusic.setBuffer(Resources::instance().getSound(Resources::GAME_MUSIC));
+	m_gameMusic.setLoop(true);
+	m_gameMusic.setVolume(70);
 }
 
 //__________________________________
@@ -29,12 +24,16 @@ void Controller::run() {
 	DebugDraw d(m_window);
 	d.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 	m_world->SetDebugDraw(&d);
-
+	m_gameMusic.play();
 	while (m_window.isOpen()) {
 		try {
 			
 			if(Btn::getScreen()==SCORE)
 				m_view->setCenter(m_window.getDefaultView().getCenter());
+			if (Btn::getScreen() == GAME)
+				m_gameMusic.setVolume(30);
+			else
+				m_gameMusic.setVolume(70);
 			m_window.clear(sf::Color::White);
 			m_window.setView(*m_view);
 			sf::Event event;
@@ -42,7 +41,7 @@ void Controller::run() {
 
 			while (m_window.pollEvent(event)) {
 				if (Btn::getScreen() != T_Screen::GAME)
-					m_screen[Btn::getScreen()]->handleScreen(event, cursorPosF);
+					m_screen[Btn::getScreen()]->handleMouse(event, cursorPosF);
 
 				if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
 					m_window.close();
@@ -50,6 +49,7 @@ void Controller::run() {
 			}
 			auto delta = m_gameClock.restart();
 			m_screen[Btn::getScreen()]->handleGame(delta);
+			m_screen[Btn::getScreen()]->handleScreen();
 			m_screen[Btn::getScreen()]->draw(m_window);
 			m_window.display();
 		}

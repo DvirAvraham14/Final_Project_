@@ -18,7 +18,6 @@ private:
 	void creatPlayers();
 	void createButtons();
 	void updateRect();
-	void update(sf::Time& delta);
 	int static               m_currPlayer;
 	std::vector<sf::IntRect> m_playerName;
 	sf::Sprite               m_names;

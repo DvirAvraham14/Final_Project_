@@ -2,19 +2,22 @@
 
 
 void Map::createMap(int index) {
+	sf::ConvexShape road;
+	m_coins.clear();
 	m_obstacles.clear();
 	std::string path = "map" + std::to_string(index) + ".txt";
 	vector<sf::Vector2f> points;
 	points = readCord(path);
-	m_road.setPointCount(points.size() + 2);
+	road.setPointCount(points.size() + 2);
 
 	for (auto i = 0; i < points.size(); i++)
-		m_road.setPoint(i, sf::Vector2f(points[i].x, points[i].y));
-	m_road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, INT32_MAX));
-	m_road.setPoint(points.size() + 1, sf::Vector2f(0, INT32_MAX));
-	m_road.setOutlineThickness(WIDTH_WINDOW / -33.3f);
-	m_road.setOutlineColor(sf::Color(0x373737FF));
-	m_road.setFillColor(sf::Color(0x555555FF));
+		road.setPoint(i, sf::Vector2f(points[i].x, points[i].y));
+	road.setPoint(points.size(), sf::Vector2f(points[points.size() - 1].x, INT32_MAX));
+	road.setPoint(points.size() + 1, sf::Vector2f(0, INT32_MAX));
+	road.setOutlineThickness(WIDTH_WINDOW / -33.3f);
+	road.setOutlineColor(sf::Color(0x373737FF));
+	road.setFillColor(sf::Color(0x555555FF));
+	m_road = road;
 }
 
 

@@ -14,7 +14,7 @@
 class Controller {
 public:
 	Controller();
-	~Controller();
+	~Controller() {};
 	void run();
 
 private:
@@ -25,8 +25,8 @@ private:
 	std::shared_ptr<b2World>                 m_world = std::make_shared<b2World>(b2Vec2(0.0f, 9.8f));
 	MyContactListener                        myContact;
 	sf::Clock					             m_gameClock;
+	sf::Sound                                m_gameMusic;
 	bool                                     m_nextLevel = true;
-
 	void createScreens();
 };
 

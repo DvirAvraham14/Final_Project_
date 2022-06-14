@@ -14,6 +14,7 @@ public:
 		P_Monster,
 		P_Truck,
 		P_COIN,
+		P_FLAG,
 		MaxPlayer,
 	};
 
@@ -53,6 +54,7 @@ public:
 		HELP_CENTER1,
 		HELP_CENTER2,
 		CLOCK,
+		EMPTY_B,
 		MaxTexture,
 	};
 
@@ -64,6 +66,8 @@ public:
 		Crash,
 		Coins,
 		UNLOCK,
+		RATE,
+		GAME_MUSIC,
 		MaxSounds,
 	};
 
@@ -108,6 +112,7 @@ private:
 						"HelpCenter1.png",
 						"HelpCenter2.png",
 						"clock.png",
+						"emptyButton.png",
 										
 	};	
 
@@ -118,7 +123,9 @@ private:
 							"KnifeStab.wav",
 							"crash.wav",
 							"coin.wav",
-							"unlock.wav"
+							"unlock.wav",
+							"star.wav",
+							"gameMusic.wav",
 						
 	};
 

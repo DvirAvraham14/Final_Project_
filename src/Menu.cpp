@@ -31,7 +31,7 @@ void Menu::mute(int index) {
 		m_buttons[index].updateSprite(Resources::TEXTURE::MUTE);
 	}
 	else {
-		m_lis.setGlobalVolume(50);
+		m_lis.setGlobalVolume(100);
 		m_buttons[index].updateSprite(Resources::TEXTURE::SOUND);
 
 	}
