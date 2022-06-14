@@ -32,7 +32,6 @@ void Ground::CreateGround() {
 	chain.CreateLoop(vs, size);
 	m_body->CreateFixture(&chain, 1.0f);
 	m_body->SetUserData(this);
-
 }
 //------------------------------------------
 

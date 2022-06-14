@@ -12,7 +12,6 @@ public:
 	void coilliedSpikes();
 	bool getCollideStatus() const { return m_body->GetFixtureList()->IsSensor(); }
 	bool isDead() const { return m_isDead; }
-
 private:
 	void setSensor(float posXm, b2FixtureDef&, int id);
 	void setMassa(float);
