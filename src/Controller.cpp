@@ -19,15 +19,11 @@ Controller::Controller()
 void Controller::run() {
 	sf::Vector2f cursorPosF;
 	
-	// debug draw
-	DebugDraw d(m_window);
-	d.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
-	m_world->SetDebugDraw(&d);
 	m_gameMusic.play();
 	while (m_window.isOpen()) {
 		try {
 			
-			if(Btn::getScreen()==SCORE)
+			if(Btn::getScreen() == SCORE)
 				m_view->setCenter(m_window.getDefaultView().getCenter());
 			if (Btn::getScreen() == GAME)
 				m_gameMusic.setVolume(30);

@@ -18,8 +18,8 @@ void GameScreen::updateLevel() {
 	restartInfo();
 	m_level++;
 	m_map.createMap(m_level);
-	m_objects.push_back(std::make_shared<Ground>(m_map.getRoad(), m_world));
-	m_enemies.push_back(std::make_shared<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(100, 500),
+	m_objects.push_back(std::make_unique<Ground>(m_map.getRoad(), m_world));
+	m_enemies.push_back(std::make_unique<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(100, 500),
 		res::Players::P_Truck, res::SOUNDS::Crash));
 	createObstacles();
 	createCoins();
@@ -36,9 +36,9 @@ void GameScreen::restartInfo() {
 
 void GameScreen::createObj() {
 
-	m_vehicels.push_back(std::make_shared<Tricky>(res::TEXTURE::TrickyTexture, m_world, res::SOUNDS::Coins));
-	m_vehicels.push_back(std::make_shared<Spike>(res::TEXTURE::SpikeTexture, m_world, res::SOUNDS::Coins));
-	m_vehicels.push_back(std::make_shared<Jake>(res::TEXTURE::JackTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_unique<Tricky>(res::TEXTURE::TrickyTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_unique<Spike>(res::TEXTURE::SpikeTexture, m_world, res::SOUNDS::Coins));
+	m_vehicels.push_back(std::make_unique<Jake>(res::TEXTURE::JackTexture, m_world, res::SOUNDS::Coins));
 }
 
 void GameScreen::createObstacles() {
@@ -55,9 +55,8 @@ void GameScreen::createObstacles() {
 				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::KnifeStab));
 			break;
 		case FLAG:
-			m_objects.push_back(std::make_unique<EndFlag>(res::TEXTURE::Flag,
-				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::Winning, false));
-			break;
+			m_objects.push_back((std::make_unique<EndFlag>(res::TEXTURE::Flag,
+				m_world, sf::Vector2f(obstacle.y, obstacle.z), res::SOUNDS::Winning)));
 		case MONSTER:
 			m_enemies.push_back(std::make_unique<Monster>(res::TEXTURE::Monster,
 				m_world, sf::Vector2f(obstacle.y, obstacle.z),
