@@ -5,7 +5,6 @@ GameScreen::GameScreen(std::shared_ptr<sf::View> view)
 {
 	m_world->SetContactListener(&m_contactListner);
 	createObj();
-	updateLevel();
 	setGameInfo();
 }
 
@@ -14,15 +13,14 @@ void GameScreen::updateLevel() {
 	restartInfo();
 	m_map.createMap(GameData::instance().getLevel());
 	m_objects.push_back(std::make_unique<Ground>(m_map.getRoad(), m_world));
-	m_enemies.push_back(std::make_unique<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(100, 500),
+	m_enemies.push_back(std::make_unique<Truck>(res::TEXTURE::Truck, m_world, sf::Vector2f(120, 500),
 		res::Players::P_Truck, res::SOUNDS::Crash));
 	createObstacles();
 	createCoins();
 }
 
 void GameScreen::restartInfo() {
-	//if (m_vehicels[GameData::instance().getPlayer()]->getIsEnd())
-		//GameData::instance().updateLevel(1);
+	m_totalCoins = 0;
 	m_screenDelay = 2;
 	m_coinCount = 0;
 	m_timePass -= m_timePass;
@@ -32,8 +30,8 @@ void GameScreen::restartInfo() {
 	m_vehicels[GameData::instance().getPlayer()]->setEnd(false);
 	m_vehicels[GameData::instance().getPlayer()]->setEnableMove(true);
 	m_vehicels[GameData::instance().getPlayer()]->setIsDead(false);
-	m_vehicels[GameData::instance().getPlayer()]->setPosition({ 250, 500 });
-	m_vehicels[GameData::instance().getPlayer()]->setAni(Direction::Start);
+	m_vehicels[GameData::instance().getPlayer()]->setPosition({ 300, 500 });
+	m_vehicels[GameData::instance().getPlayer()]->setAni(Direction::Win);
 }
 
 void GameScreen::createObj() {
@@ -59,6 +57,7 @@ void GameScreen::createObstacles() {
 		case FLAG:
 			m_objects.push_back(std::make_unique<EndFlag>(res::TEXTURE::Flag,
 				m_world, sf::Vector2f(obstacle.y, obstacle.z-20), res::SOUNDS::Winning));
+			m_flagEndPos = obstacle.y;
 			break;
 		case MONSTER:
 			m_enemies.push_back(std::make_unique<Monster>(res::TEXTURE::Monster,
@@ -115,13 +114,17 @@ void GameScreen::setGameInfo() {
 }
 void GameScreen::handleGame(sf::Time& delta) {
 
+	if (m_firstRound) {
+		updateLevel();
+		m_firstRound = false;
+	}
 	m_gameBg.setTexture(Resources::instance().getTexture(GameData::instance().getCurrBg(), true));
 	m_gameBg.setTextureRect(sf::IntRect(0, 0, int(WIDTH_WINDOW * 100), int(HEIGHT_WINDOW * 2.5)));
 	m_gameBg.setScale(WIDTH_WINDOW / 2000.f, WIDTH_WINDOW / 2000.6f);
 
 	m_vehicels[GameData::instance().getPlayer()]->setBox2dEnable(true);
 
-	if (static_cast<Ground*>(m_objects[GROUND].get())->getEndPoint() - m_vehicels[GameData::instance().getPlayer()]->getPos().x > WIDTH_WINDOW)
+	if (m_flagEndPos - m_vehicels[GameData::instance().getPlayer()]->getPos().x > 500)
 		m_view->setCenter(sf::Vector2f(m_vehicels[GameData::instance().getPlayer()]->getPos()).x + WIDTH_WINDOW / 3.f, HEIGHT_WINDOW / 1.5f);
 
 	m_world->Step(timeStep, velocityIterations, positionIterations);
@@ -146,10 +149,12 @@ void GameScreen::handleGame(sf::Time& delta) {
 	updateClockInfo();
 	if (m_vehicels[GameData::instance().getPlayer()]->getIsEnd() || m_vehicels[GameData::instance().getPlayer()]->isDead()) {
 		GameData::instance().setClockString(m_time, { 638, 370 });
-		GameData::instance().setCoinString(std::to_string(m_coinCount), { 403, 370 });
+		GameData::instance().setCoinString(std::to_string(m_coinCount)+"/"+std::to_string(m_totalCoins), {403, 370});
 		GameData::instance().setStars(scoreCalculator());
-		updateLevel();
 		GameData::instance().setScreen(SCORE);
+		if(m_vehicels[GameData::instance().getPlayer()]->getIsEnd())
+			GameData::instance().updateLevel(1);
+		m_firstRound = true;
 	}
 }
 
@@ -166,7 +171,7 @@ int GameScreen::scoreCalculator() {
 	
 	int stars = 0;
 
-	if (m_timePass.asSeconds() / float(static_cast<Ground*>(m_objects[GROUND].get())->getEndPoint()) < 0.04)
+	if (m_minutes < 1)
 		stars++;
 	if (m_coinCount * 2 > m_totalCoins)
 		stars++;
@@ -204,6 +209,8 @@ void GameScreen::draw(sf::RenderWindow& target) const {
 	target.draw(m_clockInfo);
 	target.draw(GameData::instance().getCoinText());
 	target.draw(m_coinInfo);
+	for (auto& i : m_buttons)
+		i.draw(target);
 }
 
 void GameScreen::updateCoinsInfo()  {

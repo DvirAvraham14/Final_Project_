@@ -16,11 +16,11 @@ void SelectVehicle::createButtons() {
 	arrow.setTexture(Resources::instance().getTexture(Resources::TEXTURE::ARROW));
 	arrow.setScale(WIDTH_WINDOW / 1420.0f, WIDTH_WINDOW / 1420.0f);
 
-	m_buttons.push_back(Btn({ WIDTH_WINDOW / 19.0f,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn({ 60,HEIGHT_WINDOW / 2.2f }, arrow,
 		[&]() ->T_Screen { return changePlayer(false); }));
 	arrow.scale(-1, 1);
 
-	m_buttons.push_back(Btn({ WIDTH_WINDOW / 1.05f,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn({ WIDTH_WINDOW - 60,HEIGHT_WINDOW / 2.2f }, arrow,
 		[&]() ->T_Screen { return changePlayer(true); }));
 
 	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 1.25f, Resources::TEXTURE::SELECT,

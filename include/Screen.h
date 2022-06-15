@@ -12,6 +12,7 @@ public:
 	virtual void handleGame(sf::Time& delta) {}; 
 	virtual void handleScreen() {};
 	virtual void update() {};
+	virtual void updateLevel() {};
 	void Draw(sf::RenderWindow& target) const;
 protected:
 	std::vector<Btn>	m_buttons;

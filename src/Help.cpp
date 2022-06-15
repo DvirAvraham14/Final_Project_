@@ -12,11 +12,11 @@ void Help::createButtons() {
 	arrow.setTexture(Resources::instance().getTexture(Resources::TEXTURE::ARROW));
 	arrow.setScale(WIDTH_WINDOW / 1420.0f, WIDTH_WINDOW / 1420.0f);
 
-	m_buttons.push_back(Btn({ WIDTH_WINDOW / 27.0f,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn({ 40,HEIGHT_WINDOW / 2.2f }, arrow,
 		[&]() ->T_Screen { updateSprite(); return HELP; }));
 	arrow.scale(-1, 1);
 
-	m_buttons.push_back(Btn({ WIDTH_WINDOW / 1.025f,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn({ WIDTH_WINDOW-40 ,HEIGHT_WINDOW / 2.2f }, arrow,
 		[&]() ->T_Screen { updateSprite(); return HELP; }));
 }
 

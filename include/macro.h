@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <array>
 
 const int WIDTH_WINDOW = 1024;
 const int HEIGHT_WINDOW = WIDTH_WINDOW/1.6;
@@ -17,8 +18,8 @@ enum T_Screen
 	SELECT_VEHICLE,
 	SELECT_AREA,
 	SELECT_LEVEL,
-	GAME,
 	SCORE,
+	GAME,
 };
 
 enum Players

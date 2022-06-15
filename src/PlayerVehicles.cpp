@@ -3,9 +3,9 @@
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	Resources::SOUNDS sound)
-	:MovingObject(texture, world, sf::Vector2f(250, 500), Resources::Players::Tricky, sound)
+	:MovingObject(texture, world, sf::Vector2f(300, 500), Resources::Players::Tricky, sound)
 {
-	CreateBody(sf::Vector2f(250, 500));
+	CreateBody(sf::Vector2f(300, 500));
 	m_sprite.setScale(0.6, 0.6);
 	setBox2dEnable(false);
 }

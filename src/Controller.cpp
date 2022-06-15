@@ -26,7 +26,7 @@ void Controller::run() {
 			if(GameData::instance().getScreen() ==SCORE)
 				m_view->setCenter(m_window.getDefaultView().getCenter());
 			if (GameData::instance().getScreen() == GAME)
-				m_gameMusic.setVolume(30);
+				m_gameMusic.setVolume(20);
 			else
 				m_gameMusic.setVolume(70);
 			m_window.clear(sf::Color::White);
@@ -43,8 +43,8 @@ void Controller::run() {
 				}
 			}
 			auto delta = m_gameClock.restart();
-			m_screen[GameData::instance().getScreen()]->handleGame(delta);
 			m_screen[GameData::instance().getScreen()]->handleScreen();
+			m_screen[GameData::instance().getScreen()]->handleGame(delta);
 			m_screen[GameData::instance().getScreen()]->draw(m_window);
 			m_window.display();
 		}
@@ -61,6 +61,7 @@ void Controller::createScreens() {
 	m_screen.push_back(std::make_unique<SelectVehicle>());
 	m_screen.push_back(std::make_unique<SelectArea>());
 	m_screen.push_back(std::make_unique<RoadMap>());
-	m_screen.push_back(std::make_unique<GameScreen>(m_view));
 	m_screen.push_back(std::make_unique<ScoreScreen>());
+	m_screen.push_back(std::make_unique<GameScreen>(m_view));
+	
 }

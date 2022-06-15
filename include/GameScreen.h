@@ -39,6 +39,8 @@ private:
 	void updateClockInfo();
 	bool screenTimer(sf::Time delta);
 
+	float                                       m_flagEndPos;
+	bool                                        m_firstRound = true;
 	sf::Font                                    m_font;
 	sf::Sprite                                  m_clockInfo;
 	sf::Sprite                                  m_coinInfo;

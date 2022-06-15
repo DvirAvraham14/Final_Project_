@@ -15,7 +15,7 @@ public:
 	Resources::TEXTURE getCurrBg() { return m_choosenBg; }
 	T_Screen getScreen()           { return m_currScreen;}
 	bool getIsNextLevel()          { return m_nextLevel; }
-
+	bool getFirst() { return m_firstRound; }
 	void setClockText(sf::Text clockText)        { m_clockText = clockText; }
 	void setCoinText(sf::Text coinText)          { m_coinText = coinText; }
 	void setLevel(int level)                     { m_level = level; }
@@ -26,6 +26,7 @@ public:
 	void setCurrBg(Resources::TEXTURE choosenBg) { m_choosenBg = choosenBg; }
 	void setScreen(T_Screen screen)              { m_currScreen = screen; }
 	void setIsNextLevel(bool isNext)             { m_nextLevel = isNext; }
+	void setFirst() { m_firstRound = !m_firstRound; }
 
 	void setClockString(std::string str, sf::Vector2f pos);
 	void setCoinString(std::string str, sf::Vector2f pos);
@@ -39,6 +40,7 @@ private:
 	T_Screen m_currScreen = T_Screen::MENU;
 	Resources::TEXTURE m_choosenBg = Resources::TEXTURE::CITY_NIGHT;
 	bool m_nextLevel = true;
+	bool m_firstRound = false;
 	
 	GameData(){}
 	GameData(const GameData&) = delete;

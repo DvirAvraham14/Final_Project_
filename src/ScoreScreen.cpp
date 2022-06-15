@@ -39,12 +39,12 @@ void ScoreScreen::handleScreen() {
 	m_coinText = GameData::instance().getCoinText();
 	m_coinText.setColor(sf::Color{ 0x373737FF });
 	m_coinText.setOrigin(m_coinText.getGlobalBounds().width / 2.f, m_coinText.getGlobalBounds().height / 2.f);
-	m_coinText.setPosition(403, 370);
+	m_coinText.setPosition(423, 375);
 
 	m_clockText = GameData::instance().getClockText();
 	m_clockText.setColor(sf::Color{ 0x373737FF });
 	m_clockText.setOrigin(m_clockText.getGlobalBounds().width / 2.f, m_clockText.getGlobalBounds().height / 2.f);
-	m_clockText.setPosition(638, 370);
+	m_clockText.setPosition(638, 373);
 }
 
 void ScoreScreen::draw(sf::RenderWindow& target) const {

@@ -12,8 +12,6 @@ public:
 	virtual void handleScreen();
 	void Unlock(int index);
 private:
-	bool      m_firstRound = true;
-	sf::Sound m_sound;
 	void lockLevels();
 	void setLock(std::vector<sf::Vector2f> position);
 };

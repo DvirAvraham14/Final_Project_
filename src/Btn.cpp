@@ -39,7 +39,6 @@ void Btn::Mark(const sf::Vector2f cursur) {
 
 		if (this->m_sprite.getGlobalBounds().contains(cursur))
 			m_sprite.setColor(sf::Color(0x37373737));
-
 		else
 			m_sprite.setColor(sf::Color(0x00FF000F));
 	}
@@ -59,6 +58,14 @@ void Btn::Press(const sf::Vector2f cursur) {
 }
 
 //__________________________________
+void Btn::chooseLevel(const sf::Vector2f cursur) {
+	if (m_levelFunc && this->m_sprite.getGlobalBounds().contains(cursur)) {
+		m_sound.play();
+		GameData::instance().setScreen(GAME);
+		GameData::instance().setLevel(m_levelFunc());
+	}
+}
+//__________________________________
 void Btn::updateSprite(Resources::TEXTURE sprite) {
 	m_sprite.setTexture(Resources::instance().getTexture(sprite));
 }
@@ -70,10 +77,12 @@ void Btn::draw(sf::RenderWindow& window) const {
 }
 
 //__________________________________
-void Btn::unlock(std::function<T_Screen()> func) {
+void Btn::unlock(int index) {
 	m_sprite.setTexture(Resources::instance().getTexture(Resources::TEXTURE::EMPTY_B));
 	m_sprite.setColor(sf::Color{ 0x00FF000F });
-	m_func = func;
+	m_index = index;
+	m_levelFunc = [&]() ->int { return m_index; };
+	m_func = [&]() ->T_Screen { return GAME; };
  }
 
 //__________________________________
@@ -81,4 +90,9 @@ bool Btn::isLock() const{
 	if (m_sprite.getColor() == sf::Color{ 0x00FF000F })
 		return false;
 	return true;
+}
+
+//__________________________________
+void Btn::setPostion(sf::Vector2f pos) {
+	m_sprite.setPosition(pos);
 }
