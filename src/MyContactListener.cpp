@@ -12,7 +12,7 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 	auto objB = static_cast<GameObject*>(bodyUserDataB);
 	void* bodtTagB = contact->GetFixtureB()->GetUserData();
 
-	if (!objA || !objB) throw std::exception("error");
+	if (!objA || !objB) return;
 	CollisionHandler::instance().processCollision(*objA, *objB,
 		((int)bodtTagA == COLLIDE || (int)bodtTagB == COLLIDE) ? true : false);
 }
@@ -28,6 +28,6 @@ void MyContactListener::EndContact(b2Contact* contact) {
 	void* bodyUserDataB = contact->GetFixtureB()->GetBody()->GetUserData();
 	auto objB = static_cast<GameObject*>(bodyUserDataB);
 	//void* bodtTagB = contact->GetFixtureB()->GetUserData();
-	if (!objA || !objB) throw std::exception("error");
+	if (!objA || !objB) return;
 	CollisionHandler::instance().processCollision(*objA, *objB,false,true);
 }

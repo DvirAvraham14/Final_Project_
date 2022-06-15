@@ -4,13 +4,12 @@
 class GameObject
 {
 public:
-	GameObject() = default;
+	GameObject();
 	GameObject(std::shared_ptr<b2World> world);
 	GameObject(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f pos, Resources::SOUNDS sound);
 	virtual ~GameObject() {m_world->DestroyBody(m_body); }
 	virtual void draw(sf::RenderWindow& target) const;
 	void undoCollision(bool = true);
-
 	inline sf::Sprite getSprite() { return m_sprite; }
 	inline virtual void update(sf::Time) {};
 	inline void startContact() { m_contacting = true; }

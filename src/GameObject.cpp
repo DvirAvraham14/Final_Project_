@@ -14,6 +14,13 @@ GameObject::GameObject(Resources::TEXTURE textue,
 }
 
 //___________________________________________________
+GameObject::GameObject()
+	:m_world(nullptr),
+	m_contacting(false)
+	,m_body(nullptr)
+{}
+
+//___________________________________________________
 
 GameObject::GameObject(std::shared_ptr<b2World> world)
 	:m_world(world),

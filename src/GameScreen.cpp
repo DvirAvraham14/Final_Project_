@@ -239,7 +239,7 @@ int GameScreen::scoreCalculator() {
 		stars++;
 	if (m_coinCount * HALF > m_totalCoins)
 		stars++;
-	if (m_coinCount == m_totalCoins)
+	if (m_coinCount > m_totalCoins * 0.9)
 		stars++;
 	return stars;
  }
