@@ -5,7 +5,9 @@
 Spikes::Spikes(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::SOUNDS sound,bool )
 	:Obstacles(texture, world, pos, sound)
 {
-	//CreateBody(pos);
+
+	m_world->DestroyBody(m_body); // a double create
+	CreateBody(pos);
 }
 
 //___________________________________________________
