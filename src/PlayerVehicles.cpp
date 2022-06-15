@@ -98,7 +98,7 @@ void PlayerVehicles::updatePosition() {
 
 void PlayerVehicles::drive(Resources::Players player) {
 	if (m_contacting) {
-		if (m_speed <= 0)
+		if (m_speed <= 0 && !m_body->IsFixedRotation())
 			m_animation.direction(Direction::Push);
 		m_speed += (m_speed < MAX_SPEED[player]) ? PUSH : RESET;
 		float force = physicalMove(m_body->GetLinearVelocity().x, m_speed);

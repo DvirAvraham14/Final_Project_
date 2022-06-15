@@ -41,6 +41,7 @@ void GameScreen::restartVehicle() {
 	m_vehicels[GameData::instance().getPlayer()]->setEnableMove(true);
 	m_vehicels[GameData::instance().getPlayer()]->setIsDead(false);
 	m_vehicels[GameData::instance().getPlayer()]->setPosition(PLAYER_POS);
+	m_vehicels[GameData::instance().getPlayer()]->selVelocityZero();
 	m_vehicels[GameData::instance().getPlayer()]->setAni(Direction::Win);
 }
 
@@ -149,6 +150,8 @@ void GameScreen::handleGame(sf::Time& delta) {
 	m_vehicels[GameData::instance().getPlayer()]->setBox2dEnable(true);
 	updateView();
 	updateObject(delta);
+	if (screenTimer(delta))
+		return;
 	setClock();
 	updateCoinsInfo();
 	updateClockInfo();
@@ -179,10 +182,6 @@ void GameScreen::updateObject(sf::Time& delta) {
 		m_objects[i]->update(delta);
 		handleObject(i);
 	}
-
-	if (screenTimer(delta))
-		return;
-
 	m_timePass += delta;
 }
 
@@ -234,7 +233,8 @@ bool GameScreen::screenTimer(sf::Time delta) {
 int GameScreen::scoreCalculator() {
 	
 	int stars = RESET;
-
+	if (m_vehicels[GameData::instance().getPlayer()]->isDead())
+		return stars;
 	if (m_minutes < MINUTE)
 		stars++;
 	if (m_coinCount * HALF > m_totalCoins)

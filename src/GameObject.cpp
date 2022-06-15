@@ -1,7 +1,7 @@
 #include"GameObject.h"
 
-//___________________________________________________
 
+//___________________________________________________
 GameObject::GameObject(Resources::TEXTURE textue,
 	std::shared_ptr<b2World> world,
 	sf::Vector2f pos,

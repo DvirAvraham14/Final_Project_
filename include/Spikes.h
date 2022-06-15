@@ -4,7 +4,7 @@
 class Spikes :public Obstacles
 {
 public:
-	using Obstacles::Obstacles;
+	//using Obstacles::Obstacles;
 	Spikes(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::SOUNDS sound,bool = true);
 
 private:
