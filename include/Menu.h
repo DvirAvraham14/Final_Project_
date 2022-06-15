@@ -12,6 +12,5 @@ private:
 	void mute(int index);
 	void createButtons();
 
-	sf::Sprite					m_logo;
 	sf::Listener				m_lis;
 };

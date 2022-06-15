@@ -15,6 +15,7 @@ GameScreen::GameScreen(std::shared_ptr<sf::View> view)
 void GameScreen::updateLevel() {
 
 	restartInfo();
+	setEnable();
 	restartVehicle();
 	setBackground();
 	createObstacles();
@@ -35,14 +36,16 @@ void GameScreen::restartInfo() {
 //___________________________________________________
 
 void GameScreen::restartVehicle() {
-	m_vehicels[GameData::instance().getPlayer()]->undoCollision(false);
-	m_vehicels[GameData::instance().getPlayer()]->setSpeet(RESET);
-	m_vehicels[GameData::instance().getPlayer()]->setEnd(false);
-	m_vehicels[GameData::instance().getPlayer()]->setEnableMove(true);
-	m_vehicels[GameData::instance().getPlayer()]->setIsDead(false);
-	m_vehicels[GameData::instance().getPlayer()]->setPosition(PLAYER_POS);
-	m_vehicels[GameData::instance().getPlayer()]->selVelocityZero();
-	m_vehicels[GameData::instance().getPlayer()]->setAni(Direction::Win);
+	for (int i = TRICKY; i <= JAKE; i++) {
+		m_vehicels[i]->undoCollision(false);
+		m_vehicels[i]->setSpeet(RESET);
+		m_vehicels[i]->setEnd(false);
+		m_vehicels[i]->setEnableMove(true);
+		m_vehicels[i]->setIsDead(false);
+		m_vehicels[i]->setPosition(PLAYER_POS);
+		m_vehicels[i]->selVelocityZero();
+		m_vehicels[i]->setAni(Direction::Win);
+	}
 }
 
 //___________________________________________________
@@ -147,7 +150,6 @@ void GameScreen::setGameInfo() {
 void GameScreen::handleGame(sf::Time& delta) {
 
 	checkRound();
-	m_vehicels[GameData::instance().getPlayer()]->setBox2dEnable(true);
 	updateView();
 	updateObject(delta);
 	if (screenTimer(delta))
@@ -159,6 +161,25 @@ void GameScreen::handleGame(sf::Time& delta) {
 	if (m_vehicels[GameData::instance().getPlayer()]->getIsEnd() || 
 		m_vehicels[GameData::instance().getPlayer()]->isDead())
 		handleEnd();
+}
+
+//___________________________________________________
+
+void GameScreen::checkRound() {
+	if (m_firstRound) {
+		updateLevel();
+		m_firstRound = false;
+	}
+}
+
+//___________________________________________________
+
+void GameScreen::setEnable() {
+	for(int i=TRICKY; i<= JAKE;i++)
+		if(i== GameData::instance().getPlayer())
+			m_vehicels[i]->setBox2dEnable(true);
+		else
+			m_vehicels[i]->setBox2dEnable(false);
 }
 
 //___________________________________________________
@@ -183,15 +204,6 @@ void GameScreen::updateObject(sf::Time& delta) {
 		handleObject(i);
 	}
 	m_timePass += delta;
-}
-
-//___________________________________________________
-
-void GameScreen::checkRound() {
-	if (m_firstRound) {
-		updateLevel();
-		m_firstRound = false;
-	}
 }
 
 //___________________________________________________
@@ -239,7 +251,7 @@ int GameScreen::scoreCalculator() {
 		stars++;
 	if (m_coinCount * HALF > m_totalCoins)
 		stars++;
-	if (m_coinCount == m_totalCoins)
+	if (m_coinCount > 0.9 * m_totalCoins)
 		stars++;
 	return stars;
  }

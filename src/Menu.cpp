@@ -8,11 +8,6 @@ Menu::Menu()
 	createButtons();
 
 	m_buttons.erase(m_buttons.begin());
-	//logo
-	m_logo.setTexture(Resources::instance().getTexture(Resources::TEXTURE::LOGO));
-	m_logo.setOrigin(m_logo.getGlobalBounds().width / HALF, m_logo.getGlobalBounds().height / HALF);
-	m_logo.setPosition(LOGO_POS);
-	m_logo.setScale(LOGO_SCALE);
 }
 
 //___________________________________________________
@@ -45,5 +40,4 @@ void Menu::mute(int index) {
 
 void Menu::draw(sf::RenderWindow& target) const {
 	Draw(target);
-	target.draw(m_logo);
 }

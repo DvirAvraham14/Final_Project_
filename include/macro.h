@@ -158,11 +158,9 @@ const sf::Color ROAD_COLOR = sf::Color(0x555555FF);
 
 //_________________Menu data_____________________
 
-const sf::Vector2f LOGO_POS = { WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.17f };
-const sf::Vector2f LOGO_SCALE = { WIDTH_WINDOW / 2000.f, WIDTH_WINDOW / 2000.f };
-const sf::Vector2f PLAY_POS = { WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.4f };
-const sf::Vector2f HELP_POS = { WIDTH_WINDOW / 17, HEIGHT_WINDOW / 10 };
-const sf::Vector2f MUTE_POS = { WIDTH_WINDOW / 17, HEIGHT_WINDOW / 4 };
+const sf::Vector2f PLAY_POS = { WIDTH_WINDOW / 2.f, HEIGHT_WINDOW / 1.35f };
+const sf::Vector2f HELP_POS = { WIDTH_WINDOW / 1.1, HEIGHT_WINDOW / 9 };
+const sf::Vector2f MUTE_POS = { WIDTH_WINDOW / 1.1, HEIGHT_WINDOW / 3.5 };
 const unsigned int VOLUME = 100;
 const unsigned int MUTE = 0;
 
@@ -201,7 +199,7 @@ const float SPIKES_BOX = WIDTH_WINDOW / 23.5f;
 
 //____________SelectVehicle data___________________
 
-const unsigned int SPRITE_POS = 22;
+const unsigned int SPRITE_POS = 21;
 const unsigned int ADD = 1;
 const sf::Vector2f LEFT_ARROW = { 60, HEIGHT_WINDOW / 2.2f }; 
 const sf::Vector2f RIGHT_ARROW = { WIDTH_WINDOW - 60, HEIGHT_WINDOW / 2.2f }; 
@@ -220,7 +218,7 @@ const std::array<sf::IntRect, 3> PLAYERS_NAME =
 
 //____________SelectVehicle area___________________
 
-const unsigned int SPRITE_AREA_POS = 14;
+const unsigned int SPRITE_AREA_POS = 13;
 
 const std::array<sf::IntRect, 4> AREA_NAME =
 {

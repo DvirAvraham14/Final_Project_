@@ -32,6 +32,7 @@ private:
 	void restartInfo();
 	void restartVehicle();
 	void setBackground();
+	void setEnable();
 	void setClock();
 	void checkRound();
 	void updateObject(sf::Time& delta);

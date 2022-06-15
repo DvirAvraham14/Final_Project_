@@ -33,7 +33,7 @@ void Controller::run() {
 			while (m_window.pollEvent(event)) {
 				m_screen[GameData::instance().getScreen()]->handleMouse(event, cursorPosF);
 
-				if (event.type == sf::Event::Closed || (event.key.code == sf::Keyboard::Escape)) {
+				if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
 					m_window.close();
 				}
 			}
