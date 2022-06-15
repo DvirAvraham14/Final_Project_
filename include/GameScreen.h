@@ -5,7 +5,6 @@
 #include "Spike.h"
 #include "Jake.h"
 #include "Tricky.h"
-#include "SelectVehicle.h"
 #include "Railing.h"
 #include "Spikes.h"
 #include "Monster.h"
@@ -14,8 +13,6 @@
 #include "Truck.h"
 #include "Map.h"
 #include "Coin.h"
-#include "macro.h"
-#include "ScoreScreen.h"
 
 class GameScreen :public Screen
 {
@@ -33,10 +30,17 @@ private:
 	void setGameInfo();
 	void updateLevel();
 	void restartInfo();
+	void restartVehicle();
+	void setBackground();
 	void setClock();
-	int scoreCalculator();
+	void checkRound();
+	void updateObject(sf::Time& delta);
 	void updateCoinsInfo();
+	void updateView();
+	void handleObject(int i);
+	void handleEnd();
 	void updateClockInfo();
+	int scoreCalculator();
 	bool screenTimer(sf::Time delta);
 
 	float                                       m_flagEndPos;
@@ -46,14 +50,14 @@ private:
 	sf::Sprite                                  m_coinInfo;
 	bool                                        m_lost = false;
 	std::string                                 m_time;
-	int                                         m_coinCount = 0;
-	int                                         m_minutes = 0;
+	int                                         m_coinCount = RESET;
+	int                                         m_minutes = RESET;
 	std::shared_ptr<sf::View>					m_view;
 	sf::Sprite                                  m_gameBg;
 	sf::Time									m_timePass;
-	int                                         m_totalCoins = 0;
+	int                                         m_totalCoins = RESET;
 	float										m_screenDelay;
-
+	
 	Map                                         m_map;
 	std::shared_ptr<b2World>                    m_world;
 	MyContactListener							m_contactListner;

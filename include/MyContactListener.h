@@ -1,7 +1,6 @@
 #pragma once
-#include "macro.h"
-#include "CollisionHandler.h"
 
+#include "CollisionHandler.h"
 
 class MyContactListener : public b2ContactListener
 {

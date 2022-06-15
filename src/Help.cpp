@@ -1,24 +1,30 @@
 #include "Help.h"
 
+//___________________________________________________
+
 Help::Help()
 	:Screen(Resources::TEXTURE::HELP_CENTER1, T_Screen::MENU)
 {
 	createButtons();
 }
 
+//___________________________________________________
+
 void Help::createButtons() {
 
 	sf::Sprite arrow;
 	arrow.setTexture(Resources::instance().getTexture(Resources::TEXTURE::ARROW));
-	arrow.setScale(WIDTH_WINDOW / 1420.0f, WIDTH_WINDOW / 1420.0f);
+	arrow.setScale(ARROW_SCALE);
 
-	m_buttons.push_back(Btn({ 40,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn(ARROW_LEFT_POS, arrow,
 		[&]() ->T_Screen { updateSprite(); return HELP; }));
-	arrow.scale(-1, 1);
+	arrow.scale(MOVE_LEFT);
 
-	m_buttons.push_back(Btn({ WIDTH_WINDOW-40 ,HEIGHT_WINDOW / 2.2f }, arrow,
+	m_buttons.push_back(Btn(ARROW_RIGHT_POS, arrow,
 		[&]() ->T_Screen { updateSprite(); return HELP; }));
 }
+
+//___________________________________________________
 
 void Help::updateSprite() {
 
@@ -31,6 +37,8 @@ void Help::updateSprite() {
 		m_firstScreen = true;
 	}
 }
+
+//___________________________________________________
 
 void Help::draw(sf::RenderWindow& target) const {
 

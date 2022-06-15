@@ -1,14 +1,18 @@
 #include "PlayerVehicles.h"
 
+//___________________________________________________
+
 PlayerVehicles::PlayerVehicles(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	Resources::SOUNDS sound)
-	:MovingObject(texture, world, sf::Vector2f(300, 500), Resources::Players::Tricky, sound)
+	:MovingObject(texture, world, PLAYER_POS, Resources::Players::Tricky, sound)
 {
-	CreateBody(sf::Vector2f(300, 500));
-	m_sprite.setScale(0.6, 0.6);
+	CreateBody(PLAYER_POS);
+	m_sprite.setScale(PLAYER_SCALE);
 	setBox2dEnable(false);
 }
+
+//___________________________________________________
 
 void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 
@@ -18,28 +22,30 @@ void PlayerVehicles::CreateBody(sf::Vector2f pos) {
 	m_body = m_world->CreateBody(&m_bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(WIDTH_WINDOW / 33.3f, WIDTH_WINDOW / 23.5f);
+	dynamicBox.SetAsBox(BOX_SCALE.x, BOX_SCALE.y);
 	b2FixtureDef fixtureDef;
 
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.1f;
+	fixtureDef.density = PLAYER_DENSITY;
+	fixtureDef.friction = PLAYER_FRICTION;
 
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetUserData(this);
 
-	setSensor(-10, fixtureDef, 1);//first wheel
-	setSensor(10, fixtureDef, 1);//secound wheel
-	setMassa(10.0f);
+	setSensor(-MASS, fixtureDef, ID);//first wheel
+	setSensor(MASS, fixtureDef, ID);//secound wheel
+	setMassa(MASS);
 }
+
+//___________________________________________________
 
 void PlayerVehicles::setSensor(float posX, b2FixtureDef& fixtureDef, int id) {
 
 	b2CircleShape circle;
-	circle.m_radius = 4;
+	circle.m_radius = RADIUS;
 	circle.m_type = circle.e_circle;
 
-	circle.m_p = b2Vec2(m_sprite.getPosition().x + posX, m_sprite.getPosition().y + 40);
+	circle.m_p = b2Vec2(m_sprite.getPosition().x + posX, m_sprite.getPosition().y + CIRCLE_OFFSET);
 
 	b2FixtureDef footSensorFixtureDef;
 	footSensorFixtureDef.isSensor = true;
@@ -48,6 +54,8 @@ void PlayerVehicles::setSensor(float posX, b2FixtureDef& fixtureDef, int id) {
 	m_body->CreateFixture(&footSensorFixtureDef);
 }
 
+//___________________________________________________
+
 void PlayerVehicles::setMassa(float weight) {
 	b2MassData massa;
 	massa.mass = weight;
@@ -55,6 +63,8 @@ void PlayerVehicles::setMassa(float weight) {
 	massa.I = m_sprite.getOrigin().y;
 	m_body->SetMassData(&massa);
 }
+
+//___________________________________________________
 
 void PlayerVehicles::update(sf::Time delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && m_enableMove)
@@ -68,13 +78,15 @@ void PlayerVehicles::update(sf::Time delta) {
 	m_animation.update(delta);
 }
 
+//___________________________________________________
+
 void PlayerVehicles::updatePosition() {
 	b2Vec2  position = m_body->GetPosition();
-	float	angle = 180 / b2_pi * m_body->GetAngle();
-	auto temp = std::fmod(angle, 360);
-	if (std::abs(temp) > 45 && !m_isDead) {
+	float	angle = ANGLE / b2_pi * m_body->GetAngle();
+	auto temp = std::fmod(angle, FULL_ANGLE);
+	if (std::abs(temp) > MAX_ROTATION && !m_isDead) {
 		m_animation.direction(Direction::FrontFall);
-		angle = 0;
+		angle = RESET;
 		setEnableMove(false);
 		m_isDead = true;
 	}
@@ -82,19 +94,23 @@ void PlayerVehicles::updatePosition() {
 	m_sprite.setPosition(position.x, position.y);
 }
 
+//___________________________________________________
+
 void PlayerVehicles::drive(Resources::Players player) {
 	if (m_contacting) {
 		if (m_speed <= 0)
 			m_animation.direction(Direction::Push);
-		m_speed += (m_speed < MAX_SPEED[player]) ? 5 : 0;
+		m_speed += (m_speed < MAX_SPEED[player]) ? PUSH : RESET;
 		float force = physicalMove(m_body->GetLinearVelocity().x, m_speed);
-		m_body->ApplyForce(b2Vec2(force, 0), m_body->GetWorldCenter(), true);
+		m_body->ApplyForce(b2Vec2(force, RESET), m_body->GetWorldCenter(), true);
 	}
 }
 
+//___________________________________________________
+
 void PlayerVehicles::jump(float height, Resources::Players player) {
 	if (m_contacting) {
-		m_body->SetLinearVelocity({ m_body->GetLinearVelocity().x,0 });
+		m_body->SetLinearVelocity({ m_body->GetLinearVelocity().x,RESET });
 		m_animation.direction(Direction::Filp);
 		b2Vec2 vel = m_body->GetLinearVelocity();
 		float force = physicalMove(vel.y, ((height == 0) ? JUMP_HEIGHT[player] : height));
@@ -103,9 +119,11 @@ void PlayerVehicles::jump(float height, Resources::Players player) {
 	}
 }
 
+//___________________________________________________
+
 void PlayerVehicles::coilliedSpikes() {
 	m_isDead = m_contacting = true;
-	m_body->SetLinearVelocity({ -5,0 });
+	m_body->SetLinearVelocity({-float(PUSH), RESET });
 	this->undoCollision();
 	setAni(Direction::FrontFall);
 }

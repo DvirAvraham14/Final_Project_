@@ -1,11 +1,11 @@
 #pragma once
-#include"Obstacles.h"
+#include "Obstacles.h"
+
 class Spikes :public Obstacles
 {
 public:
 	using Obstacles::Obstacles;
 	Spikes(Resources::TEXTURE texture, std::shared_ptr<b2World> world, sf::Vector2f pos, Resources::SOUNDS sound,bool = true);
-protected:
 
 private:
 	void CreateBody(sf::Vector2f pos);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Screen.h"
-#include "GameScreen.h"
 
 class ScoreScreen :public Screen
 {
@@ -9,10 +8,11 @@ public:
 	ScoreScreen();
 	virtual void draw(sf::RenderWindow& target) const;
 	virtual void handleScreen();
+
 private:
 	void createButtons();
-	void setStarsPos();
-	void setStarsData(std::vector<sf::Vector2f> starsPos);
+	void setStarsData();
+
 	std::vector<sf::Sprite> m_stars;
 	sf::Sound               m_sound;
 	sf::Text                m_coinText;

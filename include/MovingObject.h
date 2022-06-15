@@ -1,6 +1,8 @@
 #pragma once
+
 #include"GameObject.h"
 #include "Animation.h"
+
 class MovingObject :public GameObject
 {
 public:
@@ -18,15 +20,16 @@ public:
 	void setEnableMove(bool moveSatuse) { m_enableMove = moveSatuse; }
 	void setBox2dEnable(bool value) { m_body->SetEnabled(value); }
 	void setEnd(bool end) { m_isEnd = end; }
-	inline bool isDead() const { return m_isDead; }
 	inline void setIsDead(bool life) { m_isDead = life; }
+	inline bool isDead() const { return m_isDead; }
 	inline bool getIsEnd()const { return m_isEnd; }
 
 protected:
-	bool m_enableMove = true;
-	Animation m_animation;
-	float m_speed = 0;
-	bool m_isDead = false;
+	bool       m_enableMove = true;
+	Animation  m_animation;
+	float      m_speed = 0;
+	bool       m_isDead = false;
+
 private:
-	bool m_isEnd = false;
+	bool       m_isEnd = false;
 };

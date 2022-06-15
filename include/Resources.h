@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
 #include "AnimationData.h"
@@ -70,11 +71,12 @@ public:
 		GAME_MUSIC,
 		MaxSounds,
 	};
-
+	
 	const sf::Font& getFont();
 	const sf::SoundBuffer& getSound(SOUNDS );
 	const sf::Texture& getTexture(TEXTURE, bool = false);
 	const AnimationData& getData(Players);
+
 private:
 	std::string			m_textPath[MaxTexture] = {
 						"background.png",
@@ -133,7 +135,6 @@ private:
 	std::vector<sf::SoundBuffer>	m_sounds;
 	std::vector<AnimationData>		m_animaData;
 	sf::Font						m_font;
-
 
 	Resources();
 	Resources(const Resources&) = delete;

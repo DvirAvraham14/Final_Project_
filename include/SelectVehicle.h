@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Screen.h"
+#include "Screen.h"
 #include "Animation.h"
 
 class SelectVehicle :public Screen
@@ -9,6 +9,7 @@ public:
 	SelectVehicle();
 	virtual void draw(sf::RenderWindow& target) const;
 	virtual void handleGame(sf::Time& delta);
+
 private:
 	using player = Resources::Players;
 	T_Screen changePlayer(bool next);

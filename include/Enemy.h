@@ -1,5 +1,7 @@
 #pragma once
+
 #include "MovingObject.h"
+
 class Enemy : public MovingObject
 {
 public:
@@ -9,5 +11,5 @@ public:
 	virtual void jump(float = 0, Resources::Players = Resources::Players::MaxPlayer) {}
 	virtual void CreateBody(sf::Vector2f pos);
 
-protected:
+private:
 };

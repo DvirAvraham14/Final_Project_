@@ -1,11 +1,7 @@
 #pragma once
 
-#include "Direction.h"
-#include "Resources.h"
 #include "Btn.h"
-#include "AnimationData.h"
 #include <SFML/Graphics.hpp>
-#include "GameData.h"
 
 class Animation
 {
@@ -21,6 +17,6 @@ private:
     const AnimationData&     m_data;
     sf::Time                 m_elapsed = {};
     Direction                m_dir = Direction::Win;
-    int                      m_index = 0;
+    int                      m_index = RESET;
     sf::Sprite&              m_sprite;
 };

@@ -1,5 +1,6 @@
 #include "MyContactListener.h"
 
+//___________________________________________________
 
 void MyContactListener::BeginContact(b2Contact* contact) {
 
@@ -13,8 +14,10 @@ void MyContactListener::BeginContact(b2Contact* contact) {
 
 	if (!objA || !objB) throw std::exception("error");
 	CollisionHandler::instance().processCollision(*objA, *objB,
-		((int)bodtTagA == 1 || (int)bodtTagB == 1) ? true : false);
+		((int)bodtTagA == COLLIDE || (int)bodtTagB == COLLIDE) ? true : false);
 }
+
+//___________________________________________________
 
 void MyContactListener::EndContact(b2Contact* contact) {
 

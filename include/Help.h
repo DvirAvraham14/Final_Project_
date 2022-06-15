@@ -7,6 +7,7 @@ class Help :public Screen
 public:
 	Help();
 	virtual void draw(sf::RenderWindow& target) const;
+
 private:
 	void createButtons();
 	void updateSprite();

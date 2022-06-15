@@ -1,5 +1,7 @@
 #include"EndFlag.h"
 
+//___________________________________________________
+
 EndFlag::EndFlag(Resources::TEXTURE texture,
 	std::shared_ptr<b2World> world,
 	sf::Vector2f pos,
@@ -10,6 +12,8 @@ EndFlag::EndFlag(Resources::TEXTURE texture,
 	m_sprite.setPosition(pos);
 	CreateBody(pos);
 }
+
+//___________________________________________________
 
 void EndFlag::update(sf::Time delta) {
 

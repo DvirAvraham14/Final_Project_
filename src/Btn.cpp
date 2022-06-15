@@ -1,16 +1,18 @@
 #include "Btn.h"
 
+//___________________________________________________
+
 Btn::Btn(float x, float y, Resources::TEXTURE sprite, std::function<T_Screen()> func)
 	:m_position({ x, y }), m_func(func)
 {
 	m_sprite.setTexture(Resources::instance().getTexture(sprite));
-	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
+	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / HALF, m_sprite.getGlobalBounds().height / HALF);
 	m_sprite.setPosition(m_position);
-	m_sprite.setScale(WIDTH_WINDOW / 1100.0f, WIDTH_WINDOW / 1100.0f);
+	m_sprite.setScale(BTN_SCALE);
 	m_sound.setBuffer(Resources::instance().getSound(Resources::SOUNDS::CLICK));
 }
 
-//__________________________________
+//___________________________________________________
 
 Btn::Btn(sf::Vector2f pos, sf::Sprite sprite,  std::function<T_Screen()> func)
 	:m_position(pos), m_func(func)
@@ -20,30 +22,33 @@ Btn::Btn(sf::Vector2f pos, sf::Sprite sprite,  std::function<T_Screen()> func)
 	m_sprite.setPosition(pos);
 }
 
-//__________________________________
+//___________________________________________________
+
 void Btn::hover(const sf::Vector2f cursur) {
 	if (m_func) {
 
 		if (this->m_sprite.getGlobalBounds().contains(cursur))
-			m_sprite.setColor(sf::Color(0xfafafacc));
-
+			m_sprite.setColor(HOVERED);
 		else
-			m_sprite.setColor(sf::Color(0xfafafaff));
+			m_sprite.setColor(ORIGINAL);
 	}
 }
 
 
-//__________________________________
+//___________________________________________________
+
 void Btn::Mark(const sf::Vector2f cursur) {
 	if (m_func) {
 
 		if (this->m_sprite.getGlobalBounds().contains(cursur))
-			m_sprite.setColor(sf::Color(0x37373737));
+			m_sprite.setColor(HOVERED_MAP);
 		else
-			m_sprite.setColor(sf::Color(0x00FF000F));
+			m_sprite.setColor(ORIGINAL_MAP);
 	}
 }
-//__________________________________
+
+//___________________________________________________
+
 void Btn::Press(const sf::Vector2f cursur) {
 	if (m_func && this->m_sprite.getGlobalBounds().contains(cursur)) {
 	
@@ -57,7 +62,8 @@ void Btn::Press(const sf::Vector2f cursur) {
 	}
 }
 
-//__________________________________
+//___________________________________________________
+
 void Btn::chooseLevel(const sf::Vector2f cursur) {
 	if (m_levelFunc && this->m_sprite.getGlobalBounds().contains(cursur)) {
 		m_sound.play();
@@ -65,13 +71,15 @@ void Btn::chooseLevel(const sf::Vector2f cursur) {
 		GameData::instance().setLevel(m_levelFunc());
 	}
 }
-//__________________________________
+
+//___________________________________________________
+
 void Btn::updateSprite(Resources::TEXTURE sprite) {
 	m_sprite.setTexture(Resources::instance().getTexture(sprite));
 }
 
+//___________________________________________________
 
-//__________________________________
 void Btn::draw(sf::RenderWindow& window) const {
 	window.draw(m_sprite);
 }
@@ -79,18 +87,11 @@ void Btn::draw(sf::RenderWindow& window) const {
 //__________________________________
 void Btn::unlock(int index) {
 	m_sprite.setTexture(Resources::instance().getTexture(Resources::TEXTURE::EMPTY_B));
-	m_sprite.setColor(sf::Color{ 0x00FF000F });
+	m_sprite.setColor(TRANSPARE);
 	m_index = index;
 	m_levelFunc = [&]() ->int { return m_index; };
 	m_func = [&]() ->T_Screen { return GAME; };
  }
-
-//__________________________________
-bool Btn::isLock() const{
-	if (m_sprite.getColor() == sf::Color{ 0x00FF000F })
-		return false;
-	return true;
-}
 
 //__________________________________
 void Btn::setPostion(sf::Vector2f pos) {

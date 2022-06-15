@@ -15,7 +15,7 @@ public:
 	Resources::TEXTURE getCurrBg() { return m_choosenBg; }
 	T_Screen getScreen()           { return m_currScreen;}
 	bool getIsNextLevel()          { return m_nextLevel; }
-	bool getFirst() { return m_firstRound; }
+	bool getFirst()                { return m_firstRound; }
 	void setClockText(sf::Text clockText)        { m_clockText = clockText; }
 	void setCoinText(sf::Text coinText)          { m_coinText = coinText; }
 	void setLevel(int level)                     { m_level = level; }
@@ -26,7 +26,7 @@ public:
 	void setCurrBg(Resources::TEXTURE choosenBg) { m_choosenBg = choosenBg; }
 	void setScreen(T_Screen screen)              { m_currScreen = screen; }
 	void setIsNextLevel(bool isNext)             { m_nextLevel = isNext; }
-	void setFirst() { m_firstRound = !m_firstRound; }
+	void setFirst()                              { m_firstRound = !m_firstRound; }
 
 	void setClockString(std::string str, sf::Vector2f pos);
 	void setCoinString(std::string str, sf::Vector2f pos);
@@ -34,8 +34,8 @@ private:
 
 	sf::Text m_clockText = sf::Text();
 	sf::Text m_coinText = sf::Text();
-	int	m_level = 1;
-	int m_numOfStars = 3;
+	int	m_level = START;
+	int m_numOfStars = MAX_SCORE;
 	int m_currPlayer = Resources::Players::Spike;
 	T_Screen m_currScreen = T_Screen::MENU;
 	Resources::TEXTURE m_choosenBg = Resources::TEXTURE::CITY_NIGHT;

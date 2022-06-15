@@ -1,51 +1,52 @@
 #include "ScoreScreen.h"
 
+//___________________________________________________
+
 ScoreScreen::ScoreScreen()
-	:Screen(Resources::TEXTURE::Score, T_Screen::SCORE)
+	:Screen(Resources::TEXTURE::Score, T_Screen::SELECT_LEVEL)
 {
 	createButtons();
-	setStarsPos();
+	setStarsData();
 	m_sound.setBuffer(Resources::instance().getSound(Resources::RATE));
 }
 
+//___________________________________________________
+
 void ScoreScreen::createButtons() {
 
-	m_buttons.push_back(Btn(WIDTH_WINDOW / 2.0f, HEIGHT_WINDOW / 1.25f, Resources::TEXTURE::NEXT,
+	m_buttons.push_back(Btn(SELECT_POS.x, SELECT_POS.y, Resources::TEXTURE::NEXT,
 		[&]() ->T_Screen {GameData::instance().setIsNextLevel(true); return SELECT_LEVEL; }));
 }
 
-void ScoreScreen::setStarsPos() {
+//___________________________________________________
 
-	std::vector<sf::Vector2f> starsPos;
-	starsPos.push_back({ 380, 202 });
-	starsPos.push_back({ 469, 202 });
-	starsPos.push_back({ 559, 202 });
-	setStarsData(starsPos);
-}
-
-void ScoreScreen::setStarsData(std::vector<sf::Vector2f> starsPos) {
+void ScoreScreen::setStarsData() {
 
 	sf::Sprite star;
 	star.setTexture(Resources::instance().getTexture(Resources::TEXTURE::STAR));
-	star.setScale(0.25f, 0.25f);
+	star.setScale(STAR_SCALE);
 
-	for (auto& pos : starsPos) {
+	for (auto& pos : STARS_POS) {
 		star.setPosition(pos);
 		m_stars.push_back(star);
 	}
 }
 
+//___________________________________________________
+
 void ScoreScreen::handleScreen() {
 	m_coinText = GameData::instance().getCoinText();
 	m_coinText.setColor(sf::Color{ 0x373737FF });
-	m_coinText.setOrigin(m_coinText.getGlobalBounds().width / 2.f, m_coinText.getGlobalBounds().height / 2.f);
-	m_coinText.setPosition(423, 375);
+	m_coinText.setOrigin(m_coinText.getGlobalBounds().width / HALF, m_coinText.getGlobalBounds().height / HALF);
+	m_coinText.setPosition(COIN_SCORE_POS);
 
 	m_clockText = GameData::instance().getClockText();
 	m_clockText.setColor(sf::Color{ 0x373737FF });
-	m_clockText.setOrigin(m_clockText.getGlobalBounds().width / 2.f, m_clockText.getGlobalBounds().height / 2.f);
-	m_clockText.setPosition(638, 373);
+	m_clockText.setOrigin(m_clockText.getGlobalBounds().width / HALF, m_clockText.getGlobalBounds().height / HALF);
+	m_clockText.setPosition(CLOCK_SCORE_POS);
 }
+
+//___________________________________________________
 
 void ScoreScreen::draw(sf::RenderWindow& target) const {
 	Draw(target);

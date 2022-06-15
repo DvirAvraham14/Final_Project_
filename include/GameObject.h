@@ -7,9 +7,9 @@ public:
 	GameObject() = default;
 	GameObject(std::shared_ptr<b2World> world);
 	GameObject(Resources::TEXTURE, std::shared_ptr<b2World>, sf::Vector2f pos, Resources::SOUNDS sound);
-	virtual ~GameObject() { m_body->GetWorld()->DestroyBody(m_body); }
+	virtual ~GameObject() { m_world->DestroyBody(m_body); }
 	virtual void draw(sf::RenderWindow& target) const;
-	void undoCollision();
+	void undoCollision(bool = true);
 
 	inline sf::Sprite getSprite() { return m_sprite; }
 	inline virtual void update(sf::Time) {};
@@ -23,11 +23,12 @@ public:
 	inline void stopBody() { m_body->SetAwake(false); }
 	inline void removeObj() { toDelete = true; }
 	inline bool getDeleteStatus() { return toDelete; }
+
 protected:
 	std::shared_ptr<b2World> m_world;
 	sf::Sprite				 m_sprite;
 	sf::Sound				 m_sound;
-	b2Body* m_body;
+	b2Body*                  m_body;
 	bool					 m_contacting;
 	bool					 toDelete = false;
 

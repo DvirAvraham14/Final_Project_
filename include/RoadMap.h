@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Screen.h"
-#include "GameScreen.h"
 
 class RoadMap:public Screen
 {
@@ -11,7 +10,7 @@ public:
 	virtual void handleMouse(sf::Event event, const sf::Vector2f cursorPos);
 	virtual void handleScreen();
 	void Unlock(int index);
+
 private:
-	void lockLevels();
-	void setLock(std::vector<sf::Vector2f> position);
+	void setLock();
 };
