@@ -1,6 +1,6 @@
 OPP – ex4 “Circle the cat”
 ******************************************************************************
-Dvir Avraham	206340705	dviravr
+Dvir Avraham
 ******************************************************************************
 Description:
 In this exercise a programmable "Circle the cat" - Circle the Cat is a puzzle game where you draw circles around a cat in an attempt to trap it.
